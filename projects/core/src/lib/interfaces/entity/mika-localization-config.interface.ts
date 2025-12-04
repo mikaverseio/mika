@@ -23,7 +23,7 @@ export interface MikaLanguageOption {
  * their display titles, and how they should be structured in
  * the API response.
  */
-export interface MikaContentLocalizationSettings {
+export interface MikaLocalizationConfig {
 
     options: MikaLanguageOption[],
 

@@ -1,5 +1,5 @@
 import { MikaEntityConfig } from "../interfaces/entity/mika-entity-config.interface";
-import { MikaBaseUrlsConfig } from "../interfaces/mika-app-config.interface";
+import { MikaBaseUrlsConfig } from "../interfaces/core/mika-app-config.interface";
 import { MikaUrlHelper } from "../helpers/mika-endpoint.helper";
 
 export function ensureEntityConfigMap(configs: any) {

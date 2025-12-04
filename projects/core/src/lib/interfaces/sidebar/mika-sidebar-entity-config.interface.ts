@@ -1,4 +1,4 @@
-export interface SidebarEntityConfig {
+export interface MikaSidebarEntityConfig {
 	label?: string;
 	icon?: string;
 	showInSidebar?: boolean;

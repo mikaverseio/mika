@@ -1,18 +1,18 @@
 import { FormGroup } from "@angular/forms";
-import { BaseFieldConfig } from "./base-field.interface";
-import { FieldOption } from "./mika-field-option.interface";
+import { MikaBaseFieldConfig } from "./base-field.interface";
+import { MikaFieldOption } from "./mika-field-option.interface";
 import { MikaFieldType } from "../../types/mika-app.type";
 
 
-export interface FormFieldV1 extends BaseFieldConfig {
+export interface MikaFieldConfigV1 extends MikaBaseFieldConfig {
 	group?: string;
 	type: MikaFieldType;
 	defaultValue?: any;
 	validators?: any[];
 
 	// Static options
-	options?: FieldOption[];
-	defaultOption?: FieldOption;
+	options?: MikaFieldOption[];
+	defaultOption?: MikaFieldOption;
 
 	// Dynamic options (not grouped for now, but clean)
 	optionsSource?: string;
@@ -20,8 +20,8 @@ export interface FormFieldV1 extends BaseFieldConfig {
 	optionsQueryParams?: any;
 	dependsOn?: string;
 	filterByParent?: string;
-	loadOptions?: (parentValue?: any) => Promise<FieldOption[]>;
-	autocompleteFn?: (search: string) => Promise<FieldOption[]>;
+	loadOptions?: (parentValue?: any) => Promise<MikaFieldOption[]>;
+	autocompleteFn?: (search: string) => Promise<MikaFieldOption[]>;
 	displayWith?: (option: any) => string;
 
 	// UX & behavior
@@ -53,7 +53,7 @@ export interface FormFieldV1 extends BaseFieldConfig {
  * This interface defines the structure of a form field configuration object,
  * which is used to create dynamic forms in MikaForm.
  */
-export interface FormField extends BaseFieldConfig {
+export interface MikaFieldConfig extends MikaBaseFieldConfig {
     /**
      * The name of the group this field belongs to.  Fields can be organized into
      * groups for layout or logical purposes within the form.

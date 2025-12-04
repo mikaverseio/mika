@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MikaAppService } from '../../../services/mika-app.service';
 import { Mika } from '../../../helpers/mika-app.helper';
 import { MikaPreferencesService } from '../../../services/mika-preferences.service';
-import { MikaAppConfig } from '../../../interfaces/mika-app-config.interface';
+import { MikaAppConfig } from '../../../interfaces/core/mika-app-config.interface';
 @Component({
     selector: 'app-login',
     templateUrl: './login.page.html',

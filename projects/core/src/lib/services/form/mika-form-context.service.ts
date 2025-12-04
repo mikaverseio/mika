@@ -1,7 +1,7 @@
 import { inject, Injectable, Injector, signal } from '@angular/core';
 import { AbstractControl, ControlContainer, FormControl, FormGroup } from '@angular/forms';
 import { MikaEntityConfig } from '../../interfaces/entity/mika-entity-config.interface';
-import { FormField } from '../../interfaces/field/form-field.interface';
+import { MikaFieldConfig } from '../../interfaces/field/mika-field-config.interface';
 import { MikaFormBuilderService } from './mika-form-builder.service';
 import { MikaDesignSystem, MikaFormMode } from '../../types/mika-app.type';
 import { MikaKey } from '../../enum/mika-key.enum';
@@ -65,7 +65,7 @@ export class MikaFormContextService extends ControlContainer {
 		});
 	}
 
-	async addFields(fields: FormField[], subscribeToChanges: boolean = false) {
+	async addFields(fields: MikaFieldConfig[], subscribeToChanges: boolean = false) {
 		for (const field of fields) {
 			const control = new FormControl(field.defaultValue ?? null, field.validators ?? []);
 			this.form.addControl(field.key, control);
@@ -109,8 +109,8 @@ export class MikaFormContextService extends ControlContainer {
 		});
 	}
 
-	get groupedFields(): Array<{ key: string; fields: FormField[] }> {
-		const groups: Record<string, FormField[]> = {};
+	get groupedFields(): Array<{ key: string; fields: MikaFieldConfig[] }> {
+		const groups: Record<string, MikaFieldConfig[]> = {};
 
 		for (const field of this.config()?.form.fields!) {
 			const groupKey = field.group || 'General';

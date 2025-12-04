@@ -18,7 +18,7 @@ import { MikaDataService } from '../../../services/mika-data.service';
 import { MikaEntityConfig } from '../../../interfaces/entity/mika-entity-config.interface';
 import { MikaAutocompleteFieldComponent } from '../../../fields/mika-autocomplete-field.component';
 import { MikaFormBuilderService } from '../../../services/form/mika-form-builder.service';
-import { FilterConfig } from '../../../interfaces/field/filter-config.interface';
+import { MikaFilterConfig } from '../../../interfaces/field/mika-filter-config.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from 'ionicons/dist/types/stencil-public-runtime';
 
@@ -66,7 +66,7 @@ export class TableFiltersComponent implements OnInit {
 	}
 
 	async initFilterForm() {
-		const searchField: FilterConfig = {
+		const searchField: MikaFilterConfig = {
 			key: 'key',
 			label: 'search',
 			type: 'text'
@@ -88,8 +88,8 @@ export class TableFiltersComponent implements OnInit {
 		}
 	}
 
-	get groupedFilters(): Array<{ key: string; filters: FilterConfig[] }> {
-		const groups: Record<string, FilterConfig[]> = {};
+	get groupedFilters(): Array<{ key: string; filters: MikaFilterConfig[] }> {
+		const groups: Record<string, MikaFilterConfig[]> = {};
 
 		for (const filter of this.entityConfig.table.filters || []) {
 			const groupKey = filter.group || 'General';
@@ -101,7 +101,7 @@ export class TableFiltersComponent implements OnInit {
 	}
 
 
-	onFilterChange(filter: FilterConfig) {
+	onFilterChange(filter: MikaFilterConfig) {
 		if (filter.onChange) filter.onChange(this.filterForm);
 	}
 

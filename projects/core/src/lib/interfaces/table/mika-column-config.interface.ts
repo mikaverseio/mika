@@ -1,4 +1,4 @@
-export interface MikaTableColumn {
+export interface MikaColumnConfig {
 	key: string;
 	columnDef?: string;
 	label: string;

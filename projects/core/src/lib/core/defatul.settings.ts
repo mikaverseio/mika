@@ -1,8 +1,8 @@
 
-import { MikaAuthConfig } from "../interfaces/mika-app-config.interface";
-import { MikaGlobalSettings } from "../interfaces/settings/mika-global-settings.interface";
+import { MikaAuthConfig } from "../interfaces/core/mika-app-config.interface";
+import { MikaGlobalConfig } from "../interfaces/settings/mika-global-config.interface";
 
-export const mikaDefaultSettings: MikaGlobalSettings = {
+export const mikaDefaultSettings: MikaGlobalConfig = {
 	siteName: 'MikaForm',
 	actions: {
 		notifications: true,

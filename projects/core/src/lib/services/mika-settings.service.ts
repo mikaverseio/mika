@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { MikaGlobalSettings } from '../interfaces/settings/mika-global-settings.interface';
+import { MikaGlobalConfig } from '../interfaces/settings/mika-global-config.interface';
 @Injectable({ providedIn: 'root' })
 export class MikaSettingsService {
-	private globalSettings: MikaGlobalSettings = {
+	private globalSettings: MikaGlobalConfig = {
 		siteName: 'MikaForm',
 		// apiBase: '',
 		publicSiteUrl: '',
@@ -14,11 +14,11 @@ export class MikaSettingsService {
 		sidebarMode: 'auto'
 	};
 
-	setSettings(settings: Partial<MikaGlobalSettings>) {
+	setSettings(settings: Partial<MikaGlobalConfig>) {
 		this.globalSettings = { ...this.globalSettings, ...settings };
 	}
 
-	getSettings(): MikaGlobalSettings {
+	getSettings(): MikaGlobalConfig {
 		return this.globalSettings;
 	}
 

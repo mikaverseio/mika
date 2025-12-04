@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MikaEntityConfig } from '../interfaces/entity/mika-entity-config.interface';
-import { GlobalEntityConfig } from '../interfaces/entity/globla-entity-config.interface';
-import { HookRegistry } from '../interfaces/hooks/hook-registry.interface';
-import { HookContext } from '../interfaces/hooks/hook-context.interface';
+import { MikaGlobalEntityConfig } from '../interfaces/entity/mika-global-entity-config.interface';
+import { MikaHookRegistry } from '../interfaces/hooks/mika-hook-registry.interface';
+import { MikaHookContext } from '../interfaces/hooks/mika-hook-context.interface';
 import { Mika } from '../helpers/mika-app.helper';
 
 @Injectable({ providedIn: 'root' })
 export class MikaHookService {
 
-	async safeExecuteHook<T = any>(hookName: keyof MikaEntityConfig | keyof GlobalEntityConfig, config: MikaEntityConfig, ...args: any[]): Promise<T | null> {
+	async safeExecuteHook<T = any>(hookName: keyof MikaEntityConfig | keyof MikaGlobalEntityConfig, config: MikaEntityConfig, ...args: any[]): Promise<T | null> {
 		const hookKey = hookName as string;
 
 		let hook = (config as any)?.[hookKey] as Function | undefined;
@@ -28,14 +28,14 @@ export class MikaHookService {
 		return null;
 	}
 
-	async safeExecuteHookRegistery<K extends keyof HookRegistry>(
+	async safeExecuteHookRegistery<K extends keyof MikaHookRegistry>(
 		hookName: K,
-		context: HookContext,
-		args: Parameters<NonNullable<HookRegistry[K]>> // 👈 نوع صارم مؤكد
-	): Promise<Awaited<ReturnType<NonNullable<HookRegistry[K]>>> | null> {
+		context: MikaHookContext,
+		args: Parameters<NonNullable<MikaHookRegistry[K]>> // 👈 نوع صارم مؤكد
+	): Promise<Awaited<ReturnType<NonNullable<MikaHookRegistry[K]>>> | null> {
 
-		const localHook = context.config?.[hookName] as HookRegistry[K];
-		const globalHook = Mika.get().globalEntityConfig?.[hookName] as HookRegistry[K];
+		const localHook = context.config?.[hookName] as MikaHookRegistry[K];
+		const globalHook = Mika.get().globalEntityConfig?.[hookName] as MikaHookRegistry[K];
 
 		const hook = localHook || globalHook;
 

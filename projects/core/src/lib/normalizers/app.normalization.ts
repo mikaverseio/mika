@@ -1,5 +1,5 @@
 import { mikaDefaultAuthConfig, mikaDefaultSettings } from "../core/defatul.settings";
-import { MikaAppConfig, MikaAuthConfig } from "../interfaces/mika-app-config.interface";
+import { MikaAppConfig, MikaAuthConfig } from "../interfaces/core/mika-app-config.interface";
 import { normalizeEntityConfigMap } from "./entity.normalization";
 import { normalizeBaseUrls } from "./generic.normalization";
 

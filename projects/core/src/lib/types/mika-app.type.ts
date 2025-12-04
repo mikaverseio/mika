@@ -1,7 +1,7 @@
 import { EMikaAction } from "../enum/mika-action.enum";
 import { MikaBaseAction } from "../interfaces/action/mika-base-action.interface";
 import { MikaEntityConfig } from "../interfaces/entity/mika-entity-config.interface";
-import { MikaAppConfig } from "../interfaces/mika-app-config.interface";
+import { MikaAppConfig } from "../interfaces/core/mika-app-config.interface";
 
 export type MikaAppConfigOptions = MikaAppConfig | MikaAppConfig[];
 

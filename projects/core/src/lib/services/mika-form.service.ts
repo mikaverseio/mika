@@ -6,7 +6,7 @@ import { MikaPreferencesService } from './mika-preferences.service';
 import { MikaPreloadService } from './mika-preload.service';
 import { MikaLanguageService } from './mika-language.service';
 import { MikaAppService } from './mika-app.service';
-import { MikaAppConfig } from '../interfaces/mika-app-config.interface';
+import { MikaAppConfig } from '../interfaces/core/mika-app-config.interface';
 import { MikaKey } from '../enum/mika-key.enum';
 import { MikaAppConfigOptions } from '../types/mika-app.type';
 

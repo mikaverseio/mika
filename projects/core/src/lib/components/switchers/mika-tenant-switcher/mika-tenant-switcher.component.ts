@@ -10,7 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MikaAppService } from '../../../services/mika-app.service';
 import { MikaAuthService } from '../../../services/auth/mika-auth.service';
 import { MikaLoading } from '../../../services/mika-loading.service';
-import { MikaAppConfig } from '../../../interfaces/mika-app-config.interface';
+import { MikaAppConfig } from '../../../interfaces/core/mika-app-config.interface';
 
 @Component({
 	selector: 'app-mika-tenant-switcher',

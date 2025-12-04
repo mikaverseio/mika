@@ -1,14 +1,14 @@
 import { FormGroup } from "@angular/forms";
-import { FilterConfig } from "../field/filter-config.interface";
-import { ResponseProps } from "./entity-table-response.interface";
-import { HookRegistry } from "../hooks/hook-registry.interface";
+import { MikaFilterConfig } from "../field/mika-filter-config.interface";
+import { MikaResponseConfig } from "./mika-response-config.interface";
+import { MikaHookRegistry } from "../hooks/mika-hook-registry.interface";
 
-export interface GlobalEntityConfig extends HookRegistry  {
+export interface MikaGlobalEntityConfig extends MikaHookRegistry  {
 	/**
 	* Configuration for filtering the entity list.  Each `FilterConfig`
 	* defines a filter field and its options.  These are global filters
 	*/
-   filters?: Array<FilterConfig>;
+   filters?: Array<MikaFilterConfig>;
 
    /**
 	* Determines when filters are applied.
@@ -21,7 +21,7 @@ export interface GlobalEntityConfig extends HookRegistry  {
    /**
 	 * Configuration for how properties are nested in the response
 	 */
-   responseProps?: ResponseProps;
+   responseConfig?: MikaResponseConfig;
 
    /**
 	* Enables caching of API requests for this entity.

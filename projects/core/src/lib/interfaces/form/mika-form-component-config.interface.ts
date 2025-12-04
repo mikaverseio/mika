@@ -1,7 +1,7 @@
 import { Type } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 
-export interface MikaFormComponentInterface {
+export interface MikaFormComponentConfig {
 	component: Type<any>;
 	label: string;
 	tab?: string;

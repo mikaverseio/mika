@@ -1,4 +1,4 @@
-export interface SidebarItem {
+export interface MikaSidebarItemConfig {
 	key?: string;
 	label: string;
 	route?: string;
@@ -6,5 +6,5 @@ export interface SidebarItem {
 	order?: number;
 	external?: boolean;
 	divider?: boolean;
-	children?: SidebarItem[];
+	children?: MikaSidebarItemConfig[];
 }

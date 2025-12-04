@@ -1,4 +1,4 @@
-export interface BaseFieldConfig {
+export interface MikaBaseFieldConfig {
     /**
      * The unique key for the form field.  This is used to identify the field
      * within the form group and to bind the field to a specific data property.

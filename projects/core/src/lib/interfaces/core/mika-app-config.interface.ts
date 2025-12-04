@@ -1,8 +1,8 @@
 import { Type } from "@angular/core";
-import { MikaGlobalSettings } from "./settings/mika-global-settings.interface";
-import { MikaEntityConfig } from "./entity/mika-entity-config.interface";
-import { MikaContentLocalizationSettings } from "./entity/mika-language.interface";
-import { MikaPreloadConfig } from "./entity/preload-config.interface";
+import { MikaGlobalConfig } from "../settings/mika-global-config.interface";
+import { MikaEntityConfig } from "../entity/mika-entity-config.interface";
+import { MikaLocalizationConfig } from "../entity/mika-localization-config.interface";
+import { MikaPreloadConfig } from "../entity/mika-preload-config.interface";
 import { Route, Routes } from "@angular/router";
 
 // mika-auth-settings.interface.ts
@@ -32,7 +32,7 @@ export interface MikaAuthConfig {
 }
 
 // mika-permissions-settings.interface.ts
-export interface MikaPermissionsSettings {
+export interface MikaPermissionsConfig {
 	permissionsSource?: 'manual' | 'definedEntity' | 'api';
 	rolesSource?: 'manual' | 'definedEntity' | 'api';
 	defaultAccessPolicy?: 'allow' | 'deny';
@@ -45,7 +45,7 @@ export interface MikaPermissionsSettings {
 }
 
 // mika-i18n-settings.interface.ts
-export interface MikaI18nSettings {
+export interface MikaI18nConfig {
 	defaultLang?: string;
 	fallbackLang?: string;
 	translationFiles?: Record<string, any>;
@@ -53,7 +53,7 @@ export interface MikaI18nSettings {
 }
 
 // mika-theming.interface.ts
-export interface MikaThemingSettings {
+export interface MikaThemingConfig {
 	layout?: 'default' | 'minimal';
 	brandColor?: string;
 	logoUrl?: string;
@@ -62,7 +62,7 @@ export interface MikaThemingSettings {
 
 // mika-features.interface.ts
 
-export interface MikaEnvironment {
+export interface MikaEnvironmentConfig {
 	id: string;
 	name: string;
 	production?: boolean;
@@ -87,15 +87,15 @@ export interface MikaAppConfig {
 
 	domain?: string;
 	baseUrls: MikaBaseUrlsConfig;
-	settings?: MikaGlobalSettings;
+	settings?: MikaGlobalConfig;
 	interceptors?: any[];
 	componentOverrides?: Record<string, Type<any>>;
 
-	permissions?: MikaPermissionsSettings;
-	i18n?: MikaI18nSettings;
-	contentLocalization?: MikaContentLocalizationSettings
-	theming?: MikaThemingSettings;
-	environments?: MikaEnvironment[];
+	permissions?: MikaPermissionsConfig;
+	i18n?: MikaI18nConfig;
+	contentLocalization?: MikaLocalizationConfig
+	theming?: MikaThemingConfig;
+	environments?: MikaEnvironmentConfig[];
 	preload?: MikaPreloadConfig[]
 	dashboards?: any[],
 

@@ -11,7 +11,7 @@ import { Observable, of, from } from 'rxjs';
 import { debounceTime, map, startWith, switchMap } from 'rxjs/operators';
 import {MatIconModule} from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormField } from '../interfaces/field/form-field.interface';
+import { MikaFieldConfig } from '../interfaces/field/mika-field-config.interface';
 
 @Component({
 	selector: 'app-autocomplete-field',
@@ -56,7 +56,7 @@ import { FormField } from '../interfaces/field/form-field.interface';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MikaAutocompleteFieldComponent implements OnInit, ControlValueAccessor, AfterViewInit {
-	@Input() field!: FormField;
+	@Input() field!: MikaFieldConfig;
 	selectedValue: any;
 	inputControl = new FormControl('');
 	filteredOptions$!: Observable<any[]>;

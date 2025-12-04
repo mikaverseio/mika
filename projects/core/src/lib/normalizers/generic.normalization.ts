@@ -1,5 +1,5 @@
 import { MikaUrlHelper } from "../helpers/mika-endpoint.helper";
-import { MikaBaseUrlsConfig } from "../interfaces/mika-app-config.interface";
+import { MikaBaseUrlsConfig } from "../interfaces/core/mika-app-config.interface";
 
 export const normalizeInterceptors = (raw: any): any[] => {
 	if (!raw) return [];

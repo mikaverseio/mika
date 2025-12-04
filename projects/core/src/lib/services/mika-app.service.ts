@@ -3,10 +3,10 @@ import { Mika } from '../helpers/mika-app.helper';
 import { MikaPreferencesService } from './mika-preferences.service';
 import { resolveMediaUrl, setTenantMode } from '../utils/mika-app.util';
 import { normalizeEntityConfig } from '../normalizers/entity.normalization';
-import { MikaAppConfig } from '../interfaces/mika-app-config.interface';
+import { MikaAppConfig } from '../interfaces/core/mika-app-config.interface';
 import { normalizeAppsConfig } from '../normalizers/app.normalization';
 import { MikaAppConfigOptions } from '../types/mika-app.type';
-import { SidebarGroup } from '../interfaces/sidebar/sidebar-group.interface';
+import { MikaSidebarGroupConfig } from '../interfaces/sidebar/mika-sidebar-group-config.interface';
 import { MikaEntityConfig } from '../interfaces/entity/mika-entity-config.interface';
 import { MikaKey } from '../enum/mika-key.enum';
 import { uuid } from '../utils/utils';
@@ -49,7 +49,7 @@ export class MikaAppService {
 	theming = computed(() => this.getActiveApp()?.theming);
 
 	private noMenuPages = ['/login', '/register', '/reset-password'];
-	menus = signal(new Array<SidebarGroup>);
+	menus = signal(new Array<MikaSidebarGroupConfig>);
 	showMenu = signal(true);
 
 	init(config: MikaAppConfigOptions) {
@@ -255,7 +255,7 @@ export class MikaAppService {
 		return resolveMediaUrl(path, this.settings()?.mediaBaseUrl || this.settings()?.publicSiteUrl!);
 	}
 
-	async renderSidebar(tenantSidebarGroups?: SidebarGroup[]): Promise<SidebarGroup[]> {
+	async renderSidebar(tenantSidebarGroups?: MikaSidebarGroupConfig[]): Promise<MikaSidebarGroupConfig[]> {
 		const settings = this.getActiveApp()?.settings;
 		if (!tenantSidebarGroups || tenantSidebarGroups!.length !== 0) {
 			tenantSidebarGroups = settings?.sidebarGroups ?? [];
@@ -269,7 +269,7 @@ export class MikaAppService {
 		}
 
 		// AUTO mode: build from registered configs
-		const groupsMap = new Map<string, SidebarGroup>();
+		const groupsMap = new Map<string, MikaSidebarGroupConfig>();
 
 		// for (const [key, config] of this.entityConfigs().entries()) {
 		// 	const resolved = await this.getConfig(key);

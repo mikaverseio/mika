@@ -1,6 +1,6 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { MikaTableColumn } from '../interfaces/table/mika-table-column.interface';
+import { MikaColumnConfig } from '../interfaces/table/mika-column-config.interface';
 import { localize } from '../utils/localization-utils';
 
 @Pipe({ name: 'getValue', pure: true })
@@ -8,7 +8,7 @@ export class GetValuePipe implements PipeTransform {
 
 	private translate = inject(TranslateService);
 
-	transform(item: any, column: MikaTableColumn, fallback: any = '', locale?: string): any {
+	transform(item: any, column: MikaColumnConfig, fallback: any = '', locale?: string): any {
 
 		if (!item || !column) return fallback;
 

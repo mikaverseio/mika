@@ -2,22 +2,22 @@
 
 import { Injector } from '@angular/core';
 import { MikaEntityConfig } from '../interfaces/entity/mika-entity-config.interface';
-import { MikaPreloadConfig } from '../interfaces/entity/preload-config.interface';
-import { FormField } from '../interfaces/field/form-field.interface';
-import { MikaGlobalSettings } from '../interfaces/settings/mika-global-settings.interface';
+import { MikaPreloadConfig } from '../interfaces/entity/mika-preload-config.interface';
+import { MikaFieldConfig } from '../interfaces/field/mika-field-config.interface';
+import { MikaGlobalConfig } from '../interfaces/settings/mika-global-config.interface';
 import { isUrl } from '../utils/utils';
 import { MikaAppService } from '../services/mika-app.service';
 import { MikaUrlHelper } from './mika-endpoint.helper';
 
 export class Mika {
 
-	public static settings: MikaGlobalSettings;
+	public static settings: MikaGlobalConfig;
 
-	static set(settings: MikaGlobalSettings) {
+	static set(settings: MikaGlobalConfig) {
 		this.settings = settings;
 	}
 
-	static get(): MikaGlobalSettings {
+	static get(): MikaGlobalConfig {
 		if (!this.settings) {
 			throw new Error('[MikaForm] Global settings have not been initialized.');
 		}
@@ -71,7 +71,7 @@ export class Mika {
 		return '';
 	}
 
-	static getEntityPreloadConfig(preloadConfig: MikaPreloadConfig, config?: MikaEntityConfig | null, fieldConfig?: FormField) {
+	static getEntityPreloadConfig(preloadConfig: MikaPreloadConfig, config?: MikaEntityConfig | null, fieldConfig?: MikaFieldConfig) {
 
 		if (preloadConfig && preloadConfig?.endpoint && isUrl(preloadConfig.endpoint)) {
 			return {

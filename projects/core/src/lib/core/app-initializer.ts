@@ -8,7 +8,7 @@ import { HttpClient } from "@angular/common/http";
 import { DynamicFieldComponentResolver } from "../resolvers/dynamic-field-component.resolver";
 import { LIB_I18N_PATH, MIKA_FIELD_COMPONENT_OVERRIDES } from "../tokens/mika.tokens";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { MikaAppConfig } from "../interfaces/mika-app-config.interface";
+import { MikaAppConfig } from "../interfaces/core/mika-app-config.interface";
 import { mikaAuthInterceptor } from "../interceptors/mika-auth.interceptor";
 import { MikaAppConfigAsyncOptions, MikaAppConfigOptions } from "../types/mika-app.type";
 import { normalizeInterceptors } from "../normalizers/generic.normalization";

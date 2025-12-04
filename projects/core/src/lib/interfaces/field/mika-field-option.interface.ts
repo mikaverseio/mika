@@ -1,4 +1,4 @@
-export interface FieldOption {
+export interface MikaFieldOption {
 	label: string;
 	value: any;
 	isTranslatable?: boolean;

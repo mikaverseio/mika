@@ -2,7 +2,7 @@ import { effect, inject, Injectable, Injector, runInInjectionContext, signal } f
 import { MikaDataService } from '../mika-data.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { FormField } from '../../interfaces/field/form-field.interface';
+import { MikaFieldConfig } from '../../interfaces/field/mika-field-config.interface';
 import { slugify } from '../../utils/utils';
 import { MikaPreloadService } from '../mika-preload.service';
 import { MikaLanguageService } from '../mika-language.service';
@@ -19,7 +19,7 @@ export class MikaFormBuilderService {
 
 	constructor() { }
 
-	initForm(fields: FormField[], mode: string, localizable: boolean = false): FormGroup {
+	initForm(fields: MikaFieldConfig[], mode: string, localizable: boolean = false): FormGroup {
 		const group: Record<string, FormControl> = {};
 		for (const field of fields) {
 			if (field.type == 'file' && mode == 'edit') {
@@ -42,7 +42,7 @@ export class MikaFormBuilderService {
 		this.filterChange$.next(form.getRawValue());
 	}
 
-	async enhanceFields(form: FormGroup, fields: FormField[], mode: string, subscribeToChanges: boolean = false) {
+	async enhanceFields(form: FormGroup, fields: MikaFieldConfig[], mode: string, subscribeToChanges: boolean = false) {
 		for (const field of fields) {
 			const control = form.get(field.key);
 			this.initValidators(form, field, control, mode);
@@ -59,7 +59,7 @@ export class MikaFormBuilderService {
 		}
 	}
 
-	handleSlugs(form: FormGroup, field: FormField, control: any) {
+	handleSlugs(form: FormGroup, field: MikaFieldConfig, control: any) {
 		if (field.type === 'slug' && field.slugSource) {
 			const source = form.get(field.slugSource);
 			const target = form.get(field.key);
@@ -81,7 +81,7 @@ export class MikaFormBuilderService {
 		}
 	}
 
-	initEvents(form: FormGroup, field: FormField, control: any, subscribeToChanges: boolean) {
+	initEvents(form: FormGroup, field: MikaFieldConfig, control: any, subscribeToChanges: boolean) {
 		if (subscribeToChanges && field.type !== 'autocomplete') {
 			control.valueChanges.subscribe(() => {
 				field.onChange?.(form);
@@ -105,13 +105,13 @@ export class MikaFormBuilderService {
 		}
 	}
 
-	initTranslations(form: FormGroup, fields: FormField[]) {
+	initTranslations(form: FormGroup, fields: MikaFieldConfig[]) {
 		for (const field of fields) {
 			this.setTranslations(form, field);
 		}
 	}
 
-	setLocalizedValue = (form: FormGroup, field: FormField) => {
+	setLocalizedValue = (form: FormGroup, field: MikaFieldConfig) => {
 		runInInjectionContext(this.injector, () => {
 			effect(() => {
 				const locale = this.selectedLocale();
@@ -125,7 +125,7 @@ export class MikaFormBuilderService {
 		});
 	};
 
-	setTranslations = (form: FormGroup, field: FormField) => {
+	setTranslations = (form: FormGroup, field: MikaFieldConfig) => {
 		const locale = this.selectedLocale();
 		const translations = form.get('formTranslations')?.value ?? [];
 		const translation = translations.find((item: any) => item.locale == locale && item.column_name == field.key);
@@ -142,7 +142,7 @@ export class MikaFormBuilderService {
 		}
 	}
 
-	initValidators(form: FormGroup, field: FormField, control: any, mode: string) {
+	initValidators(form: FormGroup, field: MikaFieldConfig, control: any, mode: string) {
 		const validators = field.type == 'file' && mode == 'edit' ? [] : (field.validators ?? []);
 
 		// Important: force rebind with the updated parent context
@@ -154,7 +154,7 @@ export class MikaFormBuilderService {
 		});
 	}
 
-	async initOptionsFromSource(field: FormField, control: any) {
+	async initOptionsFromSource(field: MikaFieldConfig, control: any) {
 		if (field.optionsSource) {
 			const signal = this.dataService.getSignal(field.optionsSource);
 			if (!signal || signal && signal().length === 0) {
@@ -169,7 +169,7 @@ export class MikaFormBuilderService {
 		}
 	}
 
-	async filterByParentField(form: FormGroup, field: FormField, control: any) {
+	async filterByParentField(form: FormGroup, field: MikaFieldConfig, control: any) {
 		const parentControl = form.get(field.dependsOn!);
 
 		const applyFilter = (parentValue: any) => {
@@ -193,7 +193,7 @@ export class MikaFormBuilderService {
 		}
 	}
 
-	async loadOptionsBasedOnParent(form: FormGroup, field: FormField, control: any) {
+	async loadOptionsBasedOnParent(form: FormGroup, field: MikaFieldConfig, control: any) {
 		const parentControl = form.get(field.dependsOn!);
 		parentControl?.valueChanges.subscribe(async (value) => {
 			field.options = await field.loadOptions?.(value);

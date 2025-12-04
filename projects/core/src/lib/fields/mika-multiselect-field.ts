@@ -5,7 +5,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { ControlContainer, FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormField } from '../interfaces/field/form-field.interface';
+import { MikaFieldConfig } from '../interfaces/field/mika-field-config.interface';
 
 @Component({
 	selector: 'mika-multiselect-field',
@@ -30,6 +30,6 @@ import { FormField } from '../interfaces/field/form-field.interface';
   `
 })
 export class MikaMultiSelectFieldComponent {
-	@Input() field!: FormField;
+	@Input() field!: MikaFieldConfig;
 	@Input() form!: FormGroup;
 }

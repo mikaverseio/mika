@@ -1,5 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { MikaContentLocalizationSettings, MikaLanguageOption } from '../interfaces/entity/mika-language.interface';
+import { MikaLocalizationConfig, MikaLanguageOption } from '../interfaces/entity/mika-localization-config.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { Preferences } from '@capacitor/preferences';
 import { isEmpty } from '../utils/utils';
@@ -29,7 +29,7 @@ export class MikaLanguageService {
 		private localAdapter: MikaLocalStorageAdapterService
 	) {}
 
-	async register(languageConfig: MikaContentLocalizationSettings) {
+	async register(languageConfig: MikaLocalizationConfig) {
 		console.log('Registering language config:', languageConfig);
 		if (!languageConfig || !languageConfig.options?.length) {
 			this.setInitialAppLanguage(this.currentLocaleSignal());

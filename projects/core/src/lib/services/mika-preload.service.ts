@@ -1,12 +1,12 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { MikaEntityConfig } from '../interfaces/entity/mika-entity-config.interface';
 import { MikaDataService } from './mika-data.service';
-import { MikaGlobalSettings } from '../interfaces/settings/mika-global-settings.interface';
-import { MikaPreloadConfig } from '../interfaces/entity/preload-config.interface';
+import { MikaGlobalConfig } from '../interfaces/settings/mika-global-config.interface';
+import { MikaPreloadConfig } from '../interfaces/entity/mika-preload-config.interface';
 import { MikaApiService } from './http/mika-api.service';
 import { Mika } from '../helpers/mika-app.helper';
 import { firstValueFrom } from 'rxjs';
-import { FormField } from '../interfaces/field/form-field.interface';
+import { MikaFieldConfig } from '../interfaces/field/mika-field-config.interface';
 import { MikaUrlHelper } from '../helpers/mika-endpoint.helper';
 import { MikaAppService } from './mika-app.service';
 
@@ -17,7 +17,7 @@ export class MikaPreloadService {
 	api = inject(MikaApiService);
 	app = inject(MikaAppService);
 
-	async handlePreload(settings: MikaGlobalSettings, entityConfigs: any) {
+	async handlePreload(settings: MikaGlobalConfig, entityConfigs: any) {
 		if (settings && settings.preload?.length) {
 			await this.preloadFromGlobal(settings.preload);
 		}
@@ -25,7 +25,7 @@ export class MikaPreloadService {
 		await this.preloadFromEntityConfigs(entityConfigs);
 	}
 
-	async load(key: string, options: MikaPreloadConfig | null, field?: FormField) {
+	async load(key: string, options: MikaPreloadConfig | null, field?: MikaFieldConfig) {
 		console.log('---------------------------');
 		console.log('Loading preload for:', key, options);
 		const config = await this.app.getConfig(key);

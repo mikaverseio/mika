@@ -13,7 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MikaLocalStorageAdapterService } from './mika-localstorage-adapter.service';
 import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular/standalone';
-import { MikaTableColumn } from '../interfaces/table/mika-table-column.interface';
+import { MikaColumnConfig } from '../interfaces/table/mika-column-config.interface';
 
 @Injectable({ providedIn: 'root' })
 export class MikaTableService {
@@ -39,7 +39,7 @@ export class MikaTableService {
 
 	config = signal<MikaEntityConfig | null>(null);
 	isMobile = computed(() => this.isMobileView());
-	visibleColumns = computed<MikaTableColumn[]>(() => this.setVisibleColumns());
+	visibleColumns = computed<MikaColumnConfig[]>(() => this.setVisibleColumns());
 	visibleColumnKeys = computed(() => this.visibleColumns().map(c => c.columnDef || c.key));
 	finalColumnKeys = computed(() => this.getFinalColumnKeys());
 	showActions = computed(() => this.config()?.actions?.show ?? true);

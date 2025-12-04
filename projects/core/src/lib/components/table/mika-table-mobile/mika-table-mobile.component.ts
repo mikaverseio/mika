@@ -6,7 +6,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Platform, IonButtons, IonButton, IonIcon, IonContent, IonFooter, IonToolbar, IonHeader, IonTitle, IonLoading, IonAlert, IonChip, IonImg, IonMenuButton, IonProgressBar, IonModal, IonNote, IonRefresher, IonRefresherContent, IonList, IonItem, IonLabel, IonInfiniteScroll, IonInfiniteScrollContent } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LocalizePipe } from '../../../pipes/localize';
-import { MikaTableColumn } from '../../../interfaces/table/mika-table-column.interface';
+import { MikaColumnConfig } from '../../../interfaces/table/mika-column-config.interface';
 import { MikaApiService } from '../../../services/http/mika-api.service';
 import { debounceTime, firstValueFrom, map } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -55,7 +55,7 @@ export class MikaTableMobileComponent implements OnInit {
 	@Input() items: any[] = [];
 	@Input() showActions: boolean = true;
 
-	@Input() displayedColumns: MikaTableColumn[] = [];
+	@Input() displayedColumns: MikaColumnConfig[] = [];
 	@Output() deleteClicked = new EventEmitter<any>();
 
 	@ViewChild('deleteAlert') deleteAlert!: IonAlert;

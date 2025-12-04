@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { MikaAppConfig } from '../../interfaces/mika-app-config.interface';
+import { MikaAppConfig } from '../../interfaces/core/mika-app-config.interface';
 
 @Injectable({ providedIn: 'root' })
 export class MikaAppContextService {

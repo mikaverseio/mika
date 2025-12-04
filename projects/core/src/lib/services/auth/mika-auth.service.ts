@@ -2,11 +2,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, Injectable, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { NavController } from '@ionic/angular';
-import { MikaAuthUser } from '../../interfaces/mika-auth-user.interface';
+import { MikaAuthUser } from '../../interfaces/user/mika-auth-user.interface';
 import { MikaAppService } from '../mika-app.service';
 import { Mika } from '../../helpers/mika-app.helper';
 import { MikaPreferencesService } from '../mika-preferences.service';
-import { MikaAppConfig, MikaAuthConfig } from '../../interfaces/mika-app-config.interface';
+import { MikaAppConfig, MikaAuthConfig } from '../../interfaces/core/mika-app-config.interface';
 import { MikaKey } from '../../enum/mika-key.enum';
 import { MikaUrlHelper } from '../../helpers/mika-endpoint.helper';
 

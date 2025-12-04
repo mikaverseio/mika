@@ -1,13 +1,13 @@
-import { MikaTableColumn } from "../table/mika-table-column.interface";
+import { MikaColumnConfig } from "../table/mika-column-config.interface";
 import { MikaEntityActionMap } from "../action/mika-entity-action.interface";
-import { SidebarEntityConfig } from "../sidebar/sidebar-entity-config.interface";
-import { SidebarToolbarConfig } from "../sidebar/sidebar-toolbar.interface";
-import { FormField } from "../field/form-field.interface";
-import { FilterConfig } from "../field/filter-config.interface";
-import { ResponseProps } from "./entity-table-response.interface";
-import { HookRegistry } from "../hooks/hook-registry.interface";
-import { MikaFormComponentInterface } from "../form/mika-form-component.interface";
-import { MikaPreloadConfig } from "./preload-config.interface";
+import { MikaSidebarEntityConfig } from "../sidebar/mika-sidebar-entity-config.interface";
+import { MikaToolbarConfig } from "../sidebar/mika-toolbar-config.interface";
+import { MikaFieldConfig } from "../field/mika-field-config.interface";
+import { MikaFilterConfig } from "../field/mika-filter-config.interface";
+import { MikaResponseConfig } from "./mika-response-config.interface";
+import { MikaHookRegistry } from "../hooks/mika-hook-registry.interface";
+import { MikaFormComponentConfig } from "../form/mika-form-component-config.interface";
+import { MikaPreloadConfig } from "./mika-preload-config.interface";
 import { MikaEntityPermissionsConfig } from "./mika-entity-permission-config.interface";
 import { MikaFormConfig } from "../form/mika-form-config.interface";
 
@@ -16,7 +16,7 @@ type CustomEndpoint = {
 	url: string;
 };
 
-export interface MikaEntityConfig extends HookRegistry {
+export interface MikaEntityConfig extends MikaHookRegistry {
 	apiBaseUrl?: string;
 
 	endpoints?: {
@@ -37,7 +37,7 @@ export interface MikaEntityConfig extends HookRegistry {
 	};
 
 	response?: {
-		props?: ResponseProps;
+		props?: MikaResponseConfig;
 	};
 
 	contentId?: string | number;
@@ -46,7 +46,7 @@ export interface MikaEntityConfig extends HookRegistry {
 	plural?: string;
 	title?: string;
 
-	sidebarConfig?: SidebarEntityConfig;
+	sidebarConfig?: MikaSidebarEntityConfig;
 
 	template?: 'tabular' | 'form-only' | 'view' | 'custom';
 
@@ -59,18 +59,18 @@ export interface MikaEntityConfig extends HookRegistry {
 	permissions?: MikaEntityPermissionsConfig;
 
 	table: {
-		columns: MikaTableColumn[];
+		columns: MikaColumnConfig[];
 		idColumn?: string | number;
 		defaultSort?: string;
 		sortable?: boolean;
-		filters?: Array<FilterConfig>;
+		filters?: Array<MikaFilterConfig>;
 		filterSubmitMode?: 'onChange' | 'onSubmit' | null;
-		mobileColumns?: Array<MikaTableColumn['key']>;
+		mobileColumns?: Array<MikaColumnConfig['key']>;
 	};
 
 	form: {
-		fields: FormField[];
-		components?: Array<MikaFormComponentInterface>;
+		fields: MikaFieldConfig[];
+		components?: Array<MikaFormComponentConfig>;
 		config?: MikaFormConfig;
 	};
 
@@ -82,7 +82,7 @@ export interface MikaEntityConfig extends HookRegistry {
 }
 
 
-export interface EntityConfigV0 extends HookRegistry {
+export interface EntityConfigV0 extends MikaHookRegistry {
     /**
      * Base URL for API requests related to this entity.  If provided,
      * it will be prepended to other endpoint properties (e.g., `endpoint`,
@@ -149,7 +149,7 @@ export interface EntityConfigV0 extends HookRegistry {
      * Each `TableColumn` defines how a specific data field should be rendered
      * in the table.
      */
-    tableColumns: MikaTableColumn[];
+    tableColumns: MikaColumnConfig[];
 
     /**
      * The column to use as the unique identifier for each row in the table.
@@ -162,7 +162,7 @@ export interface EntityConfigV0 extends HookRegistry {
      * editing this entity.  Each `FormField` defines the input type, validation
      * rules, and display properties for a form field.
      */
-    formFields: FormField[];
+    formFields: MikaFieldConfig[];
 
     /**
      * The default field to sort the table by.
@@ -195,7 +195,7 @@ export interface EntityConfigV0 extends HookRegistry {
      * Configuration for filtering the entity list.  Each `FilterConfig`
      * defines a filter field and its options.
      */
-    filters?: Array<FilterConfig>;
+    filters?: Array<MikaFilterConfig>;
 
      /**
      * Determines when filters are applied.
@@ -220,17 +220,17 @@ export interface EntityConfigV0 extends HookRegistry {
      * Configuration for the sidebar associated with this entity's views.
      * This allows you to customize the content and behavior of the sidebar.
      */
-    sidebarConfig?: SidebarEntityConfig;
+    sidebarConfig?: MikaSidebarEntityConfig;
 
     /**
      * Configuration for toolbar items in the sidebar.
      */
-    sidebarToolbarItems?: SidebarToolbarConfig[];
+    sidebarToolbarItems?: MikaToolbarConfig[];
 
     /**
      * Array of custom form components.
      */
-    formComponents?: Array<MikaFormComponentInterface>;
+    formComponents?: Array<MikaFormComponentConfig>;
 
     /**
      * Property in the API response that indicates success.
@@ -255,7 +255,7 @@ export interface EntityConfigV0 extends HookRegistry {
     /**
       * Configuration for how properties are nested in the response
       */
-    responseProps?: ResponseProps;
+    responseProps?: MikaResponseConfig;
 
     /**
      * Configuration for preloading data.

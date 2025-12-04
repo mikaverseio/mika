@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormGroup, ControlContainer, FormGroupDirective } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { FormField } from '../interfaces/field/form-field.interface';
+import { MikaFieldConfig } from '../interfaces/field/mika-field-config.interface';
 
 @Component({
 	selector: 'mika-text-field',
@@ -28,6 +28,6 @@ import { FormField } from '../interfaces/field/form-field.interface';
 	`
 })
 export class MikaTextFieldComponent {
-	@Input() field!: FormField;
+	@Input() field!: MikaFieldConfig;
 	@Input() form!: FormGroup;
 }
