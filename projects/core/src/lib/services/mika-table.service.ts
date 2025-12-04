@@ -8,7 +8,7 @@ import { MikaEntityConfig } from '../interfaces/entity/mika-entity-config.interf
 import { MikaApiService } from './http/mika-api.service';
 import { ToastService } from './general/app.service';
 import { firstValueFrom } from 'rxjs';
-import { MikaFormService } from './mika-form.service';
+import { MikaEngineService } from './mika-engine.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MikaLocalStorageAdapterService } from './mika-localstorage-adapter.service';
 import { Capacitor } from '@capacitor/core';
@@ -19,7 +19,7 @@ import { MikaColumnConfig } from '../interfaces/table/mika-column-config.interfa
 export class MikaTableService {
 	private api = inject(MikaApiService);
 	private toast = inject(ToastService);
-	private mika = inject(MikaFormService);
+	private mika = inject(MikaEngineService);
 	private router = inject(Router);
 	private route = inject(ActivatedRoute);
 	private localAdapter = inject(MikaLocalStorageAdapterService);

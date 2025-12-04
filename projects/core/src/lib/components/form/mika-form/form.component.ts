@@ -24,7 +24,7 @@ import { FormFieldsIonicComponent } from "../form-fields-ionic/form-fields-ionic
 import { FormFieldsMaterialComponent } from "../form-fields-material/form-fields-material.component";
 import { FormTabbedComponentsComponent } from "../form-tabbed-components/form-tabbed-components.component";
 import { MikaFormBuilderService } from '../../../services/form/mika-form-builder.service';
-import { MikaFormService } from '../../../services/mika-form.service';
+import { MikaEngineService } from '../../../services/mika-engine.service';
 import { catchError, debounceTime, filter, firstValueFrom, of, Subscription, switchMap, tap } from 'rxjs';
 import { Mika } from '../../../helpers/mika-app.helper';
 import { MikaContainerComponent } from "../../ui/mika-container/mika-container.component";
@@ -67,7 +67,7 @@ export class MikaFormComponent implements OnInit, OnDestroy {
 	api = inject(MikaApiService);
 	toast = inject(ToastService);
 	router = inject(Router);
-	mika = inject(MikaFormService);
+	mika = inject(MikaEngineService);
 	dataService = inject(MikaDataService);
 	context = inject(MikaFormContextService);
 	formBuilder = inject(MikaFormBuilderService);

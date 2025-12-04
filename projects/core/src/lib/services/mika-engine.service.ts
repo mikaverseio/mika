@@ -1,17 +1,16 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { MikaHookService } from './mika-hook.service';
 import { MikaCacheService } from './mika-cache.service';
-import { MIKA_APP_CONFIG } from '../core/mika-form.tokens';
 import { MikaPreferencesService } from './mika-preferences.service';
 import { MikaPreloadService } from './mika-preload.service';
 import { MikaLanguageService } from './mika-language.service';
 import { MikaAppService } from './mika-app.service';
 import { MikaAppConfig } from '../interfaces/core/mika-app-config.interface';
-import { MikaKey } from '../enum/mika-key.enum';
 import { MikaAppConfigOptions } from '../types/mika-app.type';
+import { MIKA_APP_CONFIG } from '../tokens';
 
 @Injectable({ providedIn: 'root' })
-export class MikaFormService {
+export class MikaEngineService {
 
 	contextedInitialize = false;
 

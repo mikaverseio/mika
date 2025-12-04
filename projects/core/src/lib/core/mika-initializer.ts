@@ -1,12 +1,11 @@
 import { inject, Injector, Optional, runInInjectionContext, Type } from "@angular/core";
 import { MikaAuthService } from "../services/auth/mika-auth.service";
-import { MikaFormService } from "../services/mika-form.service";
-import { MIKA_APP_CONFIG } from "./mika-form.tokens";
+import { MikaEngineService } from "../services/mika-engine.service";
 import { Mika } from "../helpers/mika-app.helper";
 import { TranslateLoader } from "@ngx-translate/core";
 import { HttpClient } from "@angular/common/http";
 import { DynamicFieldComponentResolver } from "../resolvers/dynamic-field-component.resolver";
-import { LIB_I18N_PATH, MIKA_FIELD_COMPONENT_OVERRIDES } from "../tokens/mika.tokens";
+import { LIB_I18N_PATH, MIKA_APP_CONFIG, MIKA_FIELD_COMPONENT_OVERRIDES } from "../tokens/mika.tokens";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { MikaAppConfig } from "../interfaces/core/mika-app-config.interface";
 import { mikaAuthInterceptor } from "../interceptors/mika-auth.interceptor";
@@ -25,7 +24,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 export const mikaAppInitializer = (parentInjector: Injector) => {
 	return runInInjectionContext(parentInjector, async () => {
 		const auth = inject(MikaAuthService);
-		const mikaFormService = inject(MikaFormService);
+		const mikaFormService = inject(MikaEngineService);
 		const mikaSettings = inject(MIKA_APP_CONFIG);
 		const ms: any = mikaSettings;
 		mikaFormService.register(ms);

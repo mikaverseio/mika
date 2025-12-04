@@ -1,4 +1,4 @@
-import { mikaDefaultAuthConfig, mikaDefaultSettings } from "../core/defatul.settings";
+import { mikaDefaultAuthConfig, mikaDefaultConfig } from "../core/mika-default-config";
 import { MikaAppConfig, MikaAuthConfig } from "../interfaces/core/mika-app-config.interface";
 import { normalizeEntityConfigMap } from "./entity.normalization";
 import { normalizeBaseUrls } from "./generic.normalization";
@@ -24,7 +24,7 @@ export function normalizeAppConfig(config: MikaAppConfig): MikaAppConfig {
 
 	config.baseUrls = normalizeBaseUrls(config.baseUrls);
 	config.entities = normalizeEntityConfigMap(config.entities, config.baseUrls);
-	config.settings = {...mikaDefaultSettings, ...config.settings };
+	config.settings = {...mikaDefaultConfig, ...config.settings };
 	config.auth = {...mikaDefaultAuthConfig, ...config.auth };
 
 

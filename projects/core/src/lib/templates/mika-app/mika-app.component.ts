@@ -13,7 +13,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MikaLanguageService } from '../../services/mika-language.service';
 import { MikaAuthService } from '../../services/auth/mika-auth.service';
 import { MikaLoading } from '../../services/mika-loading.service';
-import { MikaFormService } from '../../services/mika-form.service';
+import { MikaEngineService } from '../../services/mika-engine.service';
 import { Mika } from '../../helpers/mika-app.helper';
 import { MikaActionService } from '../../services/mika-action.service';
 import { MikaTenantSwitcherComponent } from '../../components/switchers/mika-tenant-switcher/mika-tenant-switcher.component';
@@ -49,7 +49,7 @@ export class MikaAppComponent implements OnInit, AfterViewInit {
 		public auth: MikaAuthService,
 		public mikaLoading: MikaLoading,
 		public translate: TranslateService,
-		public mika: MikaFormService,
+		public mika: MikaEngineService,
 		private modalController: ModalController,
 		private actions: MikaActionService
 	) {

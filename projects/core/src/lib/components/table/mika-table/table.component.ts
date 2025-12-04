@@ -23,7 +23,7 @@ import { printHtml } from '../../../utils/utils';
 import { GetValuePipe } from '../../../pipes/get-value.pipe';
 import { PrintComponent } from '../print/print.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MikaFormService } from '../../../services/mika-form.service';
+import { MikaEngineService } from '../../../services/mika-engine.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MikaPreferencesService } from '../../../services/mika-preferences.service';
@@ -83,7 +83,7 @@ export class MikaTableComponent implements OnInit, AfterViewInit {
 	route = inject(ActivatedRoute);
 	dataService = inject(MikaDataService);
 	formBuilder = inject(MikaFormBuilderService);
-	mika = inject(MikaFormService);
+	mika = inject(MikaEngineService);
 	cdr = inject(ChangeDetectorRef);
 	preferences = inject(MikaPreferencesService);
 	localAdapter = inject(MikaLocalStorageAdapterService);

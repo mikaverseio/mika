@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Mika } from '../../helpers/mika-app.helper';
-import { MikaFormService } from '../../services/mika-form.service';
+import { MikaEngineService } from '../../services/mika-engine.service';
 
 @Component({
 	selector: 'app-dashboard',
@@ -16,7 +16,7 @@ import { MikaFormService } from '../../services/mika-form.service';
 export class DashboardPage implements OnInit {
 
 	Mika = Mika;
-	mika = inject(MikaFormService);
+	mika = inject(MikaEngineService);
 	constructor() { }
 
 	ngOnInit() {
