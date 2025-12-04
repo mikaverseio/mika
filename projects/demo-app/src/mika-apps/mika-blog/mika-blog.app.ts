@@ -1,8 +1,6 @@
-
-import { MikaAppConfig } from "dist/core/lib/interfaces/mika-app-config.interface";
 import { postConfig } from "./post.config";
 import { categoryConfig } from "./category.config";
-import { MikaEntityConfig } from "@mikaverse/core";
+import { MikaAppConfig, MikaEntityConfig } from "@mikaverse/core";
 // import { qushqushRoutes } from "./qushqush.routes";
 
 export const entityConfig: Record<string, MikaEntityConfig | Function> = {

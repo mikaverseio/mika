@@ -3,9 +3,9 @@ import { computed, Injectable, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { MikaAuthUser } from '../../interfaces/user/mika-auth-user.interface';
-import { MikaAppService } from '../mika-app.service';
+import { MikaAppService } from '../engine/mika-app.service';
 import { Mika } from '../../helpers/mika-app.helper';
-import { MikaPreferencesService } from '../mika-preferences.service';
+import { MikaStorageService } from '../infra/mika-storage.service';
 import { MikaAppConfig, MikaAuthConfig } from '../../interfaces/core/mika-app-config.interface';
 import { MikaKey } from '../../enum/mika-key.enum';
 import { MikaUrlHelper } from '../../helpers/mika-endpoint.helper';
@@ -27,7 +27,7 @@ export class MikaAuthService {
 		private http: HttpClient,
 		private router: NavController,
 		private app: MikaAppService,
-		private preferences: MikaPreferencesService
+		private preferences: MikaStorageService
 	) {
 
 	}

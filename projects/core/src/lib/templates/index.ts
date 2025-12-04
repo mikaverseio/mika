@@ -1,1 +1,1 @@
-export * from './mika-app/mika-app.component';
+export * from './mika-root/mika-root.component';

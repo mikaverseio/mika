@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { MikaAppComponent } from '@mikaverse/core';
+import { MikaRootComponent } from '@mikaverse/core';
 
 @Component({
   selector: 'app-root',
-   imports: [MikaAppComponent],
-  template: `<mika-app></mika-app>`,
+   imports: [MikaRootComponent],
+  template: `<mika-root></mika-root>`,
   standalone: true,
 })
 export class AppComponent {

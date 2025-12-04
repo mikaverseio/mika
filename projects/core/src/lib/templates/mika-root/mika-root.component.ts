@@ -10,20 +10,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { MikaLanguageService } from '../../services/mika-language.service';
+import { MikaI18nService } from '../../services/infra/mika-i18n.service';
 import { MikaAuthService } from '../../services/auth/mika-auth.service';
-import { MikaLoading } from '../../services/mika-loading.service';
-import { MikaEngineService } from '../../services/mika-engine.service';
+import { MikaLoading } from '../../services/data/mika-loading.service';
+import { MikaEngineService } from '../../services/engine/mika-engine.service';
 import { Mika } from '../../helpers/mika-app.helper';
-import { MikaActionService } from '../../services/mika-action.service';
 import { MikaTenantSwitcherComponent } from '../../components/switchers/mika-tenant-switcher/mika-tenant-switcher.component';
+import { MikaActionService } from '../../services';
 
 
 @Component({
   standalone: true,
-	selector: 'mika-app',
-	templateUrl: './mika-app.component.html',
-	styleUrls: ['./mika-app.component.scss', '../../styles/styles.scss'],
+	selector: 'mika-root',
+	templateUrl: './mika-root.component.html',
+	styleUrls: ['./mika-root.component.scss', '../../styles/styles.scss'],
 	imports: [IonAlert,
 		IonLoading, IonToolbar, RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonMenuToggle,
 		IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet, IonButton, IonButtons, IonFooter, IonChip, IonHeader, TranslatePipe, IonAvatar, IonImg,
@@ -35,7 +35,7 @@ import { MikaTenantSwitcherComponent } from '../../components/switchers/mika-ten
 		TranslatePipe,
 	]
 })
-export class MikaAppComponent implements OnInit, AfterViewInit {
+export class MikaRootComponent implements OnInit, AfterViewInit {
 
 	@ViewChild('confirmActionAlert') confirmActionAlert!: IonAlert;
 	@ViewChild('globalLoader', { static: false }) globalLoader!: IonLoading;
@@ -45,7 +45,7 @@ export class MikaAppComponent implements OnInit, AfterViewInit {
 	private isLoading: any;
 
 	constructor(
-		public languageService: MikaLanguageService,
+		public languageService: MikaI18nService,
 		public auth: MikaAuthService,
 		public mikaLoading: MikaLoading,
 		public translate: TranslateService,

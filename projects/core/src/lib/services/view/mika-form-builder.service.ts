@@ -1,11 +1,11 @@
 import { effect, inject, Injectable, Injector, runInInjectionContext, signal } from '@angular/core';
-import { MikaDataService } from '../mika-data.service';
+import { MikaDataService } from '../data/mika-data.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { MikaFieldConfig } from '../../interfaces/field/mika-field-config.interface';
 import { slugify } from '../../utils/utils';
-import { MikaPreloadService } from '../mika-preload.service';
-import { MikaLanguageService } from '../mika-language.service';
+import { MikaPreloadService } from '../data/mika-preload.service';
+import { MikaI18nService } from '../infra/mika-i18n.service';
 
 @Injectable({ providedIn: 'root' })
 export class MikaFormBuilderService {
@@ -14,7 +14,7 @@ export class MikaFormBuilderService {
 	private preloadService = inject(MikaPreloadService);
 
 	private injector = inject(Injector);
-	languageService = inject(MikaLanguageService);
+	languageService = inject(MikaI18nService);
 	selectedLocale = this.languageService.formLocaleSignal;
 
 	constructor() { }

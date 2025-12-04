@@ -1,6 +1,6 @@
 import { inject, Injector, Optional, runInInjectionContext, Type } from "@angular/core";
 import { MikaAuthService } from "../services/auth/mika-auth.service";
-import { MikaEngineService } from "../services/mika-engine.service";
+import { MikaEngineService } from "../services/engine/mika-engine.service";
 import { Mika } from "../helpers/mika-app.helper";
 import { TranslateLoader } from "@ngx-translate/core";
 import { HttpClient } from "@angular/common/http";

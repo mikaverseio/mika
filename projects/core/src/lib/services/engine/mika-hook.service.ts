@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { MikaEntityConfig } from '../interfaces/entity/mika-entity-config.interface';
-import { MikaGlobalEntityConfig } from '../interfaces/entity/mika-global-entity-config.interface';
-import { MikaHookRegistry } from '../interfaces/hooks/mika-hook-registry.interface';
-import { MikaHookContext } from '../interfaces/hooks/mika-hook-context.interface';
-import { Mika } from '../helpers/mika-app.helper';
+import { MikaEntityConfig } from '../../interfaces/entity/mika-entity-config.interface';
+import { MikaGlobalEntityConfig } from '../../interfaces/entity/mika-global-entity-config.interface';
+import { MikaHookRegistry } from '../../interfaces/hooks/mika-hook-registry.interface';
+import { MikaHookContext } from '../../interfaces/hooks/mika-hook-context.interface';
+import { Mika } from '../../helpers/mika-app.helper';
 
 @Injectable({ providedIn: 'root' })
 export class MikaHookService {

@@ -13,7 +13,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
-import { MikaFormContextService } from '../../../services/form/mika-form-context.service';
+import { MikaFormContextService } from '../../../services/view/mika-form-context.service';
 import { FileUploadComponent } from '../../../fields/file-upload/file-upload.component';
 
 

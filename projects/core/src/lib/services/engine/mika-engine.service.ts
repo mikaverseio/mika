@@ -1,13 +1,13 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { MikaHookService } from './mika-hook.service';
-import { MikaCacheService } from './mika-cache.service';
-import { MikaPreferencesService } from './mika-preferences.service';
-import { MikaPreloadService } from './mika-preload.service';
-import { MikaLanguageService } from './mika-language.service';
+import { MikaCacheService } from '../data/mika-cache.service';
+import { MikaStorageService } from '../infra/mika-storage.service';
+import { MikaPreloadService } from '../data/mika-preload.service';
+import { MikaI18nService } from '../infra/mika-i18n.service';
 import { MikaAppService } from './mika-app.service';
-import { MikaAppConfig } from '../interfaces/core/mika-app-config.interface';
-import { MikaAppConfigOptions } from '../types/mika-app.type';
-import { MIKA_APP_CONFIG } from '../tokens';
+import { MikaAppConfig } from '../../interfaces/core/mika-app-config.interface';
+import { MikaAppConfigOptions } from '../../types/mika-app.type';
+import { MIKA_APP_CONFIG } from '../../tokens';
 
 @Injectable({ providedIn: 'root' })
 export class MikaEngineService {
@@ -17,9 +17,9 @@ export class MikaEngineService {
 	constructor(
 		public cache: MikaCacheService,
 		public hook: MikaHookService,
-		public preferences: MikaPreferencesService,
+		public preferences: MikaStorageService,
 		private preloadService: MikaPreloadService,
-		private languageService: MikaLanguageService,
+		private languageService: MikaI18nService,
 		public app: MikaAppService,
 		@Optional() @Inject(MIKA_APP_CONFIG) injected: MikaAppConfigOptions | null
 	) {

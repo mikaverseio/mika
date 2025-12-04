@@ -16,12 +16,12 @@ import { PrintComponent } from '../print/print.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { MikaPreferencesService } from '../../../services/mika-preferences.service';
+import { MikaStorageService } from '../../../services/infra/mika-storage.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MikaActionService } from '../../../services/mika-action-1.service';
 import { TableFiltersComponent } from '../table-filters/table-filters.component';
 import { MikaLangSwitcherComponent } from '../../switchers/mika-lang-switcher/mika-lang-switcher.component';
+import { MikaActionService } from '../../../services';
 
 @Component({
 	selector: 'app-mika-table-header',
@@ -41,7 +41,7 @@ export class MikaTableHeaderComponent implements OnInit {
 	showFilter = signal(true);
 
 	constructor(
-		private preferences: MikaPreferencesService,
+		private preferences: MikaStorageService,
 		private actions: MikaActionService
 	) { }
 

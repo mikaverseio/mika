@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Preferences } from '@capacitor/preferences';
 
 @Injectable({ providedIn: 'root' })
-export class MikaPreferencesService {
+export class MikaStorageService {
 
 	async set(key: string, value: any) {
 		await Preferences.set({

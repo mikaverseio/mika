@@ -107,18 +107,18 @@
 
 
 import { Injectable } from '@angular/core';
-import { MikaLoading } from './mika-loading.service';
-import { ToastService } from './general/app.service';
+import { MikaLoading } from '..//data/mika-loading.service';
+import { MikaUiService } from '../view/mika-ui.service';
 import { MikaActionBuilder } from './mika-action-builder';
-import { MikaActionRegistry } from '../config/mika-action.registry';
-import { MikaAuthService } from './auth/mika-auth.service';
-import { MikaActionKey, MikaExecutableAction } from '../types/mika-app.type';
+import { MikaActionRegistry } from '../../config/mika-action.registry';
+import { MikaAuthService } from '../auth/mika-auth.service';
+import { MikaActionKey, MikaExecutableAction } from '../../types/mika-app.type';
 
 @Injectable({ providedIn: 'root' })
 export class MikaActionService {
 	constructor(
 		private loaderService: MikaLoading,
-		private toastService: ToastService,
+		private toastService: MikaUiService,
 		private auth: MikaAuthService
 	) { }
 

@@ -1,10 +1,10 @@
 import { Validators } from "@angular/forms";
 import { MikaEntityConfig } from "../interfaces/entity/mika-entity-config.interface";
 import { inject } from "@angular/core";
-import { MikaLanguageService } from "../services/mika-language.service";
+import { MikaI18nService } from "../services/infra/mika-i18n.service";
 
 export const mikaLanguageEntity = () => {
-	const lang = inject(MikaLanguageService);
+	const lang = inject(MikaI18nService);
 	const config: MikaEntityConfig = {
 		contentType: 'languages',
 		// endpoint: 'localStorage',

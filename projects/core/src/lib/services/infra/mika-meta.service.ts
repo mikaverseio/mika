@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 
 @Injectable({ providedIn: 'root' })
-export class MikaSeoService {
+export class MikaMetaService {
 	constructor(private title: Title, private meta: Meta) { }
 
 	updateTitle(newTitle: string) {

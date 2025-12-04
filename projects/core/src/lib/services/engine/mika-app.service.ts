@@ -1,21 +1,21 @@
 import { Injectable, signal, computed, inject, runInInjectionContext, EnvironmentInjector } from '@angular/core';
-import { Mika } from '../helpers/mika-app.helper';
-import { MikaPreferencesService } from './mika-preferences.service';
-import { resolveMediaUrl, setTenantMode } from '../utils/mika-app.util';
-import { normalizeEntityConfig } from '../normalizers/entity.normalization';
-import { MikaAppConfig } from '../interfaces/core/mika-app-config.interface';
-import { normalizeAppsConfig } from '../normalizers/app.normalization';
-import { MikaAppConfigOptions } from '../types/mika-app.type';
-import { MikaSidebarGroupConfig } from '../interfaces/sidebar/mika-sidebar-group-config.interface';
-import { MikaEntityConfig } from '../interfaces/entity/mika-entity-config.interface';
-import { MikaKey } from '../enum/mika-key.enum';
-import { uuid } from '../utils/utils';
-import { MikaAppContextService } from './app/mika-app-context.service';
+import { Mika } from '../../helpers/mika-app.helper';
+import { MikaStorageService } from '../infra/mika-storage.service';
+import { resolveMediaUrl, setTenantMode } from '../../utils/mika-app.util';
+import { normalizeEntityConfig } from '../../normalizers/entity.normalization';
+import { MikaAppConfig } from '../../interfaces/core/mika-app-config.interface';
+import { normalizeAppsConfig } from '../../normalizers/app.normalization';
+import { MikaAppConfigOptions } from '../../types/mika-app.type';
+import { MikaSidebarGroupConfig } from '../../interfaces/sidebar/mika-sidebar-group-config.interface';
+import { MikaEntityConfig } from '../../interfaces/entity/mika-entity-config.interface';
+import { MikaKey } from '../../enum/mika-key.enum';
+import { uuid } from '../../utils/utils';
+import { MikaAppContextService } from './mika-app-context.service';
 
 @Injectable({ providedIn: 'root' })
 export class MikaAppService {
 
-	private preferences = inject(MikaPreferencesService);
+	private preferences = inject(MikaStorageService);
 	private injector = inject(EnvironmentInjector);
 	private appContext = inject(MikaAppContextService);
 

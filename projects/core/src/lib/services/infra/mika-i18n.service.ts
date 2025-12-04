@@ -1,14 +1,14 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { MikaLocalizationConfig, MikaLanguageOption } from '../interfaces/entity/mika-localization-config.interface';
+import { MikaLocalizationConfig, MikaLanguageOption } from '../../interfaces/entity/mika-localization-config.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { Preferences } from '@capacitor/preferences';
-import { isEmpty } from '../utils/utils';
-import { MikaApiService } from './http/mika-api.service';
-import { MikaLocalStorageAdapterService } from './mika-localstorage-adapter.service';
-import { MikaAppService } from './mika-app.service';
+import { isEmpty } from '../../utils/utils';
+import { MikaApiService } from '../http/mika-api.service';
+import { MikaLocalStorageAdapterService } from '../data/mika-localstorage-adapter.service';
+import { MikaAppService } from '../engine/mika-app.service';
 
 @Injectable({ providedIn: 'root' })
-export class MikaLanguageService {
+export class MikaI18nService {
   translate = inject(TranslateService);
 
 	private default: MikaLanguageOption[] = [

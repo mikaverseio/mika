@@ -1,13 +1,13 @@
 import { inject, Injectable } from '@angular/core';
-import { MikaPreferencesService } from './mika-preferences.service';
-import { ToastService } from './general/app.service';
-import { MikaEntityConfig } from '../interfaces/entity/mika-entity-config.interface';
+import { MikaStorageService } from '../infra/mika-storage.service';
+import { MikaUiService } from '../view/mika-ui.service';
+import { MikaEntityConfig } from '../../interfaces/entity/mika-entity-config.interface';
 
 @Injectable({ providedIn: 'root' })
 export class MikaLocalStorageAdapterService {
 
-	preferences = inject(MikaPreferencesService);
-	toast = inject(ToastService);
+	preferences = inject(MikaStorageService);
+	toast = inject(MikaUiService);
 
 	async list(contentType: string, filters: any, params: any) {
 		const raw = await this.preferences.get(contentType);

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonModal, IonButtons, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { MikaContainerComponent } from "../../../components/ui/mika-container/mika-container.component";
 import { RouterModule } from '@angular/router';
-import { MikaLanguageService } from '../../../services/mika-language.service';
+import { MikaI18nService } from '../../../services/infra/mika-i18n.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { closeCircle } from 'ionicons/icons';
@@ -19,7 +19,7 @@ import { closeCircle } from 'ionicons/icons';
 export class SettingsPage implements OnInit {
 
 	@ViewChild(IonModal) langMoal!: IonModal;
-	languageService = inject(MikaLanguageService);
+	languageService = inject(MikaI18nService);
 	constructor() {
 		addIcons({closeCircle});
 	}

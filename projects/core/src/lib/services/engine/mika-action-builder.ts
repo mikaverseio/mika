@@ -1,7 +1,7 @@
 // 🧱 MikaActionBuilderV2 — Fluent API for registering, customizing, and executing Mika actions
 
-import { normalizeAction } from '../normalizers/action.normalization';
-import { MikaActionKey, MikaExecutableAction } from '../types/mika-app.type';
+import { normalizeAction } from '../../normalizers';
+import { MikaActionKey, MikaExecutableAction } from '../../types';
 import { MikaActionService } from './mika-action-1.service';
 
 export class MikaActionBuilder {

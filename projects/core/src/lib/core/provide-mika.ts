@@ -1,6 +1,6 @@
 import { EnvironmentProviders, importProvidersFrom, inject, Injector, makeEnvironmentProviders, provideAppInitializer } from '@angular/core';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { MikaEngineService } from '../services/mika-engine.service';
+import { MikaEngineService } from '../services/engine/mika-engine.service';
 import { PreloadAllModules, provideRouter, RouteReuseStrategy, withPreloading } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 

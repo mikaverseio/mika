@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { IonButton, IonLoading, IonContent, IonHeader, IonToolbar, IonFooter } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MikaApiService } from '../../../services/http/mika-api.service';
-import { ToastService } from '../../../services/general/app.service';
+import { MikaUiService } from '../../../services/view/mika-ui.service';
 import { Router } from '@angular/router';
 import { MikaEntityConfig } from '../../../interfaces/entity/mika-entity-config.interface';
 import { addIcons } from 'ionicons';
@@ -16,23 +16,23 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MikaDataService } from '../../../services/mika-data.service';
+import { MikaDataService } from '../../../services/data/mika-data.service';
 import { MatButtonModule } from '@angular/material/button';
-import { MikaFormContextService } from '../../../services/form/mika-form-context.service';
+import { MikaFormContextService } from '../../../services/view/mika-form-context.service';
 import { FormHeaderComponent } from '../form-header/form-header.component';
 import { FormFieldsIonicComponent } from "../form-fields-ionic/form-fields-ionic.component";
 import { FormFieldsMaterialComponent } from "../form-fields-material/form-fields-material.component";
 import { FormTabbedComponentsComponent } from "../form-tabbed-components/form-tabbed-components.component";
-import { MikaFormBuilderService } from '../../../services/form/mika-form-builder.service';
-import { MikaEngineService } from '../../../services/mika-engine.service';
+import { MikaFormBuilderService } from '../../../services/view/mika-form-builder.service';
+import { MikaEngineService } from '../../../services/engine/mika-engine.service';
 import { catchError, debounceTime, filter, firstValueFrom, of, Subscription, switchMap, tap } from 'rxjs';
 import { Mika } from '../../../helpers/mika-app.helper';
 import { MikaContainerComponent } from "../../ui/mika-container/mika-container.component";
-import { MikaLocalStorageAdapterService } from '../../../services/mika-localstorage-adapter.service';
+import { MikaLocalStorageAdapterService } from '../../../services/data/mika-localstorage-adapter.service';
 import { convertToFormData } from '../../../utils/utils';
 import { MikaDesignSystem } from '../../../types/mika-app.type';
 import { NotFoundComponent } from '../../pages/not-found/not-found.component';
-import { MikaLanguageService } from '../../../services/mika-language.service';
+import { MikaI18nService } from '../../../services/infra/mika-i18n.service';
 
 @Component({
   standalone: true,
@@ -65,14 +65,14 @@ export class MikaFormComponent implements OnInit, OnDestroy {
 
 	// services
 	api = inject(MikaApiService);
-	toast = inject(ToastService);
+	toast = inject(MikaUiService);
 	router = inject(Router);
 	mika = inject(MikaEngineService);
 	dataService = inject(MikaDataService);
 	context = inject(MikaFormContextService);
 	formBuilder = inject(MikaFormBuilderService);
 	localAdapter = inject(MikaLocalStorageAdapterService);
-	languageService = inject(MikaLanguageService);
+	languageService = inject(MikaI18nService);
 
 	private autoSaveSub?: Subscription;
 	savingState: 'idle' | 'saving' | 'saved' | 'error' = 'idle';

@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { IonAlert } from '@ionic/angular/standalone';
 import { TranslateService } from '@ngx-translate/core';
-import { MikaLoading } from './mika-loading.service';
-import { ToastService } from './general/app.service';
-import { mikaActionConfig } from '../config/mika-action.config';
-import { EMikaAction } from '../enum/mika-action.enum';
-import { MikaActionRegistry } from '../config/mika-action.registry';
-import { MikaActionKey, MikaExecutableAction } from '../types/mika-app.type';
+import { MikaLoading } from '../data/mika-loading.service';
+import { MikaUiService } from '../view/mika-ui.service';
+import { EMikaAction } from '../../enum/mika-action.enum';
+import { MikaActionRegistry } from '../../config/mika-action.registry';
+import { MikaActionKey, MikaExecutableAction } from '../../types/mika-app.type';
 
 @Injectable({
 	providedIn: 'root'
@@ -21,7 +20,7 @@ export class MikaActionService {
 	private _overrides: any = null;
 
 	constructor(
-		private toast: ToastService,
+		private toast: MikaUiService,
 		private uiLoader: MikaLoading,
 		private translate: TranslateService,
 	) {

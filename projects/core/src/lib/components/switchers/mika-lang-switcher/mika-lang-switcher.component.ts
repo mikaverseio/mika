@@ -2,7 +2,7 @@ import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { Mika } from '../../../helpers/mika-app.helper';
 import { MikaEntityConfig } from '../../../interfaces/entity/mika-entity-config.interface';
-import { MikaLanguageService } from '../../../services/mika-language.service';
+import { MikaI18nService } from '../../../services/infra/mika-i18n.service';
 
 @Component({
 	selector: 'mika-lang-switcher',
@@ -26,7 +26,7 @@ export class MikaLangSwitcherComponent implements OnInit {
 	@Input() source: 'form' | 'table' = 'table';
 	@Output() langSwitched = new EventEmitter<any>();
 	Mika = Mika;
-	languageService = inject(MikaLanguageService);
+	languageService = inject(MikaI18nService);
 
 	ngOnInit() { }
 

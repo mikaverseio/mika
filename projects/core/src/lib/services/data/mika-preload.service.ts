@@ -1,14 +1,14 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { MikaEntityConfig } from '../interfaces/entity/mika-entity-config.interface';
+import { MikaEntityConfig } from '../../interfaces/entity/mika-entity-config.interface';
 import { MikaDataService } from './mika-data.service';
-import { MikaGlobalConfig } from '../interfaces/settings/mika-global-config.interface';
-import { MikaPreloadConfig } from '../interfaces/entity/mika-preload-config.interface';
-import { MikaApiService } from './http/mika-api.service';
-import { Mika } from '../helpers/mika-app.helper';
+import { MikaGlobalConfig } from '../../interfaces/settings/mika-global-config.interface';
+import { MikaPreloadConfig } from '../../interfaces/entity/mika-preload-config.interface';
+import { MikaApiService } from '../http/mika-api.service';
+import { Mika } from '../../helpers/mika-app.helper';
 import { firstValueFrom } from 'rxjs';
-import { MikaFieldConfig } from '../interfaces/field/mika-field-config.interface';
-import { MikaUrlHelper } from '../helpers/mika-endpoint.helper';
-import { MikaAppService } from './mika-app.service';
+import { MikaFieldConfig } from '../../interfaces/field/mika-field-config.interface';
+import { MikaUrlHelper } from '../../helpers/mika-endpoint.helper';
+import { MikaAppService } from '../engine/mika-app.service';
 
 @Injectable({ providedIn: 'root' })
 export class MikaPreloadService {

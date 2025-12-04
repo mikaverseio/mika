@@ -4,21 +4,21 @@ import { signal, Signal } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MikaEntityConfig } from '../interfaces/entity/mika-entity-config.interface';
-import { MikaApiService } from './http/mika-api.service';
-import { ToastService } from './general/app.service';
+import { MikaEntityConfig } from '../../interfaces/entity/mika-entity-config.interface';
+import { MikaApiService } from '../http/mika-api.service';
+import { MikaUiService } from './mika-ui.service';
 import { firstValueFrom } from 'rxjs';
-import { MikaEngineService } from './mika-engine.service';
+import { MikaEngineService } from '../engine/mika-engine.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MikaLocalStorageAdapterService } from './mika-localstorage-adapter.service';
+import { MikaLocalStorageAdapterService } from '../data/mika-localstorage-adapter.service';
 import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular/standalone';
-import { MikaColumnConfig } from '../interfaces/table/mika-column-config.interface';
+import { MikaColumnConfig } from '../../interfaces/table/mika-column-config.interface';
 
 @Injectable({ providedIn: 'root' })
-export class MikaTableService {
+export class MikaGridService {
 	private api = inject(MikaApiService);
-	private toast = inject(ToastService);
+	private toast = inject(MikaUiService);
 	private mika = inject(MikaEngineService);
 	private router = inject(Router);
 	private route = inject(ActivatedRoute);

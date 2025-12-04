@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { MikaAppComponent } from './mika-app.component';
+import { MikaRootComponent } from './mika-root.component';
 
-describe('MikaAppComponent', () => {
-  let component: MikaAppComponent;
-  let fixture: ComponentFixture<MikaAppComponent>;
+describe('MikaRootComponent', () => {
+  let component: MikaRootComponent;
+  let fixture: ComponentFixture<MikaRootComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MikaAppComponent ],
+      declarations: [ MikaRootComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MikaAppComponent);
+    fixture = TestBed.createComponent(MikaRootComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

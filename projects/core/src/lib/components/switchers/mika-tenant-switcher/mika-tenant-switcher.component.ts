@@ -7,9 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MikaAppService } from '../../../services/mika-app.service';
+import { MikaAppService } from '../../../services/engine/mika-app.service';
 import { MikaAuthService } from '../../../services/auth/mika-auth.service';
-import { MikaLoading } from '../../../services/mika-loading.service';
+import { MikaLoading } from '../../../services/data/mika-loading.service';
 import { MikaAppConfig } from '../../../interfaces/core/mika-app-config.interface';
 
 @Component({

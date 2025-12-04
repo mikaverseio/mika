@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastService } from '../../../services/general/app.service';
+import { MikaUiService } from '../../../services/view/mika-ui.service';
 import { IonHeader, IonToolbar, IonButtons, IonButton, IonMenuButton, IonTitle, IonContent, IonList, IonItem, IonInput, IonFooter, IonLoading } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -21,7 +21,7 @@ export class ChangePasswordPage implements OnInit {
 
 	constructor(
 		private auth: MikaAuthService,
-		private toast: ToastService,
+		private toast: MikaUiService,
 		private router: Router
 	) { }
 

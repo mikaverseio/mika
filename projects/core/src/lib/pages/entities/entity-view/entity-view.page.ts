@@ -3,7 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MikaEntityConfig } from '../../../interfaces/entity/mika-entity-config.interface';
 import { MikaFormComponent } from '../../../components/form/mika-form/form.component';
-import { MikaAppService } from '../../../services/mika-app.service';
+import { MikaAppService } from '../../../services/engine/mika-app.service';
 
 @Component({
 	selector: 'mika-entity-view',

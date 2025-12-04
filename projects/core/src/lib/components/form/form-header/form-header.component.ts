@@ -1,8 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { IonButton, IonToolbar, IonButtons, IonBackButton, IonTitle, IonIcon, IonSegment, IonSegmentButton } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
-import { ToastService } from '../../../services/general/app.service';
-import { MikaFormContextService } from '../../../services/form/mika-form-context.service';
+import { MikaUiService } from '../../../services/view/mika-ui.service';
+import { MikaFormContextService } from '../../../services/view/mika-form-context.service';
 
 @Component({
 	selector: 'app-form-header',
@@ -13,7 +13,7 @@ import { MikaFormContextService } from '../../../services/form/mika-form-context
 export class FormHeaderComponent implements OnInit {
 
 	public context = inject(MikaFormContextService);
-	public toast = inject(ToastService);
+	public toast = inject(MikaUiService);
 
 	constructor() { }
 

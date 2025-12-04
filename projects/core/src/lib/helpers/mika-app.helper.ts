@@ -6,7 +6,7 @@ import { MikaPreloadConfig } from '../interfaces/entity/mika-preload-config.inte
 import { MikaFieldConfig } from '../interfaces/field/mika-field-config.interface';
 import { MikaGlobalConfig } from '../interfaces/settings/mika-global-config.interface';
 import { isUrl } from '../utils/utils';
-import { MikaAppService } from '../services/mika-app.service';
+import { MikaAppService } from '../services/engine/mika-app.service';
 import { MikaUrlHelper } from './mika-endpoint.helper';
 
 export class Mika {

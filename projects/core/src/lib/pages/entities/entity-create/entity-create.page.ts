@@ -3,10 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { MikaEntityConfig } from '../../../interfaces/entity/mika-entity-config.interface';
 import { CommonModule } from '@angular/common';
 
-import { MikaSeoService } from '../../../services/mika-seo.service';
+import { MikaMetaService } from '../../../services/infra/mika-meta.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Mika } from '../../../helpers/mika-app.helper';
-import { MikaAppService } from '../../../services/mika-app.service';
+import { MikaAppService } from '../../../services/engine/mika-app.service';
 import { MikaFormComponent } from '../../../components';
 
 @Component({
@@ -20,7 +20,7 @@ export class EntityCreatePage implements OnInit {
 
 	private route = inject(ActivatedRoute);
 	private app = inject(MikaAppService);
-	private seo = inject(MikaSeoService);
+	private seo = inject(MikaMetaService);
 	private translate = inject(TranslateService);
 
 	async ngOnInit() {

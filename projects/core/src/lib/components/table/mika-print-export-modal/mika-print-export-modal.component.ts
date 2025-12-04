@@ -9,7 +9,7 @@ import { LocalizePipe } from '../../../pipes/localize';
 import { MikaApiService } from '../../../services/http/mika-api.service';
 import { CommonModule } from '@angular/common';
 import { MikaEntityConfig } from '../../../interfaces/entity/mika-entity-config.interface';
-import { MikaDataService } from '../../../services/mika-data.service';
+import { MikaDataService } from '../../../services/data/mika-data.service';
 import { FormsModule } from '@angular/forms';
 import { TableFiltersComponent } from "../table-filters/table-filters.component";
 import { MatMenuModule } from '@angular/material/menu';
@@ -21,7 +21,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MikaLoading } from '../../../services/mika-loading.service';
+import { MikaLoading } from '../../../services/data/mika-loading.service';
 import { firstValueFrom } from 'rxjs';
 import { MikaLangSwitcherComponent } from '../../switchers/mika-lang-switcher/mika-lang-switcher.component';
 @Component({

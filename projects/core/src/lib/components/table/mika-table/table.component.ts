@@ -10,32 +10,32 @@ import { MikaColumnConfig } from '../../../interfaces/table/mika-column-config.i
 import { MikaApiService } from '../../../services/http/mika-api.service';
 import { debounceTime, firstValueFrom, map } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { ToastService } from '../../../services/general/app.service';
+import { MikaUiService } from '../../../services/view/mika-ui.service';
 import { addIcons } from 'ionicons';
 import { create, trash, addCircle, reloadOutline, refreshCircle, swapVertical, download, print, listCircle, arrowDownCircle, reloadCircle, removeCircle, filterCircleOutline, filterCircle, eye, closeCircle, ellipsisVertical, ellipsisVerticalSharp, ellipsisHorizontalCircleSharp, ellipsisVerticalCircleSharp, link, createOutline, closeCircleOutline, cloudUpload, cloudDownload, trashOutline, cloudDownloadOutline } from 'ionicons/icons';
 import { MikaEntityConfig } from '../../../interfaces/entity/mika-entity-config.interface';
-import { MikaDataService } from '../../../services/mika-data.service';
+import { MikaDataService } from '../../../services/data/mika-data.service';
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { MikaFormBuilderService } from '../../../services/form/mika-form-builder.service';
+import { MikaFormBuilderService } from '../../../services/view/mika-form-builder.service';
 import { printHtml } from '../../../utils/utils';
 import { GetValuePipe } from '../../../pipes/get-value.pipe';
 import { PrintComponent } from '../print/print.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MikaEngineService } from '../../../services/mika-engine.service';
+import { MikaEngineService } from '../../../services/engine/mika-engine.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { MikaPreferencesService } from '../../../services/mika-preferences.service';
-import { MikaLocalStorageAdapterService } from '../../../services/mika-localstorage-adapter.service';
+import { MikaStorageService } from '../../../services/infra/mika-storage.service';
+import { MikaLocalStorageAdapterService } from '../../../services/data/mika-localstorage-adapter.service';
 import { Mika } from '../../../helpers/mika-app.helper';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MikaActionService } from '../../../services/mika-action-1.service';
+import { MikaActionService } from '../../../services';
 import { Capacitor } from '@capacitor/core';
 import { TableFiltersComponent } from '../table-filters/table-filters.component';
 import { MikaLangSwitcherComponent } from '../../switchers/mika-lang-switcher/mika-lang-switcher.component';
-import { MikaLanguageService } from '../../../services/mika-language.service';
+import { MikaI18nService } from '../../../services/infra/mika-i18n.service';
 
 @Component({
 	selector: 'mika-table',
@@ -78,14 +78,14 @@ export class MikaTableComponent implements OnInit, AfterViewInit {
 	fieldMode: string = 'all';
 	selectedPrintFields: string[] = [];
 	api = inject(MikaApiService);
-	app = inject(ToastService);
+	app = inject(MikaUiService);
 	router = inject(Router);
 	route = inject(ActivatedRoute);
 	dataService = inject(MikaDataService);
 	formBuilder = inject(MikaFormBuilderService);
 	mika = inject(MikaEngineService);
 	cdr = inject(ChangeDetectorRef);
-	preferences = inject(MikaPreferencesService);
+	preferences = inject(MikaStorageService);
 	localAdapter = inject(MikaLocalStorageAdapterService);
 	actions = inject(MikaActionService);
 	platform = inject(Platform);
@@ -98,7 +98,7 @@ export class MikaTableComponent implements OnInit, AfterViewInit {
 
 	isNative: boolean = false;
 
-	languageService = inject(MikaLanguageService);
+	languageService = inject(MikaI18nService);
 	selectedLocale = this.languageService.tableLocalSignal;
 
 	constructor() {

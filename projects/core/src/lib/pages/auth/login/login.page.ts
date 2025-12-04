@@ -5,11 +5,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MikaAuthService } from '../../../services/auth/mika-auth.service';
-import { ToastService } from '../../../services/general/app.service';
+import { MikaUiService } from '../../../services/view/mika-ui.service';
 import { ActivatedRoute } from '@angular/router';
-import { MikaAppService } from '../../../services/mika-app.service';
+import { MikaAppService } from '../../../services/engine/mika-app.service';
 import { Mika } from '../../../helpers/mika-app.helper';
-import { MikaPreferencesService } from '../../../services/mika-preferences.service';
+import { MikaStorageService } from '../../../services/infra/mika-storage.service';
 import { MikaAppConfig } from '../../../interfaces/core/mika-app-config.interface';
 @Component({
     selector: 'app-login',
@@ -34,11 +34,11 @@ export class LoginPage implements OnInit {
 
 	constructor(
 		private auth: MikaAuthService,
-		private toast: ToastService,
+		private toast: MikaUiService,
 		private nav: NavController,
 		private modalCtrl: ModalController,
 		private route: ActivatedRoute,
-		private preferences: MikaPreferencesService
+		private preferences: MikaStorageService
 	) { }
 
 	async ngOnInit() {

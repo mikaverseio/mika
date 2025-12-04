@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { MikaGlobalConfig } from '../interfaces/settings/mika-global-config.interface';
+import { MikaGlobalConfig } from '../../interfaces/settings/mika-global-config.interface';
 @Injectable({ providedIn: 'root' })
-export class MikaSettingsService {
+export class MikaConfigService {
 	private globalSettings: MikaGlobalConfig = {
 		siteName: 'MikaForm',
 		// apiBase: '',

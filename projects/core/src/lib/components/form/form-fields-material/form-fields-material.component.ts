@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe, TranslateDirective } from '@ngx-translate/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
-import { MikaFormContextService } from '../../../services/form/mika-form-context.service';
+import { MikaFormContextService } from '../../../services/view/mika-form-context.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MikaFieldsComponent } from '../../../fields/mika-fields';

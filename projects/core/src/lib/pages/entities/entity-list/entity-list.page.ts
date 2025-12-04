@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MikaEntityConfig } from '../../../interfaces/entity/mika-entity-config.interface';
 import { MikaTableComponent } from '../../../components/table/mika-table/table.component';
-import { MikaSeoService } from '../../../services/mika-seo.service';
+import { MikaMetaService } from '../../../services/infra/mika-meta.service';
 import { Mika } from '../../../helpers/mika-app.helper';
 import { TranslateService } from '@ngx-translate/core';
-import { MikaAppService } from '../../../services/mika-app.service';
+import { MikaAppService } from '../../../services/engine/mika-app.service';
 import { NotFoundComponent } from '../../../components/pages/not-found/not-found.component';
 import { Platform } from '@ionic/angular/standalone';
 import { MikaTableMobileComponent } from "../../../components/table/mika-table-mobile/mika-table-mobile.component";
@@ -33,7 +33,7 @@ export class EntityListPage implements OnInit {
 
 	private route = inject(ActivatedRoute);
 	private app = inject(MikaAppService);
-	private seo = inject(MikaSeoService);
+	private seo = inject(MikaMetaService);
 	private translate = inject(TranslateService);
 	public platform = inject(Platform)
 
