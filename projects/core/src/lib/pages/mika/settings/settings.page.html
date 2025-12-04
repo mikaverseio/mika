@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-title>{{ 'mf-settings' | translate }}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+	<mika-container>
+		<ion-list lines="full" [inset]="true" mode="ios">
+			<ion-item button routerLink="/mika/settings/global">
+				<ion-label>عام</ion-label>
+			</ion-item>
+			<ion-item button>
+				<ion-label>الكيانات</ion-label>
+			</ion-item>
+			<ion-item button routerLink="/languages">
+				<ion-label>اللغات</ion-label>
+			</ion-item>
+			<ion-item button id="open-modal">
+				<ion-label>لغة الداشبورد</ion-label>
+			</ion-item>
+			<ion-item button>
+				<ion-label>المستخدمين والأدوار</ion-label>
+			</ion-item>
+		</ion-list>
+	</mika-container>
+</ion-content>
+
+<ion-modal #modal trigger="open-modal">
+	<ng-template>
+		<ion-header>
+			<ion-toolbar>
+				<ion-buttons slot="start">
+					<ion-button (click)="modal.dismiss()">
+						<ion-icon slot="icon-only" name="close-circle"></ion-icon>
+					</ion-button>
+				</ion-buttons>
+				<ion-title>{{ 'mf-languages' | translate }}</ion-title>
+			</ion-toolbar>
+		</ion-header>
+		<ion-content class="ion-padding">
+			<ion-list mode="ios" lines="full" [inset]="true">
+				@for (lang of languageService.languages ; track lang.locale) {
+					<ion-item button (click)="updateDashboardLang(lang)">
+						{{ lang.title }}
+					</ion-item>
+				}
+			</ion-list>
+		</ion-content>
+	</ng-template>
+</ion-modal>

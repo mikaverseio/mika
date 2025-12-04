@@ -1,0 +1,110 @@
+<form id="ngForm" [formGroup]="filterForm" [ngClass]="{sticky: sticky}">
+
+	@if (expandable && entityConfig.table.filters && entityConfig.table.filters.length) {
+		<mat-accordion>
+			<mat-expansion-panel [expanded]="true">
+				<mat-expansion-panel-header>
+					<mat-panel-title>{{ 'mf-search' | translate }}</mat-panel-title>
+				</mat-expansion-panel-header>
+
+				<ng-container *ngTemplateOutlet="filters"></ng-container>
+
+			</mat-expansion-panel>
+		</mat-accordion>
+	}
+	@else if (entityConfig.table.filters && entityConfig.table.filters.length) {
+		<ng-container *ngTemplateOutlet="filters"></ng-container>
+	}
+
+	<ng-template #filters>
+		@for (group of groupedFilters; track group.key) {
+			<div class="filter-group">
+				<!-- <h5 class="filter-title">{{ group.key | translate }}</h5> -->
+				<div #gridRef class="rep-grid">
+					<!-- @if (entityConfig.actions?.search) {
+						<div class="form-group">
+							<mat-form-field class="example-full-width" style="width: 100%;">
+								<mat-label>{{ 'mf-search' | translate }}</mat-label>
+								<input matInput [placeholder]="'mf-search' | translate" (change)="search($event)" (input)="search($event)" (clear)="search($event)">
+							</mat-form-field>
+						</div>
+					} -->
+
+					@for (filter of group.filters; track filter.key) {
+						@if (!filter.renderIf || filter.renderIf(filterForm)) {
+							<div class="form-group">
+								@switch (filter.type) {
+									@case ('text') {
+										<mat-form-field class="example-full-width" style="width: 100%;">
+											<mat-label>{{ filter.label| translate }}</mat-label>
+											<input matInput [placeholder]="'mf-search' | translate" [formControlName]="filter.key">
+										</mat-form-field>
+
+									}
+									@case ('select') {
+										<mat-form-field appearance="fill" style="width: 100%; margin-bottom: 16px;">
+											<mat-label>{{ filter.label | translate }}</mat-label>
+											<mat-select [formControlName]="filter.key">
+												@for (opt of filter.options; track opt.value) {
+												<mat-option [value]="opt.value">
+													@if (opt.isTranslatable) {
+													{{ opt.label | translate }}
+													} @else {
+													{{ opt.label }}
+													}
+												</mat-option>
+												}
+											</mat-select>
+										</mat-form-field>
+									}
+
+									@case ('multiselect') {
+										<mat-form-field appearance="fill" style="width: 100%; margin-bottom: 16px;">
+											<mat-label>{{ filter.label | translate }}</mat-label>
+											<mat-select [formControlName]="filter.key" multiple>
+												@for (opt of filter.options; track opt.value) {
+													<mat-option [value]="opt.value">{{ opt.label }}</mat-option>
+												}
+											</mat-select>
+										</mat-form-field>
+									}
+
+									@case ('autocomplete') {
+										<app-autocomplete-field [field]="filter" [formControlName]="filter.key"></app-autocomplete-field>
+									}
+
+									@case ('checkbox') {
+										<div class="form-group flex flex-col">
+											<mat-checkbox [formControlName]="filter.key">
+												{{ filter.label| translate }}
+											</mat-checkbox>
+										</div>
+									}
+
+									@case ('date') {
+										<mat-form-field appearance="fill" style="width: 100%;">
+											<mat-label>{{ filter.label | translate }}</mat-label>
+											<input matInput [matDatepicker]="fromPicker" [formControlName]="filter.key" [min]="filter.min">
+											<mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+											<mat-datepicker #fromPicker></mat-datepicker>
+										</mat-form-field>
+									}
+								}
+							</div>
+						}
+					}
+				</div>
+			</div>
+		}
+
+
+
+
+
+		@if (entityConfig.table.filterSubmitMode === 'onSubmit') {
+			<div class="form-group flex jce">
+				<ion-button (click)="submit()" shape="round" type="submit">{{ 'mf-search' | translate }}</ion-button>
+			</div>
+		}
+	</ng-template>
+</form>

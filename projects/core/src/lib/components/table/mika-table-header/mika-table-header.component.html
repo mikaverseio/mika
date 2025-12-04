@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+		<ion-title slot="start">
+			<div class="flex aic">
+				<ion-icon *ngIf="entityConfig.sidebarConfig?.icon" [name]="entityConfig.sidebarConfig?.icon" style="margin-inline-end: 5px;"></ion-icon>
+				{{ entityConfig.contentType | translate }}
+			</div>
+		</ion-title>
+		<ion-buttons slot="start">
+			<mika-lang-switcher [config]="entityConfig"/>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-button (click)="toggleBulkMode()" [color]="bulkMode ? 'warning' : 'primary'">
+				<ion-icon slot="icon-only" [name]="bulkMode ? 'create' : 'create-outline'"></ion-icon>
+			</ion-button>
+
+			@if (entityConfig.table.filters && entityConfig.table.filters.length || entityConfig.actions.items?.search) {
+				<ion-button (click)="toggleFilter()" [color]="!showFilter() ? 'secondar' : 'secondary'">
+					@if (showFilter()) {
+					<ion-icon slot="icon-only" name="filter-circle"></ion-icon>
+					} @else {
+					<ion-icon slot="icon-only" name="filter-circle-outline"></ion-icon>
+					}
+				</ion-button>
+			}
+
+			<ion-button (click)="refresh()">
+				<ion-icon slot="icon-only" name="reload-circle"></ion-icon>
+			</ion-button>
+
+			@if (entityConfig.table.sortable) {
+				<ion-button [routerLink]="`/sortable/${entityConfig.contentType}/title`">
+					<ion-icon slot="icon-only" name="list-circle"></ion-icon>
+				</ion-button>
+			}
+
+			@if (entityConfig.actions.items?.create) {
+				<ion-button [routerLink]="`/${entityConfig.contentType}/create`">
+					<ion-icon slot="icon-only" name="add-circle"></ion-icon>
+				</ion-button>
+			}
+		</ion-buttons>
+
+		@if (entityConfig.actions.items?.print || entityConfig.actions.items?.export && (entityConfig.actions.items?.exportPdf || entityConfig.actions.items?.exportExcel))
+		{
+			<ion-buttons slot="end">
+				<ion-button (click)="presentPrintModal()">
+					<ion-icon slot="icon-only" name="cloud-download"></ion-icon>
+				</ion-button>
+				<ion-button (click)="presentPrintModal()">
+					<ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		}
+	</ion-toolbar>
+
+
+	@if (showFilter()) {
+		<ion-toolbar>
+			<app-table-filters [entityConfig]="entityConfig" (onSubmit)="onFilterSubmit($event)"></app-table-filters>
+		</ion-toolbar>
+	}
+</ion-header>

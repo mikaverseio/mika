@@ -1,0 +1,48 @@
+<div class="file-upload-wrapper">
+	<ion-label class="field-label">{{ label | translate }}</ion-label>
+	@if (!file && !previewUrl) {
+		<input
+				hidden
+				#fileInput
+				type="file"
+				class="custom-file-input"
+				[accept]="accept"
+				(change)="handleFileSelect($event); fileInput.value = ''"
+				/>
+			<button (click)="fileInput.click()" class="upload-file drop-zone" type="button" (dragover)="onDragOver($event)"
+				(dragleave)="onDragLeave($event)" (drop)="onDrop($event)" [class.dragover]="isDragging">
+				<ion-icon name="cloud-upload" color="primary"></ion-icon>
+				<ion-text color="primary">{{ 'mf-choose-file' | translate }}</ion-text>
+			</button>
+	}
+
+	@if (file || previewUrl) {
+		<div class="preview">
+			<div class="flex aic jcb">
+				<div class="flex aic">
+					@if (file?.type?.startsWith('image/') && previewUrl) {
+						<ion-img [src]="previewUrl"></ion-img>
+					  }
+					  @else if (!file && previewUrl?.startsWith('http')) {
+						<ion-img [src]="previewUrl"></ion-img>
+
+					} @else if (fileIcon) {
+						<ion-icon [name]="fileIcon"></ion-icon>
+					}
+
+					@if (isRemoteFile) {
+						<ion-button fill="clear" (click)="openInNewTab()">
+							<ion-icon name="open-outline" slot="start"></ion-icon>
+							<ion-label>{{ 'mf-view-file' | translate }}</ion-label>
+						</ion-button>
+					}
+
+				</div>
+
+				<ion-button fill="clear" shape="round" (click)="removeFile()" color="danger">
+					<ion-icon slot="icon-only" name="close-circle"></ion-icon>
+				</ion-button>
+			</div>
+		</div>
+	}
+</div>

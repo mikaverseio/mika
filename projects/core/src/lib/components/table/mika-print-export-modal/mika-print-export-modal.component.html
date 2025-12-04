@@ -1,0 +1,75 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-button (click)="closePrintModal()">
+				<ion-icon slot="icon-only" name="close-circle"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+		<ion-title slot="start">{{ 'mf-print-dialog' | translate }}</ion-title>
+		<ion-buttons slot="start">
+
+			<mat-button-toggle-group
+				name="printMode"
+				[(ngModel)]="printMode"
+				aria-label="Print Mode"
+				(change)="togglePrintMode($event)"
+				style="margin-inline-end: 10px;">
+				<mat-button-toggle value="page">الصفحة الحالية</mat-button-toggle>
+				<mat-button-toggle value="all">كل النتائج</mat-button-toggle>
+			</mat-button-toggle-group>
+			  <mat-button-toggle-group
+				name="fieldMode"
+				[(ngModel)]="fieldMode"
+				aria-label="Field Mode"
+				(change)="toggleFieldMode($event)">
+				<mat-button-toggle value="all">كل الحقول</mat-button-toggle>
+				<mat-button-toggle value="custom">حقول مخصصة</mat-button-toggle>
+			</mat-button-toggle-group>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			@if (entityConfig.actions.items?.export! && (entityConfig.actions.items?.exportPdf || entityConfig.actions.items?.exportExcel))
+			{
+				<ion-button button mat-button [matMenuTriggerFor]="exportMenu">
+					<ion-icon slot="icon-only" name="arrow-down-circle"></ion-icon>
+				</ion-button>
+				<mat-menu #exportMenu="matMenu">
+					@if (entityConfig.actions.items?.exportPdf) {
+						<button mat-menu-item (click)="export()">PDF</button>
+					}
+
+					@if (entityConfig.actions.items?.exportPdf) {
+						<button mat-menu-item (click)="export('xlsx')">Excel</button>
+					}
+				</mat-menu>
+			}
+
+			@if (entityConfig.actions.items?.print) {
+				<ion-button (click)="print()">
+					<ion-icon slot="icon-only" name="print"></ion-icon>
+				</ion-button>
+			}
+		</ion-buttons>
+	</ion-toolbar>
+	@if (fieldMode === 'custom') {
+		<ion-toolbar>
+			<div class="ion-padding field-selector">
+				<mat-form-field appearance="outline" style="width: 40%">
+					<mat-label>{{ 'mf-select-fields' | translate }}</mat-label>
+					<mat-select [(value)]="selectedPrintFields" multiple>
+					<mat-option *ngFor="let col of entityConfig.table.columns" [value]="col.key">
+						{{ col.label | translate }}
+					</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</ion-toolbar>
+	}
+</ion-header>
+<ion-content class="ion-padding print-content">
+	<div #printSection id="print-section" class="print-area">
+		@if (isPrinting) {
+			<app-print [items]="printData" [entityConfig]="entityConfig" [columns]="printableColumns" />
+			<!-- <ng-container *ngTemplateOutlet="table; context: { $implicit: printData, print: true }"></ng-container> -->
+		}
+	</div>
+</ion-content>

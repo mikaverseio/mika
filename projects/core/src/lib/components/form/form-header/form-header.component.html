@@ -1,0 +1,38 @@
+<ion-toolbar>
+	<ion-buttons slot="start">
+		<ion-back-button></ion-back-button>
+	</ion-buttons>
+	{{ context.id() === null ? context.config()?.singular : '' | translate }}
+	<ion-title>
+		@if (!context.id()) {
+			{{ 'mf-form-create' | translate: {slug: context.config()?.singular ?? 'mf-item' | translate} }}
+		} @else {
+			{{ 'mf-form-edit' | translate: {slug: context.config()?.singular ?? 'mf-item' | translate} }}
+		}
+	</ion-title>
+	<ion-buttons slot="end">
+		<ion-button (click)="toast.back()">
+			<ion-icon slot="icon-only" name="close"></ion-icon>
+		</ion-button>
+		@if (context.form) {
+			<ion-button [form]="context.formId" type="submit" [disabled]="context.form.invalid">
+				<ion-icon slot="icon-only" name="save"></ion-icon>
+			</ion-button>
+		}
+	</ion-buttons>
+</ion-toolbar>
+
+@if (context.tabbedComponents.length) {
+	<ion-toolbar>
+		<ion-segment [value]="context.selectedTab()" (ionChange)="context.onTabChange($event)">
+			<ion-segment-button value="main">
+				{{ 'mf-main-tab' | translate }}
+			</ion-segment-button>
+			@for (tab of context.tabbedComponents; track tab.tab) {
+				<ion-segment-button [value]="tab.tab">
+					{{ tab.label | translate }}
+				</ion-segment-button>
+			}
+		</ion-segment>
+	</ion-toolbar>
+}

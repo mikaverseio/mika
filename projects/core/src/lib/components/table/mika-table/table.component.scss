@@ -1,0 +1,100 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+
+	left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    justify-content: space-between;
+    contain: layout size style;
+}
+
+ion-img {
+	width: 100px;
+    padding: 5px;
+    border-radius: 7px;
+    overflow: hidden !important;
+    object-fit: cover;
+    height: 69px;
+
+	img {
+		border-radius: 7px !important;
+	}
+}
+
+.mat-mdc-header-row {
+	background: #fff;
+}
+
+.mat-column-id {
+	width: 80px;
+}
+
+.mat-mdc-header-cell {
+	font-weight: 700;
+}
+
+.actions-col, .chip-col {
+	width: 10%;
+    min-width: 160px;
+
+	ion-chip {
+		margin: 0;
+	}
+}
+
+.mat-column-select {
+	width: 5%;
+	min-width: 50px;
+}
+
+.grid {
+	display: grid;
+    grid-template-columns: repeat(5, 1fr);
+	column-gap: 5px;
+}
+
+.mat-wrapper {
+	// border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    // box-shadow: 0 0 19px 0px #0000000a;
+	box-shadow: rgba(175, 182, 201, 0.2) 0px 2px 4px -1px;
+	padding: 15px;
+    background: #fff;
+}
+
+ion-toolbar {
+	app-table-filters {
+		display: block;
+		padding: 0 15px;
+	}
+}
+
+ion-modal {
+	ion-content {
+		--backgorund: #fff !important;
+	}
+}
+
+.field-selector {
+	background: #fff;
+
+}
+
+
+.bulk-actions-toolbar {
+	position: sticky;
+	top: 0;
+	background: #f4f7fb;
+	z-index: 9999;
+	padding: 15px 15px 0;
+	ion-toolbar {
+		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	}
+}

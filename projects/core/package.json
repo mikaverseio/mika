@@ -1,0 +1,46 @@
+{
+	"name": "@mikaverse/core",
+	"version": "0.0.1-alpha.1",
+	"description": "One Config To Rule Them All. The open-source engine that turns TypeScript configs into native mobile apps and admin panels.",
+	"keywords": [
+		"angular",
+		"capacitor",
+		"low-code",
+		"admin-panel",
+		"json-schema",
+		"config-driven-ui",
+		"headless",
+		"mobile",
+		"ionic"
+	],
+	"homepage": "https://mikaverse.io",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mikaverse/mika.git"
+	},
+	"bugs": {
+		"url": "https://github.com/mikaverse/mika/issues"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "MikaVerse Team",
+		"email": "faditamimi@gmail.com"
+	},
+	"sideEffects": false,
+	"peerDependencies": {
+		"@angular/common": "^19.2.0",
+		"@angular/core": "^19.2.0",
+		"@angular/forms": "^19.2.0",
+		"@angular/router": "^19.2.0",
+		"@angular/platform-browser": "^19.2.0",
+		"@ionic/angular": "^8.0.0",
+		"@capacitor/core": "^7.0.0",
+		"@capacitor/preferences": "^7.0.0",
+		"@ngx-translate/core": "^16.0.0",
+		"rxjs": "^7.8.0",
+		"zone.js": "~0.15.0"
+	},
+	"dependencies": {
+		"tslib": "^2.3.0"
+	}
+}

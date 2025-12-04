@@ -1,0 +1,39 @@
+@if (form && ready) {
+	@if (this.id && notFound()) {
+		<mika-cannot-find-it></mika-cannot-find-it>
+	}
+	@else {
+		<ion-header [translucent]="true">
+			<app-form-header/>
+		</ion-header>
+		<ion-content class="form-content">
+			<ng-template #aboveFormContainer></ng-template>
+			<form [id]="context.formId" [formGroup]="form" (ngSubmit)="onSubmit()">
+				<mika-container>
+					<div class="main-form" *ngIf="context.selectedTab() === 'main'">
+						@switch (designSystem) {
+							@case ('ionic') {
+								<app-form-fields-ionic/>
+							}
+							@case ('material') {
+								<app-form-fields-material/>
+							}
+						}
+					</div>
+					<app-form-tabbed-components/>
+
+				</mika-container>
+			</form>
+			<ng-template #belowFormContainer></ng-template>
+		</ion-content>
+
+		<ion-footer>
+			<ion-toolbar>
+				<ion-button slot="start" shape="round" fill="clear" (click)="toast.back()">{{ 'mf-cancel' | translate }}</ion-button>
+				<ion-button [form]="context.formId" type="submit" slot="end" shape="round" color="success" [disabled]="form.invalid">{{
+					'mf-save' | translate }}</ion-button>
+			</ion-toolbar>
+		</ion-footer>
+		<ion-loading></ion-loading>
+	}
+}

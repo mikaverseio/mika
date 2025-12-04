@@ -1,0 +1,16 @@
+<ion-header>
+	<ion-toolbar>
+	<ion-buttons slot="start">
+		<ion-back-button></ion-back-button>
+	</ion-buttons>
+	  <ion-title>{{ 'mf-sortable' | translate }}</ion-title>
+	</ion-toolbar>
+  </ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+	<!-- <app-spinner *ngIf="!loaded"></app-spinner>	 -->
+	<!-- <app-list-empty *ngIf="loaded && items.length == 0"></app-list-empty> -->
+	<div *ngIf="loaded && items.length" cdkDropList class="sortable-list" (cdkDropListDropped)="drop($event)">
+		<div class="sortable-box" *ngFor="let item of items" cdkDrag>{{ item | localize: field }}</div>
+	</div>
+</ion-content>

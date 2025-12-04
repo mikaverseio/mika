@@ -1,0 +1,104 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-title>{{ 'mika' | translate }}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+	<mika-container style="direction: ltr;">
+		<h1>📘 MikaForm: A Configuration-Driven, API-First Dashboard Framework for Angular</h1>
+
+		<p>
+			<strong>MikaForm</strong> is a powerful, flexible, API-first admin dashboard system built with Angular.
+			It allows you to create admin panels for any backend API without writing custom forms or tables.
+			Instead, MikaForm relies on <code>EntityConfig</code> and global settings to dynamically generate
+			everything.
+		</p>
+
+		<h2>🚀 Getting Started</h2>
+
+		<p>To begin using MikaForm:</p>
+		<ul>
+			<li>Register your global configuration via <code>provideMikaForm()</code>.</li>
+			<li>Define your entities using <code>EntityConfig[]</code>.</li>
+			<li>Each entity generates its own table, forms (create/edit), and optionally dashboard widgets and filters.
+			</li>
+		</ul>
+
+		<h2>🧠 EntityConfig Overview</h2>
+
+		<p>The core of MikaForm is the <code>EntityConfig</code> object. Here’s a full breakdown of its structure:</p>
+
+		<h3>🔍 Key Properties</h3>
+		<ul>
+			<li><strong>key</strong>: Unique identifier for the entity (e.g., 'products', 'orders').</li>
+			<li><strong>endpoint</strong>: Backend API endpoint used for CRUD operations.</li>
+			<li><strong>fields</strong>: Form field definitions (text, select, date, image, etc.).</li>
+			<li><strong>filters</strong>: Optional filters shown in the table view.</li>
+			<li><strong>tabs</strong>: Optional tab grouping for fields in the form.</li>
+			<li><strong>cacheFirstPage</strong>: Caches first table page for performance.</li>
+			<li><strong>preload</strong>: Can preload entity data (for dropdowns or filters).</li>
+			<li><strong>permissions</strong>: Optional RBAC configuration for actions.</li>
+		</ul>
+
+		<h2>⚙️ Global Settings</h2>
+
+		<p>Global settings are passed via <code>provideMikaForm(settings, entityConfigs)</code>.</p>
+
+		<ul>
+			<li><strong>apiBaseUrl</strong>: Prepends to all API requests.</li>
+			<li><strong>logoUrl</strong>: Shown in header or sidebar.</li>
+			<li><strong>supportedLocales</strong>: Used for dynamic i18n.</li>
+			<li><strong>preload</strong>: Allows preloading non-entity data (like countries, tags, etc.).</li>
+		</ul>
+
+		<h2>🔐 RBAC & Permissions</h2>
+
+		<p>MikaForm supports field-, action-, and route-level access control:</p>
+		<ul>
+			<li>Use <code>permissions</code> inside <code>EntityConfig</code> for each action.</li>
+			<li>Inject user role/permissions using <code>MikaPreferencesService</code>.</li>
+			<li>Route access is protected using <code>MikaPermissionGuard</code>.</li>
+		</ul>
+
+		<h2>🌐 Localization & i18n</h2>
+
+		<p>MikaForm supports multiple localization strategies:</p>
+		<ul>
+			<li><code>title_en</code>, <code>title_ar</code>: Flat fields per locale.</li>
+			<li><code>title[locale]</code>: Attribute-style per locale.</li>
+			<li><code>translations.title</code>: Nested object access.</li>
+			<li>You can also provide a custom localization function.</li>
+		</ul>
+
+		<h2>🧩 Overriding Components</h2>
+
+		<p>All core field types are overridable via DI token:</p>
+
+
+
+		<h2>📦 Export & Print</h2>
+
+		<ul>
+			<li>Tables support Excel and PDF export out-of-the-box.</li>
+			<li>Print dialogs let users select visible fields before printing.</li>
+		</ul>
+
+		<h2>🧪 Advanced Usage</h2>
+
+		<ul>
+			<li>Use <code>submitHandler</code> to override default form submission.</li>
+			<li>Use <code>onChange</code> per field for dynamic form logic.</li>
+			<li>Dynamic options are supported via <code>loadOptions</code> or parent-based filters.</li>
+		</ul>
+
+		<h2>❓ Need More Help?</h2>
+
+		<p>If you’re stuck or want to contribute, feel free to:</p>
+		<ul>
+			<li>Join our support channel (Discord or Slack)</li>
+			<li>Open an issue on GitHub</li>
+			<li>Email the core team</li>
+		</ul>
+	</mika-container>
+</ion-content>

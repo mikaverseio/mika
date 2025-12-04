@@ -1,0 +1,5 @@
+@for (tab of context.tabbedComponents; track tab.tab) {
+	<ng-container *ngIf="context.selectedTab() === tab.tab">
+		<ng-container *ngComponentOutlet="tab.component; inputs: tab.inputs"></ng-container>
+	</ng-container>
+}

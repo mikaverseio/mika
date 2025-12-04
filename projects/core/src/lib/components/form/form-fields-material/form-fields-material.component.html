@@ -1,0 +1,47 @@
+<div *ngIf="context.form">
+	<div class="form-header flex aic jcb">
+		@if (context.config()?.form?.config?.steppedForm) {
+			<mat-slide-toggle (change)="handleExpand($event)">{{ 'expand-all' | translate }}</mat-slide-toggle>
+		}
+		<mika-lang-switcher [config]="context.config()" source="form"/>
+	</div>
+
+	<mat-accordion multi>
+		@for (group of context.groupedFields; track group.key; let i = $index; let isLast = $last; let isFirst = $first) {
+			<mat-expansion-panel [expanded]="expandAll() ? true : context.config()?.form?.config?.steppedForm ? step() === i + 1 : true" (opened)="setStep(i + 1)">
+				<mat-expansion-panel-header>
+					<mat-panel-title>{{ group.key | translate }}</mat-panel-title>
+				</mat-expansion-panel-header>
+
+				<div style="padding: 0 12px;">
+					<mika-fields [fields]="group.fields" [form]="context.form"/>
+				</div>
+
+				@if (context.config()?.form?.config?.steppedForm && !expandAll()) {
+					<mat-action-row>
+						@switch (true) {
+							@case (isFirst && !isLast) {
+								<button type="button" mat-button (click)="nextStep()">{{ 'mf-next' | translate }}</button>
+							}
+							@case (!isFirst && !isLast) {
+								<button type="button" mat-button (click)="prevStep()">{{ 'mf-prev' | translate }}</button>
+								<button type="button" mat-button (click)="nextStep()">{{ 'mf-next' | translate }}</button>
+							}
+							@case (isLast) {
+								<button type="button" mat-button (click)="prevStep()">{{ 'mf-prev' | translate }}</button>
+								<button type="submit" mat-button mat-flat-button color="primary">{{ 'mf-save' | translate }}</button>
+							}
+						}
+					</mat-action-row>
+				}
+
+			</mat-expansion-panel>
+
+			<!-- <ng-container *ngIf="componentsAfterGroup[group.key] as comps">
+				@for (comp of comps; track comp.groupKey) {
+				  <ng-container *ngComponentOutlet="comp.component; injector: createInjector(comp.inputs)"></ng-container>
+				}
+			</ng-container> -->
+		}
+	</mat-accordion>
+</div>

@@ -1,0 +1,37 @@
+<ion-content [fullscreen]="true" [scrollY]="false" class="auth-page">
+	<div class="auth-content w-100 h-100 flex aic jcs full-bg">
+		<div class="form-wrapper h-100 flex flex-col aic jcs">
+			<ion-img [src]="activeApp.settings?.logo"></ion-img>
+			<form #form="ngForm" (ngSubmit)="submit(form)">
+				<ion-list lines="none">
+					@if (app.appMode() === 'multiple') {
+						<ion-item>
+							<ion-select [(ngModel)]="item.tenant" name="appId" required id="app-id" [label]="'mf-select-tenant' | translate" color="light" (ionChange)="onTenantChange($event)">
+								@for (_app of app.getAllApps(); track _app.appId) {
+									<ion-select-option [value]="_app.appId">{{ _app.settings?.siteName ?? 'mika-app' | translate }}</ion-select-option>
+								}
+							  </ion-select>
+						</ion-item>
+					}
+					<ion-item>
+						<ion-input id="input-email" placeholder="{{ 'mf-enter-email' | translate }}" type="text" name="email"
+						[(ngModel)]="item.email" required
+						labelPlacement="stacked" label="أدخل بريدك الالكتروني"></ion-input>
+					</ion-item>
+					<ion-item>
+						<ion-input id="input-password" class="form-control"
+						placeholder="{{ 'mf-enter-password' | translate }}" type="password" name="password"
+						[(ngModel)]="item.password" required
+						labelPlacement="stacked" label="أدخل كلمة المرور"></ion-input>
+					</ion-item>
+				</ion-list>
+
+				<div class="flex flex-col">
+					<ion-button type="submit" color="secondary" class="main-action">{{ 'mf-login' | translate }}</ion-button>
+					<ion-button type="button" fill="clear" color="light" routerLink="/forget-password" (click)="close()">{{ 'mf-forgot-password' | translate }}</ion-button>
+				</div>
+			</form>
+			<ion-loading></ion-loading>
+		</div>
+	</div>
+</ion-content>

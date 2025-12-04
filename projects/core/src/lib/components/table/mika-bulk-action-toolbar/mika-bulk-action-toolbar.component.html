@@ -1,0 +1,25 @@
+<div class="bulk-actions-toolbar">
+	<ion-note>{{ 'mf-bulk-actions' | translate }}</ion-note>
+	<ion-toolbar color="warning">
+		<ion-buttons slot="start">
+			<ion-button (click)="bulkDelete()" [disabled]="!hasSelection">
+				<ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+			</ion-button>
+			<ion-button (click)="bulkDelete()" [disabled]="!hasSelection">
+				<ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+			</ion-button>
+			@if (entityConfig.actions.bulk?.custom; as customBuldActions) {
+				@for (cbAction of customBuldActions; track cbAction.title) {
+					<ion-button (click)="cbAction?.handler(selection.selected)" [disabled]="!hasSelection">
+						<ion-icon slot="icon-only" [name]="cbAction?.icon || 'chevron-back-circle'"></ion-icon>
+					</ion-button>
+				}
+			}
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-button (click)="selection.clear()" [disabled]="!hasSelection">
+				<ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</div>

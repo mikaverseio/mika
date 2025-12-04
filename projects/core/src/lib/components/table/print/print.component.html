@@ -1,0 +1,58 @@
+<table style="margin-bottom: 20px; direction: rtl;  border-collapse: collapse; width: 100%;">
+	<tr>
+		<td style="text-align: start;">
+			<h1 style="margin: 0; text-align: start;">{{ entityConfig.contentType | translate }}</h1>
+		</td>
+	</tr>
+</table>
+<table style="width: 100%; direction: rtl; border: 1px solid #eee; border-collapse: collapse; page-break-inside: auto;">
+	<thead style="display: table-header-group !important;">
+		@for (col of columns; track col.key) {
+			<th style="border-bottom: 1px solid #eee; text-align: start; background: #eee; color: #000; font-weight: bold; font-size: 15px; padding: 10px 2px;">
+				{{ col.label | translate }}
+			</th>
+		}
+	</thead>
+
+
+	<tbody>
+		@for (item of items; track item[entityConfig?.table?.idColumn ? entityConfig?.table?.idColumn! : 'id']; let i = $index) {
+			<tr>
+				@for (column of columns; track column.key) {
+					<td
+
+						style="text-align: start; padding: 15px; border-bottom: 1px solid #eee;">
+						@switch (column.renderType) {
+							@case ('chip') {
+								<ion-chip [color]="item[column.key] ? 'success' : 'danger'">
+									{{ item[column.key] ? (column.trueValue || '' | translate) : (column.falseValue || '' |
+									translate) }}
+								</ion-chip>
+							}
+
+							@case ('image') {
+								<ion-img [src]="item[column.key]"></ion-img>
+							}
+
+							@case ('date') {
+								{{ item | getValue: column | date: column.format || 'yyyy-MM-dd' }}
+							}
+
+							@case ('time') {
+								{{ item | getValue: column | date: column.format || 'hh:mm' }}
+							}
+
+							@case ('object') {
+								{{ column.localizable ? (item[column.key] | localize: column.localizeField) : column.localizeField }}
+							}
+
+							@default {
+								{{ item | getValue: column }}
+							}
+						}
+					</td>
+				}
+			</tr>
+		}
+	</tbody>
+</table>

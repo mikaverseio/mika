@@ -1,59 +1,111 @@
-# Mikaform
+# Mika
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
+**One Config To Rule Them All.**
+The open-source engine that turns TypeScript configs into native mobile apps and admin panels.
 
-## Development server
+[Website](https://mikaverse.io) · [Issues](https://github.com/mikaverseio/mika/issues) · [Contributing](#contributing)
 
-To start a local development server, run:
+![npm version](https://img.shields.io/npm/v/@mikaverse/core.svg?style=flat-square)
+![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
+![status](https://img.shields.io/badge/status-alpha-orange.svg?style=flat-square)
+![Angular](https://img.shields.io/badge/Angular-Standalone-red?style=flat-square&logo=angular)
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+> [!WARNING]
+> **Status: Pre-Alpha / Active Development**
+> Mika is currently in heavy development. APIs are subject to breaking changes. Do not use in production yet.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## What is Mika?
 
-```bash
-ng generate component component-name
-```
+Mika is not just a UI library. It is a **headless app engine** built on **Angular Standalone** and **Capacitor**.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Instead of writing repetitive component code (HTML templates, CSS, API services), you define your application logic in strict **TypeScript configurations**. The engine handles the rendering, state management, validation, and platform compilation (Mobile/Web) automatically.
 
-```bash
-ng generate --help
-```
+**Why use Mika?**
+* **📱 Native First:** Compiles to real iOS/Android binaries with offline sync support.
+* **🧠 AI Ready:** The schema-driven architecture is optimized for AI generation.
+* **⚡ Zero Boilerplate:** Stop building "Edit" modals and Data Grids by hand.
+* **🏢 Enterprise Grade:** Native support for Multi-tenancy, RBAC, and i18n.
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Installation
 
 ```bash
-ng test
+npm install @mikaverse/core
 ```
 
-## Running end-to-end tests
+## Quick Start
 
-For end-to-end (e2e) testing, run:
+Mika abstracts the UI layer. You simply define a MikaEntityConfig object, and the engine generates the List View, Form View, and Navigation.
 
+```ts
+import { MikaEntityConfig } from '@mikaverse/core';
+import { Validators } from '@angular/forms';
+
+export const SlideConfig: MikaEntityConfig = {
+  contentType: 'sliders',
+  endpoints: { base: 'sliders' },
+  
+  // 1. Define the Data Grid
+  table: {
+    sortable: true,
+    columns: [
+      { key: 'title', label: 'Title', sortable: true },
+      { key: 'active', label: 'Status', renderType: 'chip' },
+      { key: 'image', label: 'Preview', renderType: 'image' }
+    ]
+  },
+
+  // 2. Define the Form
+  form: {
+    groups: ['General', 'Media'],
+    fields: [
+      {
+        key: 'title',
+        label: 'Slide Title',
+        group: 'General',
+        type: 'text',
+        validators: [Validators.required]
+      },
+      {
+        key: 'image',
+        label: 'Slide Image',
+        group: 'Media',
+        type: 'file', // Handles upload logic automatically
+        validators: [Validators.required]
+      }
+    ]
+  }
+};
+```
+## Local Development
+To run the repository locally with the demo app:
+
+1. Clone the repo:
 ```bash
-ng e2e
+git clone https://github.com/mikaverse/mika.git
+cd mika
 ```
+2. Install dependencies:
+```bash 
+npm install
+```
+3. Run the Mock API (JSON Server):
+```bash
+npm run api
+```
+4. Run the Demo App:
+```bash
+ng serve demo-app
+```
+Navigate to `http://localhost:4200`.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Contributing
+We welcome contributions! Please see our CONTRIBUTING.md for details on how to submit pull requests, report issues, and request features.
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## License
+Mika is open-source software licensed under the MIT license.
+---
+Built with ❤️ by the MikaVerse Team.

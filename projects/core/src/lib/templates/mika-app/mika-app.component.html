@@ -1,0 +1,121 @@
+<ion-app>
+	<ion-split-pane contentId="main-content">
+
+		@if (auth.isLoggedIn() && mika.app.showMenu()) {
+			<ion-menu id="mainMenu" #mainMenu contentId="main-content" type="overlay">
+				<ion-header class="ion-no-border">
+					@if (mika.app.appsCount() > 1) {
+						<ion-toolbar color="primary">
+							<ion-buttons slot="start">
+								<ion-button (click)="showTenantSwitcher()" color="secondary">
+									<ion-icon slot="icon-only" name="swap-horizontal-outline"></ion-icon>
+								</ion-button>
+								<ion-chip color="danger" style="direction: ltr;">
+									<ion-icon name="rocket"></ion-icon>
+									<ion-label>
+										<strong>Prod</strong>
+									</ion-label>
+								</ion-chip>
+							</ion-buttons>
+							<ion-buttons slot="end">
+								<ion-menu-toggle auto-hide="false">
+									<ion-button [routerLink]="Mika.mikaSettingsPage">
+										<ion-icon name="settings-outline" slot="icon-only"></ion-icon>
+									</ion-button>
+									<ion-button color="light" (click)="auth.logout()">
+										<ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+									</ion-button>
+								</ion-menu-toggle>
+							</ion-buttons>
+						</ion-toolbar>
+					}
+
+					<ion-toolbar color="primary">
+						<a class="logo" slot="start" href="/">
+							<ion-img class="logoimg" [src]="Mika.logo"></ion-img>
+						</a>
+						<ion-label>{{ Mika.siteName | translate }}</ion-label>
+					</ion-toolbar>
+
+					<ion-toolbar class="actions-toolbar">
+						<ion-buttons class="flex jcs aic" slot="start">
+							<ion-menu-toggle auto-hide="false">
+								<ion-button color="light" routerLink="/dashboard" routerDirection="root">
+									<ion-icon slot="icon-only" name="home"></ion-icon>
+								</ion-button>
+							</ion-menu-toggle>
+							<ion-menu-toggle auto-hide="false">
+								<ion-button color="light" [href]="Mika.publicSite" target="_blank">
+									<ion-icon slot="icon-only" name="open"></ion-icon>
+								</ion-button>
+							</ion-menu-toggle>
+						</ion-buttons>
+						<ion-buttons class="flex jcs aic" slot="end">
+							<ion-menu-toggle auto-hide="false">
+								<ion-button color="secondary" routerLink="/notifications">
+									<ion-icon slot="icon-only" name="notifications"></ion-icon>
+								</ion-button>
+							</ion-menu-toggle>
+							<ion-menu-toggle auto-hide="false">
+								<ion-button color="secondary" routerLink="/contacts">
+									<ion-icon slot="icon-only" name="mail"></ion-icon>
+								</ion-button>
+							</ion-menu-toggle>
+						</ion-buttons>
+						<!-- <ion-searchbar></ion-searchbar> -->
+					</ion-toolbar>
+				</ion-header>
+				<ion-content>
+					@for (group of mika.app.menus(); track group.label) {
+						<ion-list>
+							<ion-list-header>{{ group.label | translate }}</ion-list-header>
+							@for (p of group.items; track p.label; let i = $index) {
+								<ion-menu-toggle auto-hide="false">
+									<ion-item routerDirection="root" [routerLink]="[p.route]" lines="none" detail="false"
+										routerLinkActive="selected">
+										<ion-icon aria-hidden="true" slot="start" [md]="p.icon + '-outline'"></ion-icon>
+										<ion-label>{{ p.label | translate }}</ion-label>
+									</ion-item>
+								</ion-menu-toggle>
+							}
+
+						</ion-list>
+					}
+				</ion-content>
+				<ion-footer>
+					<ion-toolbar color="primary">
+						<ion-chip color="light" slot="start">
+							<ion-avatar>
+								<img alt="Silhouette of a person's head"
+									src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+							</ion-avatar>
+							<ion-label>{{ auth.user?.name }}</ion-label>
+						</ion-chip>
+						@if (mika.app.appsCount() === 1) {
+							<ion-buttons slot="end">
+								<ion-menu-toggle auto-hide="false">
+									<ion-button color="light" (click)="auth.logout()">
+										<ion-icon slot="icon-only" name="log-out"></ion-icon>
+									</ion-button>
+								</ion-menu-toggle>
+							</ion-buttons>
+						}
+					</ion-toolbar>
+				</ion-footer>
+			</ion-menu>
+		}
+
+		<ion-router-outlet id="main-content"></ion-router-outlet>
+	</ion-split-pane>
+	<ion-loading #globalLoader
+		[message]="mikaLoading.message() ? (mikaLoading.message() | translate): null">
+	</ion-loading>
+
+	<ion-alert #confirmActionAlert
+		aria-hidden="false"
+		[header]="'mf-delete-wraning' | translate"
+		[message]="'mf-delete-desc' | translate"
+		[buttons]="[{text: 'mf-cancel' | translate, role: 'cancel'}, {text: 'mf-delete' | translate, role: 'confirm'}]">
+	</ion-alert>
+
+</ion-app>

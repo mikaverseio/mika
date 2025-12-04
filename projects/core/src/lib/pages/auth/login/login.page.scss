@@ -1,0 +1,32 @@
+ion-content {
+	--background: var(--ion-color-primary);
+}
+
+ion-img {
+	width: 100px;
+}
+
+form {
+	margin: 20px 0;
+}
+
+ion-list {
+	width: 320px;
+	// direction: ltr;
+	background: none;
+
+	ion-item {
+		--background: var(--ion-color-primary);
+		margin-bottom: 10px;
+		color: #fff;
+		border-radius: 5px;
+	}
+}
+
+.form-wrapper {
+	background: #ffffff17;
+    height: fit-content;
+    padding: 10px 20px;
+    border: 1px solid #ffffff7a;
+    border-radius: 5px;
+}

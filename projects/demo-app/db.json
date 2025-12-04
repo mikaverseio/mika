@@ -1,0 +1,65 @@
+{
+	"posts": {
+		"data": [
+			{
+			"id": "1",
+			"title": "Launching Mika v1.0",
+			"status": "published",
+			"category": "news",
+			"views": 1250,
+			"publishedAt": "2025-10-01",
+			"coverImage": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400"
+		},
+		{
+			"id": "2",
+			"title": "Why we chose Angular",
+			"status": "draft",
+			"category": "tech",
+			"views": 0,
+			"publishedAt": null,
+			"coverImage": "https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=400"
+		},
+		{
+			"id": "3",
+			"title": "Top 10 Mobile Patterns",
+			"status": "archived",
+			"category": "design",
+			"views": 890,
+			"publishedAt": "2024-12-15",
+			"coverImage": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400"
+		}
+		]
+	},
+	"categories": [
+		{
+			"id": "news",
+			"name": "Company News"
+		},
+		{
+			"id": "tech",
+			"name": "Engineering"
+		},
+		{
+			"id": "design",
+			"name": "UX Design"
+		}
+	],
+	"users": [
+		{
+			"id": 1,
+			"username": "admin",
+			"password": "hashed_password_hidden",
+			"name": "Mika Admin",
+			"role": "admin",
+			"avatar": "https://i.pravatar.cc/150?u=1"
+		},
+		{
+			"id": 2,
+			"username": "editor",
+			"password": "hashed_password_hidden",
+			"name": "Sarah Content",
+			"role": "editor",
+			"avatar": "https://i.pravatar.cc/150?u=2"
+		}
+	]
+}
