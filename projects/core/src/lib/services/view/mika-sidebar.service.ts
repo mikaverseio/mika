@@ -5,6 +5,7 @@ import { MikaContextService } from '../engine/mika-context.service';
 import { MikaConfigService } from '../engine/mika-config.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MikaAuthService } from '../auth/mika-auth.service';
+import { MikaIconResolverService } from '../infra/mika-icon-resolver.service';
 
 @Injectable({ providedIn: 'root' })
 export class MikaSidebarService {
@@ -12,13 +13,18 @@ export class MikaSidebarService {
 	private context = inject(MikaContextService);
 	private config = inject(MikaConfigService);
 	private auth = inject(MikaAuthService);
+	private iconResolver = inject(MikaIconResolverService); // Inject resolver
+    private destroyRef = inject(DestroyRef);
+
 
 	menus = signal(new Array<MikaSidebarGroupConfig>);
 
 	constructor() {
+		this.initializeSidebar();
+
 		this.context.contextChange$
         .pipe(
-            takeUntilDestroyed(inject(DestroyRef)),
+            takeUntilDestroyed(this.destroyRef),
             tap(appId => console.log(`[SidebarService] Context change detected for: ${appId}. Starting sidebar render.`)),
             switchMap((appId) => from(this.renderSidebar())),
             tap(() => console.log(`[SidebarService] Sidebar rendered successfully.`))
@@ -27,6 +33,13 @@ export class MikaSidebarService {
             error: (err: any) => console.error('[SidebarService] Failed to render sidebar:', err)
         });
 	}
+
+	 private async initializeSidebar(): Promise<void> {
+        // Call icon registration once at startup.
+        this.iconResolver.registerConfigIcons();
+        // Manually call the render logic for the first time.
+        await this.renderSidebar();
+    }
 
 	async renderSidebar(tenantSidebarGroups?: MikaSidebarGroupConfig[]): Promise<MikaSidebarGroupConfig[]> {
 		const settings = this.context.getActiveApp()?.settings;
@@ -98,6 +111,7 @@ export class MikaSidebarService {
 		const sidebarGroups = Array.from(groupsMap.values());
 
 		this.menus.set(sidebarGroups);
+
 		// Sort entire groups by order (from user config if available)
 		return sidebarGroups.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 	}

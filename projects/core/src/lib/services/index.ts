@@ -26,3 +26,4 @@ export * from './data/mika-preload.service';
 export * from './infra/mika-meta.service';
 export * from './engine/mika-config.service';
 export * from './view/mika-grid.service';
+export * from './infra/mika-icon-resolver.service';

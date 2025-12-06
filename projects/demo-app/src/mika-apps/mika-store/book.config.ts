@@ -18,7 +18,7 @@ export const bookConfig: MikaEntityConfig = {
     sidebarConfig: {
         sidebarGroup: 'Inventory',
         order: 1,
-        icon: 'book'
+        icon: 'book-outline'
     },
     table: {
         sortable: true,

@@ -6,8 +6,6 @@ import { MikaContainerComponent } from "../../../components/ui/mika-container/mi
 import { RouterModule } from '@angular/router';
 import { MikaI18nService } from '../../../services/infra/mika-i18n.service';
 import { TranslatePipe } from '@ngx-translate/core';
-import { addIcons } from 'ionicons';
-import { closeCircle } from 'ionicons/icons';
 
 @Component({
 	selector: 'app-settings',
@@ -21,8 +19,8 @@ export class MikaSettingsPage implements OnInit {
 	@ViewChild(IonModal) langMoal!: IonModal;
 	languageService = inject(MikaI18nService);
 	constructor() {
-		addIcons({closeCircle});
 	}
+
 	ngOnInit() {
 	}
 

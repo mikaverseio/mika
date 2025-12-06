@@ -5,8 +5,6 @@ import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChi
 import { TranslatePipe } from '@ngx-translate/core';
 import { Mika } from '../../helpers/mika-app.helper';
 import { MikaEngineService } from '../../services/engine/mika-engine.service';
-import { addIcons } from 'ionicons';
-import { checkmarkOutline, codeSlashOutline, copyOutline, documentTextOutline, downloadOutline, logoDiscord, bookOutline, trashOutline, constructOutline } from 'ionicons/icons';
 import { MikaAiGeneratorComponent } from '../../components/ai/mika-ai-generator/mika-ai-generator.component';
 
 const SIMULATED_AI_OUTPUT = `
@@ -67,7 +65,7 @@ export class MikaWelcomePage {
     private maxRetries = 3;
 
 	constructor() {
-		addIcons({trashOutline,downloadOutline,bookOutline,documentTextOutline,logoDiscord,codeSlashOutline,copyOutline,checkmarkOutline, constructOutline});
+
 	}
 
 	onInput(event: any): void {

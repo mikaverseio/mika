@@ -12,7 +12,6 @@ import { makeMikaStoreApp } from "./mika-store/store.app";
 
 
 Mika.ready((injector: Injector) => {
-	console.log('🚀 MikaForm is ready - executing mika.bootstrap.ts');
 	const mikaApp = injector.get(MikaContextService);
 
 	const blogApp = makeMikaStoreApp();
@@ -21,7 +20,7 @@ Mika.ready((injector: Injector) => {
 
 	// Activate immediately if you want
 	mikaApp.activateApp(blogApp.appId).then(() => {
-		console.log('✅ Mynely app registered and activated via mika.bootstrap.ts');
+		console.log('Mynely app registered and activated via mika.bootstrap.ts');
 	}).catch((err) => {
 		console.log(err);
 	});

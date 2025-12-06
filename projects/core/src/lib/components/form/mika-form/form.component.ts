@@ -7,8 +7,6 @@ import { MikaApiService } from '../../../services/http/mika-api.service';
 import { MikaUiService } from '../../../services/view/mika-ui.service';
 import { Router } from '@angular/router';
 import { MikaEntityConfig } from '../../../interfaces/entity/mika-entity-config.interface';
-import { addIcons } from 'ionicons';
-import { close, closeCircle, cloudUpload, save } from 'ionicons/icons';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -39,11 +37,10 @@ import { MikaI18nService } from '../../../services/infra/mika-i18n.service';
 	selector: 'mika-form',
 	templateUrl: './form.component.html',
 	styleUrls: ['./form.component.scss'],
-	imports: [IonIcon, IonFooter, IonToolbar, IonHeader, IonContent, MikaNotFoundComponent,
-		IonButton, TranslatePipe, ReactiveFormsModule, FormsModule, CommonModule, IonLoading,
+	imports: [IonHeader, IonContent, MikaNotFoundComponent,
+		ReactiveFormsModule, FormsModule, CommonModule, IonLoading,
 		MatDatepickerModule, MatFormFieldModule, MatInputModule, MatExpansionModule, MatCheckboxModule, MatSelectModule,
-		MatSlideToggleModule, MatButtonModule, FormHeaderComponent, FormFieldsIonicComponent, FormFieldsMaterialComponent, FormTabbedComponentsComponent, MikaContainerComponent,
-		IonButtons
+		MatSlideToggleModule, MatButtonModule, FormHeaderComponent, FormFieldsIonicComponent, FormFieldsMaterialComponent, FormTabbedComponentsComponent, MikaContainerComponent
 	]
 })
 export class MikaFormComponent implements OnInit, OnDestroy {
@@ -80,7 +77,7 @@ export class MikaFormComponent implements OnInit, OnDestroy {
 	savingState: 'idle' | 'saving' | 'saved' | 'error' = 'idle';
 
 	constructor() {
-		addIcons({ save, close, cloudUpload, closeCircle });
+
 	}
 
 	async ngOnInit() {

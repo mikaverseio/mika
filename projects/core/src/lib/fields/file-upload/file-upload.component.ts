@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IonItem, IonIcon, IonText, IonImg, IonButton, IonLabel } from "@ionic/angular/standalone";
+import { IonIcon, IonText, IonImg, IonButton, IonLabel } from "@ionic/angular/standalone";
 import { TranslatePipe } from '@ngx-translate/core';
-import { addIcons } from 'ionicons';
-import { document, documentOutline, removeCircle } from 'ionicons/icons';
 import { MikaContextService } from '../../services/engine/mika-context.service';
 
 @Component({
@@ -36,7 +34,6 @@ export class FileUploadComponent implements ControlValueAccessor {
 		private cdr: ChangeDetectorRef,
 		private app: MikaContextService
 	) {
-		addIcons({ removeCircle, document, documentOutline })
 	}
 
 	writeValue(value: File | string | null): void {

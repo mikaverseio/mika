@@ -1,8 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonContent, IonSearchbar, IonList, IonItem, IonButton, IonIcon, IonButtons, IonTitle , ModalController, IonInput, IonChip, IonLabel } from "@ionic/angular/standalone";
 import { TranslatePipe } from '@ngx-translate/core';
-import { addIcons } from 'ionicons';
-import { closeCircle, logIn, logOut, rocket } from 'ionicons/icons';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -34,7 +32,7 @@ export class MikaTenantSwitcherComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		addIcons({logIn, logOut, closeCircle, rocket});
+
 	}
 
 	close() {

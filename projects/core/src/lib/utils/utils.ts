@@ -226,3 +226,22 @@ export function printMikaConsoleBanner() {
 
 	console.log(mikaBanner);
 }
+
+
+export function kebabToPascalCase(kebab: string): string {
+    // Splits by '-' and capitalizes the first letter of each part
+    return kebab.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+}
+
+export function kebabToCamelCase(kebab: string): string {
+    const parts = kebab.split('-');
+
+    // 1. Take the first part as is (lowercase)
+    let result = parts[0];
+
+    // 2. Capitalize the rest and append
+    for (let i = 1; i < parts.length; i++) {
+        result += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
+    }
+    return result;
+}

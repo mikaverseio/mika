@@ -11,8 +11,6 @@ import { MikaApiService } from '../../../services/http/mika-api.service';
 import { debounceTime, firstValueFrom, map } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MikaUiService } from '../../../services/view/mika-ui.service';
-import { addIcons } from 'ionicons';
-import { create, trash, addCircle, reloadOutline, refreshCircle, swapVertical, download, print, listCircle, arrowDownCircle, reloadCircle, removeCircle, filterCircleOutline, filterCircle, eye, closeCircle, ellipsisVertical, ellipsisVerticalSharp, ellipsisHorizontalCircleSharp, ellipsisVerticalCircleSharp, link, createOutline, closeCircleOutline, cloudUpload, cloudDownload, trashOutline, cloudDownloadOutline } from 'ionicons/icons';
 import { MikaEntityConfig } from '../../../interfaces/entity/mika-entity-config.interface';
 import { MikaDataService } from '../../../services/data/mika-data.service';
 import { FormsModule } from '@angular/forms';
@@ -108,7 +106,7 @@ export class MikaTableComponent implements OnInit, AfterViewInit {
 		if (capPlatform === 'web') {
 			this.isNative = this.platform.is('android') || this.platform.is('ios');
 		}
-		addIcons({ filterCircle, filterCircleOutline, reloadCircle, listCircle, addCircle, cloudDownload, cloudUpload, trashOutline, cloudDownloadOutline, closeCircleOutline, trash, create, eye, ellipsisVerticalCircleSharp, closeCircle, arrowDownCircle, print, download, link, createOutline, ellipsisVerticalSharp, ellipsisVertical, ellipsisHorizontalCircleSharp, removeCircle, refreshCircle, swapVertical, reloadOutline });
+
 		this.initFilterState();
 	}
 

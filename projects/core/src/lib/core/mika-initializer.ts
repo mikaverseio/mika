@@ -17,6 +17,7 @@ import { HybridLoader } from "../i18n/i18n-loader";
 import { MikaAppGuard } from "../guards";
 import { printMikaConsoleBanner } from "../utils";
 import { mikaContextInterceptor } from "../interceptors/mika-context.interceptor";
+import { MikaIconResolverService } from "../services";
 
 export function HttpLoaderFactory(http: HttpClient) {
 	const baseUrl = new URL('./assets/i18n/', import.meta.url).href;
@@ -26,12 +27,15 @@ export function HttpLoaderFactory(http: HttpClient) {
 export const mikaAppInitializer = (parentInjector: Injector) => {
 	return runInInjectionContext(parentInjector, async () => {
 		printMikaConsoleBanner();
+
 		const auth = inject(MikaAuthService);
 		const mikaFormService = inject(MikaEngineService);
 		const mikaSettings = inject(MIKA_APP_CONFIG);
+
 		const ms: any = mikaSettings;
 		mikaFormService.register(ms);
 		await Mika.runReadyHooks(parentInjector);
+
 		return auth.initialize();
 	});
 }

@@ -2,8 +2,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonContent, IonSearchbar, IonList, IonItem, IonButton, IonIcon, IonButtons, IonTitle , ModalController, IonInput, IonChip, IonLabel, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, IonItemDivider, IonItemGroup, IonInputPasswordToggle, IonSelect, IonSelectOption, IonPopover } from "@ionic/angular/standalone";
 import { TranslatePipe } from '@ngx-translate/core';
-import { addIcons } from 'ionicons';
-import { closeCircle, closeCircleOutline, logIn, logOut, rocket, rocketOutline } from 'ionicons/icons';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -40,7 +38,7 @@ export class MikaHubComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		addIcons({logIn, logOut, closeCircle, closeCircleOutline, rocket, rocketOutline});
+
 	}
 
 	close() {
@@ -98,9 +96,7 @@ export class MikaHubComponent implements OnInit {
 		this.loading.present();
 		await this.auth.logout(tenant);
 		const remaining = this.auth.getRemainingUsers();
-		console.log('reminaing apps', remaining);
 		if (remaining) {
-			console.log('we have remaining apps');
 			this.switchTenant(remaining[0]);
 		}
 		this.loading.dismiss();

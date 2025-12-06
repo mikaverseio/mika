@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonChip, IonContent, IonHeader, IonIcon, IonItem, IonList, IonSpinner, IonText, IonTextarea, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
-
-import { addIcons } from 'ionicons';
-import { checkmarkOutline, codeSlashOutline, copyOutline, documentTextOutline, downloadOutline, logoDiscord, bookOutline, trashOutline, constructOutline } from 'ionicons/icons';
 import { MikaContextService } from '../../../services';
 
 const SIMULATED_AI_OUTPUT = `
@@ -68,7 +65,7 @@ export class MikaAiGeneratorComponent {
     private maxRetries = 3;
 
 	constructor() {
-		addIcons({trashOutline,downloadOutline,bookOutline,documentTextOutline,logoDiscord,codeSlashOutline,copyOutline,checkmarkOutline, constructOutline});
+
 	}
 
 	onInput(event: any): void {
