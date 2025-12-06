@@ -6,32 +6,35 @@ import { MikaFormComponent } from '../../../components/form/mika-form/form.compo
 import { MikaMetaService } from '../../../services/infra/mika-meta.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Mika } from '../../../helpers/mika-app.helper';
-import { MikaAppService } from '../../../services/engine/mika-app.service';
+import { MikaConfigService } from '../../../services';
 
 @Component({
 	selector: 'mika-entity-edit',
 	template: `<mika-form *ngIf="entityConfig" [config]="entityConfig" [id]="id" mode="edit"></mika-form>`,
 	imports: [MikaFormComponent, CommonModule]
 })
-export class EntityEditPage implements OnInit {
+export class MikaEntityEditPage implements OnInit {
 
 	@ViewChild(MikaFormComponent)
 	mikaForm!: MikaFormComponent;
 
-	entityConfig!: MikaEntityConfig;
+	entityConfig!: MikaEntityConfig | null;
 	id: any;
 
 	private route = inject(ActivatedRoute);
-	private app = inject(MikaAppService);
+	private config = inject(MikaConfigService);
 	private seo = inject(MikaMetaService);
 	private translate = inject(TranslateService);
 
 	async ngOnInit() {
 		this.id = this.route.snapshot.paramMap.get('id');
 		const slug = this.route.snapshot.paramMap.get('slug')!;
-		this.entityConfig = await this.app.getConfig(slug);
+
+		this.entityConfig = await this.config.getConfig(slug);
+		if (!this.entityConfig) return;
+
 		this.seo.setMetaTags({
-			title: `${this.translate.instant(Mika.siteName)} - ${this.translate.instant('form-edit', {slug: this.translate.instant(this.entityConfig.singular ?? 'item')})}`
+			title: `${this.translate.instant(Mika.siteName)} - ${this.translate.instant('form-edit', {slug: this.translate.instant(this.entityConfig?.singular ?? 'item')})}`
 		});
 	}
 

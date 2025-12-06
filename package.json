@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:lib": "ng build core",
-    "api": "node server.js"
+    "api:blog": "node server.js 3000 projects/demo-app/db.json",
+    "api:store": "node server.js 3001 projects/demo-app/db-bookstore.json",
+	"dev:all": "concurrently \"npm run api:blog\" \"npm run api:store\" \"ng serve demo-app\""
   },
   "private": true,
   "dependencies": {
@@ -41,6 +43,7 @@
     "@angular/cli": "^19.2.19",
     "@angular/compiler-cli": "^19.2.0",
     "@types/jasmine": "~5.1.0",
+    "concurrently": "^9.2.1",
     "jasmine-core": "~5.6.0",
     "json-server": "^0.17.4",
     "karma": "~6.4.0",

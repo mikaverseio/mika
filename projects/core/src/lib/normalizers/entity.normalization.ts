@@ -23,7 +23,7 @@ export function normalizeEntityConfigMap(configs: any, baseUrls: MikaBaseUrlsCon
 	return result;
 }
 
-export function normalizeEntityConfig(config: Partial<MikaEntityConfig>, baseUrls: MikaBaseUrlsConfig): MikaEntityConfig {
+export function normalizeEntityConfigs(config: Partial<MikaEntityConfig>, baseUrls: MikaBaseUrlsConfig): MikaEntityConfig {
 
 	const apiBase = MikaUrlHelper.ensureBase(config.apiBaseUrl || baseUrls.apiBaseUrl);
 
@@ -34,7 +34,6 @@ export function normalizeEntityConfig(config: Partial<MikaEntityConfig>, baseUrl
 
 	const endpoints = config.endpoints;
 
-	// نضمن base مع prefix
 	const basePrefixed = endpoints.base
 		? MikaUrlHelper.prefixWithApiBase(endpoints.base, apiBase)
 		: undefined;
@@ -75,7 +74,6 @@ export function normalizeEntityConfig(config: Partial<MikaEntityConfig>, baseUrl
 		}
 	}
 
-
 	return {
 		...config,
 		endpoints,
@@ -95,4 +93,70 @@ export function normalizeEntityConfig(config: Partial<MikaEntityConfig>, baseUrl
 			config: config.form?.config ?? {}
 		}
 	} as MikaEntityConfig;
+}
+
+
+/**
+ * 🛠️ Helper method to normalize internal entity config structure.
+ * 🛑 CRITICAL CHANGE: This method NO LONGER prefixes URLs with baseUrls.
+ * It only ensures paths are relative and defaults are set.
+ */
+export function normalizeEntityConfig(config: Partial<MikaEntityConfig>): MikaEntityConfig {
+
+    // 1. Set safe defaults for endpoints
+    config.endpoints = {
+        base: config.contentType, // Default is usually the contentType slug
+        ...(config.endpoints || {}),
+    };
+
+    const endpoints = config.endpoints;
+    const baseEndpoint = endpoints.base ?? config.contentType; // The relative path
+
+    // 2. Ensure all endpoints are RELATIVE paths (by removing leading slashes if they exist, or adding them)
+    // We want all final endpoints to be like "posts" or "posts/:id", not absolute URLs.
+
+    // Default derived endpoints based on BASE but DO NOT PREFIX with API Base URL
+    endpoints.base = baseEndpoint;
+    endpoints.list = endpoints.list ?? baseEndpoint;
+    endpoints.create = endpoints.create ?? baseEndpoint;
+
+    // Use string substitution for dynamic parts (e.g. for json-server compatibility)
+    endpoints.get = endpoints.get ?? `${baseEndpoint}/:id`;
+    endpoints.update = endpoints.update ?? `${baseEndpoint}/:id`;
+    endpoints.delete = endpoints.delete ?? `${baseEndpoint}/:id`;
+    endpoints.allResults = endpoints.allResults ?? `${baseEndpoint}/all`;
+
+    // 3. Handle Custom Endpoints (Ensure they remain relative)
+    if (endpoints.custom) {
+        for (const key in endpoints.custom) {
+            if (Object.prototype.hasOwnProperty.call(endpoints.custom, key)) {
+                const url = endpoints.custom[key].url;
+                if (typeof url === 'string') {
+                    // 🛑 Ensure we only store the relative path for custom URLs
+                    endpoints.custom[key].url = url.replace(/^\//, '');
+                }
+            }
+        }
+    }
+
+    // 4. Set Action/Table defaults
+    return {
+        ...config,
+        endpoints,
+        table: {
+            ...config.table,
+            sortable: config.table?.sortable ?? true,
+        },
+        actions: {
+            show: config.actions?.show ?? true,
+            bulk: config.actions?.bulk ?? [],
+            items: config.actions?.items ?? {},
+        },
+        form: {
+            ...config.form,
+            fields: config.form?.fields ?? [],
+            components: config.form?.components ?? [],
+            config: config.form?.config ?? {}
+        }
+    } as MikaEntityConfig;
 }

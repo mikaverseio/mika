@@ -16,7 +16,7 @@ import { closeCircle } from 'ionicons/icons';
 	standalone: true,
 	imports: [IonIcon, IonButton, IonButtons, IonModal, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, MikaContainerComponent, RouterModule, TranslatePipe]
 })
-export class SettingsPage implements OnInit {
+export class MikaSettingsPage implements OnInit {
 
 	@ViewChild(IonModal) langMoal!: IonModal;
 	languageService = inject(MikaI18nService);

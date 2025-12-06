@@ -13,7 +13,7 @@ export * from './http/mika-api.service';
 
 export * from './engine/mika-action-builder';
 export * from './engine/mika-action.service';
-export * from './engine/mika-app.service';
+export * from './engine/mika-context.service';
 export * from './data/mika-cache.service';
 export * from './data/mika-data.service';
 export * from './engine/mika-engine.service';

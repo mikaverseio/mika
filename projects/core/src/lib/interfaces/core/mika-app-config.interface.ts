@@ -11,13 +11,59 @@ export interface MikaAuthConfig {
 	endpoints: {
 		login: string,
 		logout?: string;
-		refreshToken?: string
+		refreshToken?: string,
+		me?: string
 	},
 
 	headers?: {
 		token: string
 		tenant: string
 	},
+
+	/**
+     * Configuration for the HTTP Request sent during login.
+     * Maps your internal form values to the API's expected keys.
+     */
+	requestMap?: {
+		/** The key for the username/email field. Default: 'username' or 'email' */
+        identifierKey?: string;
+
+        /** The key for the password field. Default: 'password' */
+        passwordKey?: string;
+	},
+
+	/**
+     * Configuration for parsing the HTTP Response after login.
+     * Tells Mika where to find the Token and User object.
+     */
+	responseMap?: {
+		/** Path to the Auth Token (e.g. 'data.token' or 'access_token') */
+        tokenPath?: string;
+
+        /** Path to the Refresh Token (e.g. 'data.refreshToken') */
+        refreshTokenPath?: string;
+
+        /** Path to the User Object (e.g. 'data.user' or 'currentUser') */
+        userPath?: string;
+	},
+
+	/**
+     * Configuration for mapping the User Object properties to Mika's internal session.
+     * Used to normalize diverse backends (Laravel, .NET, Node) into a standard MikaUser.
+     */
+    userIdentityMap?: {
+        /** Default: 'id' */
+        id?: string;
+        /** Default: 'role' */
+        role?: string;
+        /** Default: 'permissions' */
+        permissions?: string;
+        /** Default: 'name' */
+        name?: string;
+        /** Default: 'avatar' */
+        avatar?: string;
+		email?: string;
+    };
 
 	propMap?: {
 		identifier?: string;

@@ -13,7 +13,7 @@ import { MikaEngineService } from '../../services/engine/mika-engine.service';
 	standalone: true,
 	imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, TranslatePipe]
 })
-export class DashboardPage implements OnInit {
+export class MikaDashboardPage implements OnInit {
 
 	Mika = Mika;
 	mika = inject(MikaEngineService);

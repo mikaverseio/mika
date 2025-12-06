@@ -27,13 +27,13 @@
 			<ng-template #belowFormContainer></ng-template>
 		</ion-content>
 
-		<ion-footer>
-			<ion-toolbar>
+		<!-- <ion-footer>
+			<ion-toolbar color="light">
 				<ion-button slot="start" shape="round" fill="clear" (click)="toast.back()">{{ 'mf-cancel' | translate }}</ion-button>
 				<ion-button [form]="context.formId" type="submit" slot="end" shape="round" color="success" [disabled]="form.invalid">{{
 					'mf-save' | translate }}</ion-button>
 			</ion-toolbar>
-		</ion-footer>
+		</ion-footer> -->
 		<ion-loading></ion-loading>
 	}
 }

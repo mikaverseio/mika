@@ -204,3 +204,25 @@ export function deepMerge(target: any, source: any): any {
 
 	return output;
 }
+
+export function getValueByPath(obj: any, path: string): any {
+  if (!path || !obj) return undefined;
+  return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+}
+
+export function printMikaConsoleBanner() {
+	const mikaBanner = `
+		=========================================================
+		__  __ ___ _  _  _
+		|  \/  / __| | | |/ |
+		| |\/| \__ \ |_| |  |
+		|_|  |_|___/\___/|_|_|
+
+		=========================================================
+		🚀 MIKA ENGINE | v0.0.1-alpha | Config-Driven UI
+		🔗 Web: mikaverse.io | Status: Initializing Core...
+		=========================================================
+		`;
+
+	console.log(mikaBanner);
+}

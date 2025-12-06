@@ -1,25 +1,24 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 
-import { IonButton, IonContent, IonList, IonItem, IonInput, IonLoading, ModalController, NavController, IonSelect, IonSelectOption, IonImg } from "@ionic/angular/standalone";
+import { IonButton, IonContent, IonList, IonItem, IonInput, IonLoading, ModalController, NavController, IonSelect, IonSelectOption, IonImg, IonInputPasswordToggle, IonNote } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MikaAuthService } from '../../../services/auth/mika-auth.service';
 import { MikaUiService } from '../../../services/view/mika-ui.service';
 import { ActivatedRoute } from '@angular/router';
-import { MikaAppService } from '../../../services/engine/mika-app.service';
+import { MikaContextService } from '../../../services/engine/mika-context.service';
 import { Mika } from '../../../helpers/mika-app.helper';
-import { MikaStorageService } from '../../../services/infra/mika-storage.service';
 import { MikaAppConfig } from '../../../interfaces/core/mika-app-config.interface';
 @Component({
     selector: 'app-login',
     templateUrl: './login.page.html',
     styleUrls: ['./login.page.scss'],
-	imports: [IonImg, CommonModule, FormsModule, IonContent, IonList, IonItem, IonInput, IonButton, TranslatePipe, IonLoading, IonSelect, IonSelectOption],
+	imports: [IonNote, IonImg, CommonModule, FormsModule, IonContent, IonList, IonItem, IonInput, IonButton, TranslatePipe, IonLoading, IonSelect, IonSelectOption, IonInputPasswordToggle, IonNote],
 })
-export class LoginPage implements OnInit {
+export class MikaLoginPage implements OnInit {
 
-  public app = inject(MikaAppService);
+  public app = inject(MikaContextService);
 
 	@ViewChild(IonLoading) loading!: IonLoading;
 
@@ -38,7 +37,6 @@ export class LoginPage implements OnInit {
 		private nav: NavController,
 		private modalCtrl: ModalController,
 		private route: ActivatedRoute,
-		private preferences: MikaStorageService
 	) { }
 
 	async ngOnInit() {
@@ -57,6 +55,7 @@ export class LoginPage implements OnInit {
 			try {
 				await this.loading.present();
 				const response: any = await this.auth.login({email: this.item.email, password: this.item.password},  this.activeApp!);
+
 				this.loading.dismiss();
 
 				if (response.success) {

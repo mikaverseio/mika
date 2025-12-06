@@ -22,7 +22,7 @@ export function normalizeAppConfig(config: MikaAppConfig): MikaAppConfig {
 		throw new Error('[MikaAppConfig] Missing tenantId');
 	}
 
-	config.baseUrls = normalizeBaseUrls(config.baseUrls);
+	// config.baseUrls = normalizeBaseUrls(config.baseUrls);
 	config.entities = normalizeEntityConfigMap(config.entities, config.baseUrls);
 	config.settings = {...mikaDefaultConfig, ...config.settings };
 	config.auth = {...mikaDefaultAuthConfig, ...config.auth };

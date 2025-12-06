@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { SortablePage } from './sortable.page';
+import { MikaSortablePage } from './sortable.page';
 
 describe('SortableComponent', () => {
-  let component: SortablePage;
-  let fixture: ComponentFixture<SortablePage>;
+  let component: MikaSortablePage;
+  let fixture: ComponentFixture<MikaSortablePage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [SortablePage],
+      imports: [MikaSortablePage],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SortablePage);
+    fixture = TestBed.createComponent(MikaSortablePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

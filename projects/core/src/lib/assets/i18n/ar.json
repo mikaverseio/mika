@@ -72,9 +72,12 @@
 	"mf-languages": "اللغات",
 	"mf-language": "لغة",
 	"mf-bulk-actions": "إجراءات جماعية",
-	"mf-tenant-switch-tooltip": "انتقل إلى هذا الموقع",
-	"mf-tenant-login-tooltip": "سجل دخولك إلى هذا الموقع",
-	"mf-tenant-logout-tooltip": "سجل خروجك من هذا الموقع",
-	"mf-tenant-switcher-header": "مدير المواقع",
-	"mf-leave-confirmation": "لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد الخروج؟"
+	"mf-select-tenant": "اختر التطبيق",
+	"mf-tenant-switch-tooltip": "انتقل إلى هذا التطبيق",
+	"mf-tenant-login-tooltip": "سجل دخولك إلى هذا التطبيق",
+	"mf-tenant-logout-tooltip": "سجل خروجك من هذا التطبيق",
+	"mf-tenant-switcher-header": "مدير التطبيقات",
+	"mf-leave-confirmation": "لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد الخروج؟",
+	"mf-logged-in": "مسجل الدخول",
+	"mf-logged-out": "غير مسجل"
 }

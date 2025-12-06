@@ -1,4 +1,4 @@
-import { MikaKey } from "../enum/mika-key.enum";
+import { MikaKeys } from "../enum/mika-key.enum";
 
 // export const mergeEntityConfigs = (configs: any, tenantId: string, tenants: Map<string, MikaTenantConfig>) => {
 // 	const tenant = tenants.get(tenantId);

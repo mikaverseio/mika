@@ -52,7 +52,6 @@ export class HybridLoader implements TranslateLoader {
 
   // --- Helper: Load App Overrides ---
   private getAppTranslation(lang: string): Observable<any> {
-	console.log('Override Path:', this.overridePath);
     if (!this.overridePath) return of({});
 
     return this.http.get(`${this.overridePath}${lang}.json`).pipe(

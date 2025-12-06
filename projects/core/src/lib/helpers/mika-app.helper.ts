@@ -6,7 +6,7 @@ import { MikaPreloadConfig } from '../interfaces/entity/mika-preload-config.inte
 import { MikaFieldConfig } from '../interfaces/field/mika-field-config.interface';
 import { MikaGlobalConfig } from '../interfaces/settings/mika-global-config.interface';
 import { isUrl } from '../utils/utils';
-import { MikaAppService } from '../services/engine/mika-app.service';
+import { MikaContextService } from '../services/engine/mika-context.service';
 import { MikaUrlHelper } from './mika-endpoint.helper';
 
 export class Mika {
@@ -116,9 +116,9 @@ export namespace Mika {
 		}
 	}
 
-	export function registerApp(config: Parameters<MikaAppService['registerApp']>[0]) {
+	export function registerApp(config: Parameters<MikaContextService['registerApp']>[0]) {
 		ready((injector) => {
-			const app = injector.get(MikaAppService);
+			const app = injector.get(MikaContextService);
 			app.registerApp(config);
 		});
 	}

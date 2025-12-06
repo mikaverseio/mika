@@ -1,12 +1,16 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { makeMikaBlogApp } from '../mika-apps/mika-blog/mika-blog.app';
 import { provideMika } from '@mikaverse/core';
+import { makeMikaStoreApp } from '../mika-apps/mika-store/store.app';
 // import '../mika-apps/mika.bootstrap'
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideMika(makeMikaBlogApp())
+    provideMika([
+		makeMikaBlogApp(),
+		makeMikaStoreApp(),
+	]),
   ]
 
 };

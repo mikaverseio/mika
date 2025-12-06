@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { NotFoundComponent } from './not-found.component';
+import { MikaNotFoundComponent } from './not-found.component';
 
 describe('NotFoundComponent', () => {
-  let component: NotFoundComponent;
-  let fixture: ComponentFixture<NotFoundComponent>;
+  let component: MikaNotFoundComponent;
+  let fixture: ComponentFixture<MikaNotFoundComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotFoundComponent ],
+      declarations: [ MikaNotFoundComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NotFoundComponent);
+    fixture = TestBed.createComponent(MikaNotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

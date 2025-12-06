@@ -14,7 +14,7 @@ import { LocalizePipe } from '../../pipes/localize';
   standalone: true,
   imports: [IonContent, IonTitle, IonBackButton, IonButtons, IonToolbar, IonHeader, LocalizePipe,TranslatePipe, CommonModule, DragDropModule]
 })
-export class SortablePage  implements OnInit {
+export class MikaSortablePage  implements OnInit {
 
   items = [];
   field: any = 'title';

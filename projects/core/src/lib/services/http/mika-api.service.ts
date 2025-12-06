@@ -58,8 +58,6 @@ export class MikaApiService {
 
 				const url = MikaUrlHelper.replaceParams(template, params);
 
-				console.log('urll', url);
-
 				switch (method) {
 					case 'GET': return this.get(url, data);
 					case 'POST': return this.post(url, data);

@@ -4,7 +4,7 @@ import { IonItem, IonIcon, IonText, IonImg, IonButton, IonLabel } from "@ionic/a
 import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { document, documentOutline, removeCircle } from 'ionicons/icons';
-import { MikaAppService } from '../../services/engine/mika-app.service';
+import { MikaContextService } from '../../services/engine/mika-context.service';
 
 @Component({
 	selector: 'app-file-upload',
@@ -34,7 +34,7 @@ export class FileUploadComponent implements ControlValueAccessor {
 
 	constructor(
 		private cdr: ChangeDetectorRef,
-		private app: MikaAppService
+		private app: MikaContextService
 	) {
 		addIcons({ removeCircle, document, documentOutline })
 	}

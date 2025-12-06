@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SettingsPage } from './settings.page';
+import { MikaSettingsPage } from './settings.page';
 
 describe('SettingsPage', () => {
-  let component: SettingsPage;
-  let fixture: ComponentFixture<SettingsPage>;
+  let component: MikaSettingsPage;
+  let fixture: ComponentFixture<MikaSettingsPage>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SettingsPage);
+    fixture = TestBed.createComponent(MikaSettingsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

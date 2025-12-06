@@ -20,6 +20,7 @@ export type EntityConfigInput =
 
 
 export type MikaActionKey = EMikaAction | string;
+// export type MikaActionKey = keyof typeof EMikaAction;
 
 
 export type MikaExecutableAction = MikaBaseAction;

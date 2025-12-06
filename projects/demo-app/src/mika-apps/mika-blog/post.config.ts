@@ -1,5 +1,5 @@
 import { Validators } from "@angular/forms";
-import { MikaEntityConfig } from "@mikaverse/core";
+import { MikaEntityConfig, EMikaAction } from "@mikaverse/core";
 
 export const postConfig: MikaEntityConfig = {
     contentType: 'posts',
@@ -16,6 +16,13 @@ export const postConfig: MikaEntityConfig = {
             search: true
         }
     },
+	permissions: {
+		requiredClaims: {
+			[EMikaAction.DELETE]: 'blog:delete_post',
+			[EMikaAction.APPROVE]: 'cms:review_content',
+			[EMikaAction.SHOW]: 'blog:view_list'
+    	}
+	},
     sidebarConfig: {
         sidebarGroup: 'Content',
         order: 2,

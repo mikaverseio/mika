@@ -1,5 +1,5 @@
 export * from './core/mika-app-config.interface';
-export * from './user/mika-auth-user.interface';
+export * from './user/mika-user.interface';
 export * from './table/mika-column-config.interface';
 export * from './sidebar/mika-sidebar-item-config.interface';
 export * from './sidebar/mika-sidebar-entity-config.interface';

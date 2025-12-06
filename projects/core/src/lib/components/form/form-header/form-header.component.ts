@@ -3,6 +3,8 @@ import { IonButton, IonToolbar, IonButtons, IonBackButton, IonTitle, IonIcon, Io
 import { TranslatePipe } from '@ngx-translate/core';
 import { MikaUiService } from '../../../services/view/mika-ui.service';
 import { MikaFormContextService } from '../../../services/view/mika-form-context.service';
+import { addIcons } from 'ionicons';
+import { addOutline, closeOutline, saveOutline } from 'ionicons/icons';
 
 @Component({
 	selector: 'app-form-header',
@@ -15,7 +17,9 @@ export class FormHeaderComponent implements OnInit {
 	public context = inject(MikaFormContextService);
 	public toast = inject(MikaUiService);
 
-	constructor() { }
+	constructor() {
+		addIcons({saveOutline, closeOutline, addOutline})
+	}
 
 	ngOnInit() {
 	}

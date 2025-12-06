@@ -12,7 +12,7 @@ import { MikaContainerComponent } from "../../../components/ui/mika-container/mi
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, TranslatePipe, MikaContainerComponent]
 })
-export class HelpPage implements OnInit {
+export class MikaHelpPage implements OnInit {
 
   constructor() { }
 

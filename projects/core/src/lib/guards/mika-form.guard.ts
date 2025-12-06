@@ -1,10 +1,10 @@
 import { CanDeactivateFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { EntityEditPage } from '../pages/entities/entity-edit/entity-edit.page';
+import { MikaEntityEditPage } from '../pages/entities/entity-edit/entity-edit.page';
 import { TranslateService } from '@ngx-translate/core';
 
-export const mikaFormGuard: CanDeactivateFn<EntityEditPage> = async (page: EntityEditPage) => {
+export const mikaFormGuard: CanDeactivateFn<MikaEntityEditPage> = async (page: MikaEntityEditPage) => {
 	const alertCtrl = inject(AlertController);
 	const translate = inject(TranslateService);
 	const form = page?.mikaForm;
@@ -19,7 +19,6 @@ export const mikaFormGuard: CanDeactivateFn<EntityEditPage> = async (page: Entit
 
 	if (formCfg.autoSaveOnLeave && form.onSubmit) {
 		try {
-			console.log('Auto-saving form on leave...');
 			await form.onSubmit();
 			return true;
 		} catch {

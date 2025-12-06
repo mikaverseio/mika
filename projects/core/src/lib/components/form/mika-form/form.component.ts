@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter, ViewChild, inject, ViewContainerRef, Injector, OnDestroy, signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IonButton, IonLoading, IonContent, IonHeader, IonToolbar, IonFooter } from '@ionic/angular/standalone';
+import { IonButton, IonLoading, IonContent, IonHeader, IonToolbar, IonFooter, IonIcon, IonButtons } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MikaApiService } from '../../../services/http/mika-api.service';
 import { MikaUiService } from '../../../services/view/mika-ui.service';
@@ -31,7 +31,7 @@ import { MikaContainerComponent } from "../../ui/mika-container/mika-container.c
 import { MikaLocalStorageAdapterService } from '../../../services/data/mika-localstorage-adapter.service';
 import { convertToFormData } from '../../../utils/utils';
 import { MikaDesignSystem } from '../../../types/mika-app.type';
-import { NotFoundComponent } from '../../pages/not-found/not-found.component';
+import { MikaNotFoundComponent } from '../../pages/not-found/not-found.component';
 import { MikaI18nService } from '../../../services/infra/mika-i18n.service';
 
 @Component({
@@ -39,10 +39,12 @@ import { MikaI18nService } from '../../../services/infra/mika-i18n.service';
 	selector: 'mika-form',
 	templateUrl: './form.component.html',
 	styleUrls: ['./form.component.scss'],
-	imports: [IonFooter, IonToolbar, IonHeader, IonContent, NotFoundComponent,
+	imports: [IonIcon, IonFooter, IonToolbar, IonHeader, IonContent, MikaNotFoundComponent,
 		IonButton, TranslatePipe, ReactiveFormsModule, FormsModule, CommonModule, IonLoading,
 		MatDatepickerModule, MatFormFieldModule, MatInputModule, MatExpansionModule, MatCheckboxModule, MatSelectModule,
-		MatSlideToggleModule, MatButtonModule, FormHeaderComponent, FormFieldsIonicComponent, FormFieldsMaterialComponent, FormTabbedComponentsComponent, MikaContainerComponent]
+		MatSlideToggleModule, MatButtonModule, FormHeaderComponent, FormFieldsIonicComponent, FormFieldsMaterialComponent, FormTabbedComponentsComponent, MikaContainerComponent,
+		IonButtons
+	]
 })
 export class MikaFormComponent implements OnInit, OnDestroy {
 

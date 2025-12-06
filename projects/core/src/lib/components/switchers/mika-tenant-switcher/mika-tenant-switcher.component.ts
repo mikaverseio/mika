@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MikaAppService } from '../../../services/engine/mika-app.service';
+import { MikaContextService } from '../../../services/engine/mika-context.service';
 import { MikaAuthService } from '../../../services/auth/mika-auth.service';
 import { MikaLoading } from '../../../services/data/mika-loading.service';
 import { MikaAppConfig } from '../../../interfaces/core/mika-app-config.interface';
@@ -20,7 +20,7 @@ import { MikaAppConfig } from '../../../interfaces/core/mika-app-config.interfac
 })
 export class MikaTenantSwitcherComponent implements OnInit {
 
-  public app = inject(MikaAppService);
+  public app = inject(MikaContextService);
 
 	tenants = this.app.getAllApps();
 	email: any;
@@ -69,9 +69,9 @@ export class MikaTenantSwitcherComponent implements OnInit {
 	async logout(tenant: MikaAppConfig) {
 		this.loading.present();
 		const remainingTenants = await this.auth.logout(tenant);
-		if (remainingTenants) {
-			this.switchTenant(this.app.getActiveApp()!);
-		}
+		// if (remainingTenants) {
+		// 	this.switchTenant(this.app.getActiveApp()!);
+		// }
 		this.loading.dismiss();
 	}
 

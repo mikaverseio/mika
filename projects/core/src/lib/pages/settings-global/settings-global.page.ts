@@ -10,7 +10,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
-export class SettingsGlobalPage implements OnInit {
+export class MikaSettingsGlobalPage implements OnInit {
 
   constructor() { }
 

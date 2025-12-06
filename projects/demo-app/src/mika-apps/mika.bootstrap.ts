@@ -6,15 +6,16 @@
  */
 
 import { Injector } from "@angular/core";
-import { Mika, MikaAppService } from "@mikaverse/core";
+import { Mika, MikaContextService } from "@mikaverse/core";
 import { makeMikaBlogApp } from "./mika-blog/mika-blog.app";
+import { makeMikaStoreApp } from "./mika-store/store.app";
 
 
 Mika.ready((injector: Injector) => {
 	console.log('🚀 MikaForm is ready - executing mika.bootstrap.ts');
-	const mikaApp = injector.get(MikaAppService);
+	const mikaApp = injector.get(MikaContextService);
 
-	const blogApp = makeMikaBlogApp();
+	const blogApp = makeMikaStoreApp();
 	// Register an app
 	mikaApp.registerApp(blogApp);
 

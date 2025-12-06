@@ -1,6 +1,6 @@
 
 <ion-header [translucent]="true">
-	<ion-toolbar>
+	<ion-toolbar color="light">
 		<ion-buttons slot="start">
 			<ion-menu-button></ion-menu-button>
 		</ion-buttons>
@@ -19,7 +19,7 @@
 			</ion-button>
 
 			@if (entityConfig.table.filters && entityConfig.table.filters.length || entityConfig.actions.items?.search) {
-				<ion-button (click)="toggleFilter()" [color]="!showFilter() ? 'secondar' : 'secondary'">
+				<ion-button (click)="toggleFilter()" [color]="!showFilter() ? 'primary' : 'secondary'">
 					@if (showFilter()) {
 					<ion-icon slot="icon-only" name="filter-circle"></ion-icon>
 					} @else {
@@ -38,7 +38,7 @@
 				</ion-button>
 			}
 
-			@if (entityConfig.actions.items?.create) {
+			@if (entityConfig.actions.items?.create && auth.hasPermission('create')) {
 				<ion-button [routerLink]="`/${entityConfig.contentType}/create`">
 					<ion-icon slot="icon-only" name="add-circle"></ion-icon>
 				</ion-button>
@@ -60,7 +60,7 @@
 
 
 	@if (showFilter()) {
-		<ion-toolbar>
+		<ion-toolbar color="light">
 			<app-table-filters [entityConfig]="entityConfig" (onSubmit)="onFilterSubmit($event)"></app-table-filters>
 		</ion-toolbar>
 	}

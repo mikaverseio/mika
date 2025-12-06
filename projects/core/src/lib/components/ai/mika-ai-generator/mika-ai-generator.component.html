@@ -1,0 +1,96 @@
+<div dir="ltr" class="mika-prompt-panel">
+	<div class="flex jcb">
+		<div class="brand flex aic">
+			<div class="logo">
+				<svg class="w-16 h-16 rounded-2xl shadow-2xl shadow-brand-500/20" viewBox="0 0 320 320" fill="none"
+					xmlns="http://www.w3.org/2000/svg">
+					<g clip-path="url(#clip0_welcome)">
+						<rect width="320" height="320" rx="64" fill="url(#paint0_linear_welcome)" />
+						<path d="M149.584 214.082H216.146" stroke="white" stroke-width="24" stroke-linecap="round"
+							stroke-linejoin="round" />
+						<path d="M170.416 160H236.979" stroke="white" stroke-width="24" stroke-linecap="round"
+							stroke-linejoin="round" />
+						<path d="M149.584 105.918H216.146" stroke="white" stroke-width="24" stroke-linecap="round"
+							stroke-linejoin="round" />
+						<path d="M83.0212 205.762L132.943 155.84L83.0212 105.918" stroke="white" stroke-width="24"
+							stroke-linecap="round" stroke-linejoin="round" />
+					</g>
+					<defs>
+						<linearGradient id="paint0_linear_welcome" x1="360.926" y1="-51.7665" x2="-17.6548" y2="331.757"
+							gradientUnits="userSpaceOnUse">
+							<stop stop-color="#A855F7" />
+							<stop offset="1" stop-color="#0EA5E9" />
+						</linearGradient>
+						<clipPath id="clip0_welcome">
+							<rect width="320" height="320" rx="64" fill="white" />
+						</clipPath>
+					</defs>
+				</svg>
+			</div>
+			<h1>MikaAI</h1>
+		</div>
+		<div class="details">
+			<ion-chip color="warning">Registered Apps: <strong> {{ context.appsCount() }}</strong></ion-chip>
+		</div>
+	</div>
+
+	<ion-list class="prompt">
+		<ion-item>
+			<ion-textarea id="prompt" [value]="userPrompt()" (ionInput)="onInput($event)"
+				class="bg-gray-900 rounded-md text-white"
+				placeholder="e.g., Generate an inventory tracker with products, stock count, and price."
+				[autoGrow]="true" rows="3">
+			</ion-textarea>
+		</ion-item>
+	</ion-list>
+
+	<div class="flex jcb">
+		<ion-button color="primary" shape="round">
+			Suggest
+		</ion-button>
+		<ion-button color="tertiary" shape="round" (click)="generateConfig()" [disabled]="isLoading()">
+			@if (isLoading()) {
+			<ion-spinner name="crescent" class="mr-2"></ion-spinner>
+			Generating...
+			} @else {
+			<ion-icon slot="start" name="construct-outline"></ion-icon>
+			Generate Config
+			}
+		</ion-button>
+	</div>
+
+	<ion-list class="suggestions">
+		@for (suggestion of SUGGESTIONS; track suggestion) {
+		<ion-item button (click)="useSuggestion(suggestion)">
+			{{ suggestion }}
+		</ion-item>
+		}
+	</ion-list>
+
+	<div class="generated">
+		<label class="block text-sm font-medium text-gray-300 mb-2">Generated Output</label>
+
+		@if (!isLoading() && configOutput() !== INITIAL_OUTPUT_TEXT) {
+		<div class="absolute top-0 right-1 z-10 flex gap-1">
+			<ion-button (click)="copyOutput()" fill="clear" color="secondary" size="small" class="w-28">
+				<ion-icon slot="start"
+					[name]="copyButtonText() === 'Copied!' ? 'checkmark-outline' : 'copy-outline'"></ion-icon>
+				{{ copyButtonText() }}
+			</ion-button>
+			<ion-button (click)="downloadOutput()" fill="clear" color="secondary" size="small">
+				<ion-icon slot="icon-only" name="download-outline" aria-label="Download file"></ion-icon>
+			</ion-button>
+		</div>
+		}
+
+		<div class="bg-gray-900 rounded-lg p-4 h-96 overflow-auto font-mono text-sm border border-gray-700">
+			@if (isLoading()) {
+			<div class="flex items-center justify-center h-full text-gray-400">
+				<ion-spinner name="dots"></ion-spinner>
+			</div>
+			} @else {
+			<pre><code class="language-typescript text-sky-300 whitespace-pre-wrap">{{ configOutput() }}</code></pre>
+			}
+		</div>
+	</div>
+</div>

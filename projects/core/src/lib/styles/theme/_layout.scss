@@ -5,7 +5,7 @@ html {
 
 ion-header.header-md {
 	box-shadow: none;
-	border-bottom: 1px solid #eee;
+	border-bottom: 0;
 
 	&.no-border {
 		border-bottom: 0;
@@ -134,12 +134,40 @@ h4 {
 	}
 }
 
+
+
+
+
 .plt-desktop {
 
 	--scrollbar-color-thumb: var(--ion-color-primary-tint);
 	--scrollbar-color-track: var(--ion-color-primary);
 	--scrollbar-width: thin;
 	--scrollbar-width-legacy: 8px;
+
+	@supports (scrollbar-width: auto) {
+		ion-content::part(scroll) {
+			scrollbar-color: var(--scrollbar-color-thumb) var(--ion-color-light);
+			scrollbar-width: var(--scrollbar-width);
+		}
+	}
+
+	@supports selector(::-webkit-scrollbar) {
+		ion-content::part(scroll)::-webkit-scrollbar-thumb {
+			background: var(--scrollbar-color-thumb);
+		}
+
+		ion-content::part(scroll)::-webkit-scrollbar-track {
+			background: var(--ion-color-light);
+		}
+
+		ion-content::part(scroll)::-webkit-scrollbar {
+			max-width: var(--scrollbar-width-legacy);
+			max-height: var(--scrollbar-width-legacy);
+		}
+	}
+
+
 
 	@supports (scrollbar-width: auto) {
 		ion-menu ion-content::part(scroll) {
@@ -386,4 +414,31 @@ ion-content {
 	.mat-mdc-select {
 		color: #fff;
 	}
+}
+
+
+ion-input {
+	--highlight-color-valid: var(--ion-color-secondary);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: #fff !important; /* Keep your text color */
+  transition: background-color 5000s ease-in-out 0s; /* Forces override */
+  -webkit-box-shadow: 0 0 0 30px var(--ion-color-primary) inset !important;
+
+}
+
+
+ion-footer, .footer-md {
+	box-shadow: none !important;
 }

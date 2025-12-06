@@ -14,15 +14,18 @@ import { normalizeInterceptors } from "../normalizers/generic.normalization";
 import { Routes } from "@angular/router";
 import { mikaRoutes } from "../routes/mika.routes";
 import { HybridLoader } from "../i18n/i18n-loader";
+import { MikaAppGuard } from "../guards";
+import { printMikaConsoleBanner } from "../utils";
+import { mikaContextInterceptor } from "../interceptors/mika-context.interceptor";
 
 export function HttpLoaderFactory(http: HttpClient) {
 	const baseUrl = new URL('./assets/i18n/', import.meta.url).href;
-	console.log('i18n base url:', baseUrl);
 	return new TranslateHttpLoader(http, baseUrl, ".json");
 }
 
 export const mikaAppInitializer = (parentInjector: Injector) => {
 	return runInInjectionContext(parentInjector, async () => {
+		printMikaConsoleBanner();
 		const auth = inject(MikaAuthService);
 		const mikaFormService = inject(MikaEngineService);
 		const mikaSettings = inject(MIKA_APP_CONFIG);
@@ -70,6 +73,7 @@ export const initializeHttpInterceptors = (mikaFormConfig: MikaAppConfig | MikaA
 
 	const finalInterceptors = [
 		mikaAuthInterceptor,
+		mikaContextInterceptor,
 		...allInterceptors
 	];
 
@@ -92,9 +96,13 @@ export async function resolveMikaAppAsyncConfig(input: MikaAppConfigAsyncOptions
 
 export function resolveRoutes(input: MikaAppConfigOptions): Routes {
 	const configs = normalizeMikaAppConfig(input);
+
 	const mergedRoutes: Routes = [
 		...extractCustomRoutes(configs),
-		...mikaRoutes,
+		...mikaRoutes.map(route => ({
+			...route,
+			canActivate: [...(route.canActivate || []), MikaAppGuard],
+		})),
 	];
 
 	return mergedRoutes

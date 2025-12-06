@@ -12,7 +12,7 @@ export function makeMikaBlogApp(): MikaAppConfig {
 	return {
 		appId: 'mika-blog',
 		baseUrls: {
-			apiBaseUrl: 'http://localhost:3007',
+			apiBaseUrl: 'http://localhost:3000',
 			publicSiteUrl: '',
 		},
 		auth: {
@@ -20,28 +20,39 @@ export function makeMikaBlogApp(): MikaAppConfig {
 				login: 'auth/login',
 				logout: 'auth/logout'
 			},
-			propMap: {
-				identifier: 'username',
+			requestMap: {
+				identifierKey: 'username',
 			}
 		},
+		environments: [
+			{
+				id: 'blog-prod',
+				name: 'Prod',
+				production: true,
+				apiBaseUrl: 'http://localhost:3000',
+				default: true,
+			},
+			{
+				id: 'blog-dev',
+				name: 'Dev',
+				production: false,
+				apiBaseUrl: 'http://localhost:3007',
+				default: true,
+			}
+		],
 		i18n: {
 			defaultLang: 'ar',
 			fallbackLang: 'en',
 			i18nPath: '/assets/i18n/'
 		},
 		settings: {
-			// authConfig: {
-			// 	loginEndpoint: 'auth/login'
-			// },
 			siteName: 'MikaBlog',
-			// apiBase: environment.apiBase,
 			publicSiteUrl: '',
 			logo: '/public/logo.png',
 			actions: {
 				notifications: true,
 				messages: true
 			},
-
 			responseProps: {
 				data: 'data'
 			}

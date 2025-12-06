@@ -31,7 +31,7 @@ import { MikaLocalStorageAdapterService } from '../../../services/data/mika-loca
 import { Mika } from '../../../helpers/mika-app.helper';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MikaActionService } from '../../../services';
+import { MikaActionService, MikaAuthService } from '../../../services';
 import { Capacitor } from '@capacitor/core';
 import { TableFiltersComponent } from '../table-filters/table-filters.component';
 import { MikaLangSwitcherComponent } from '../../switchers/mika-lang-switcher/mika-lang-switcher.component';
@@ -89,6 +89,7 @@ export class MikaTableComponent implements OnInit, AfterViewInit {
 	localAdapter = inject(MikaLocalStorageAdapterService);
 	actions = inject(MikaActionService);
 	platform = inject(Platform);
+	auth = inject(MikaAuthService);
 
 	filterValues: any = {};
 	filterOptions: Record<string, any[]> = {};

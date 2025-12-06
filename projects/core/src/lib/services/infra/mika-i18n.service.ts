@@ -5,7 +5,9 @@ import { Preferences } from '@capacitor/preferences';
 import { isEmpty } from '../../utils/utils';
 import { MikaApiService } from '../http/mika-api.service';
 import { MikaLocalStorageAdapterService } from '../data/mika-localstorage-adapter.service';
-import { MikaAppService } from '../engine/mika-app.service';
+import { MikaContextService } from '../engine/mika-context.service';
+import { MikaLoggerService } from './mika-logger.service';
+import { MikaConfigService } from '../engine/mika-config.service';
 
 @Injectable({ providedIn: 'root' })
 export class MikaI18nService {
@@ -24,14 +26,17 @@ export class MikaI18nService {
 	tableLocalSignal = signal<string>(this.translate.getDefaultLang() || 'ar');
 
 	constructor(
-		private app: MikaAppService,
+		private app: MikaContextService,
+		private config: MikaConfigService,
 		private api: MikaApiService,
-		private localAdapter: MikaLocalStorageAdapterService
+		private localAdapter: MikaLocalStorageAdapterService,
+		private logger: MikaLoggerService
 	) {}
 
 	async register(languageConfig: MikaLocalizationConfig) {
-		console.log('Registering language config:', languageConfig);
+
 		if (!languageConfig || !languageConfig.options?.length) {
+			this.logger.info('MikaI18nService', 'Registering language config');
 			this.setInitialAppLanguage(this.currentLocaleSignal());
 			return;
 		}
@@ -39,8 +44,8 @@ export class MikaI18nService {
 		let options: MikaLanguageOption[] = [];
 
 		if (languageConfig.languageEntityKey) {
-			const entityConfig = await this.app.getConfig(languageConfig.languageEntityKey);
-			const response: any = this.api.config(entityConfig).get();
+			const entityConfig = await this.config.getConfig(languageConfig.languageEntityKey);
+			const response: any = this.api.config(entityConfig!).get();
 			const langs = response.map((item: any) => ({
 				title: item.title,
 				locale: item.locale,

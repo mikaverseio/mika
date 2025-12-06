@@ -3,7 +3,8 @@ ion-content {
 }
 
 ion-img {
-	width: 100px;
+	width: 60px;
+    margin-top: 20px;
 }
 
 form {
@@ -16,17 +17,29 @@ ion-list {
 	background: none;
 
 	ion-item {
-		--background: var(--ion-color-primary);
 		margin-bottom: 10px;
 		color: #fff;
-		border-radius: 5px;
+		--background: var(--ion-color-primary);
+		--border-radius: 7px;
+		--border-color: rgb(42 45 57);
+		--border-width: 1px;
+		--color-hover: #fff;
 	}
 }
 
 .form-wrapper {
-	background: #ffffff17;
+	background: #111525;
     height: fit-content;
     padding: 10px 20px;
-    border: 1px solid #ffffff7a;
-    border-radius: 5px;
+    border: 1px solid rgb(42 45 57);
+    border-radius: 15px;
+}
+
+
+ion-input, ion-select {
+	--highlight-color-valid: var(--ion-color-secondary) !important;
+}
+
+.mika-notes {
+	margin-top: 15px;
 }

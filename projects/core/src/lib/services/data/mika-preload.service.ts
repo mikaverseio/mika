@@ -8,14 +8,18 @@ import { Mika } from '../../helpers/mika-app.helper';
 import { firstValueFrom } from 'rxjs';
 import { MikaFieldConfig } from '../../interfaces/field/mika-field-config.interface';
 import { MikaUrlHelper } from '../../helpers/mika-endpoint.helper';
-import { MikaAppService } from '../engine/mika-app.service';
+import { MikaContextService } from '../engine/mika-context.service';
+import { MikaLoggerService } from '../infra/mika-logger.service';
+import { MikaConfigService } from '../engine/mika-config.service';
 
 @Injectable({ providedIn: 'root' })
 export class MikaPreloadService {
 
 	dataService = inject(MikaDataService);
 	api = inject(MikaApiService);
-	app = inject(MikaAppService);
+	app = inject(MikaContextService);
+	config = inject(MikaConfigService);
+	logger = inject(MikaLoggerService);
 
 	async handlePreload(settings: MikaGlobalConfig, entityConfigs: any) {
 		if (settings && settings.preload?.length) {
@@ -26,20 +30,16 @@ export class MikaPreloadService {
 	}
 
 	async load(key: string, options: MikaPreloadConfig | null, field?: MikaFieldConfig) {
-		console.log('---------------------------');
-		console.log('Loading preload for:', key, options);
-		const config = await this.app.getConfig(key);
-		console.log('Config:', config);
+
+		const config = await this.config.getConfig(key);
+
 		const preloadConfig = Mika.getEntityPreloadConfig(options!, config, field);
-		console.log('Preload Config:', preloadConfig);
+
 		const res = await firstValueFrom(this.api.get(preloadConfig.endpoint!, preloadConfig.params ?? {}));
-		console.log('Response:', res);
-		// const res = await firstValueFrom(this.api.config(config).get())
+
 		const finalData = options?.transform ? options.transform(res) : res;
-		console.log('Final Data:', finalData);
+
 		this.dataService.storeSignal(key, finalData);
-		console.log('Data stored in service for key:', key);
-		console.log('---------------------------');
 	}
 
 	async preloadFromGlobal(preload: MikaPreloadConfig[]) {
@@ -51,16 +51,16 @@ export class MikaPreloadService {
 	async preloadFromEntityConfigs(configs: Map<string, MikaEntityConfig | Function>) {
 		const tasks: Promise<void>[] = [];
 
-		console.log('Preloading from entity configs:', configs);
-
 		if (!configs || configs.size === 0) {
-			console.log('No entity configs provided for preloading.');
+			this.logger.info('MikaPreloadService', 'No entity configs provided for preloading.');
 			return;
 		}
 
+		this.logger.info('MikaPreloadService', 'Preloading from entity configs', configs);
+
 		for (const [slug, configOrFn] of configs?.entries()) {
-			const config = await this.app.getConfig(slug)
-			const preload = config.preload;
+			const config = await this.config.getConfig(slug)
+			const preload = config?.preload;
 			if (!preload) continue;
 
 			const endpoint = typeof preload === 'object' && preload.endpoint

@@ -12,7 +12,7 @@ import { Mika } from '../../../helpers/mika-app.helper';
 		IonHeader, TranslatePipe, RouterModule
 	]
 })
-export class NotFoundComponent implements OnInit {
+export class MikaNotFoundComponent implements OnInit {
 	Mika = Mika;
 	constructor() { }
 

@@ -3,7 +3,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonApp, IonSplitPane, IonMenu, ModalController, IonContent, IonList, IonListHeader, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink, IonButton, IonButtons, IonFooter, IonChip, IonHeader, IonAvatar, IonToolbar, IonImg, IonLoading, IonAlert } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { images, newspaper, documents, people, cash, calendarNumber, car, addCircle, speedometer, notifications, mail, home, open, logOut, cashSharp, peopleSharp, documentSharp, calendar, peopleCircle, alertCircle, grid, list, book, accessibility, pricetag, pricetags, settings, settingsOutline, help, options, swapHorizontalOutline, rocket, logInOutline, logOutOutline, gridOutline, cashOutline, peopleOutline, calendarNumberOutline, peopleCircleOutline, calendarOutline, alertCircleOutline, listOutline, bookOutline, accessibilityOutline, pricetagsOutline, imagesOutline, newspaperOutline, cubeOutline } from 'ionicons/icons';
+import { images, newspaper, documents, people, cash, calendarNumber, car, addCircle, speedometer, notifications, mail, home, open, logOut, cashSharp, peopleSharp, documentSharp, calendar, peopleCircle, alertCircle, grid, list, book, accessibility, pricetag, pricetags, settings, settingsOutline, help, options, swapHorizontalOutline, rocket, logInOutline, logOutOutline, gridOutline, cashOutline, peopleOutline, calendarNumberOutline, peopleCircleOutline, calendarOutline, alertCircleOutline, listOutline, bookOutline, accessibilityOutline, pricetagsOutline, imagesOutline, newspaperOutline, cubeOutline, homeOutline, openOutline, notificationsOutline, mailOutline, appsOutline } from 'ionicons/icons';
 import { MikaSelectFieldComponent } from '../../fields/mika-select-field.component';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +17,8 @@ import { MikaEngineService } from '../../services/engine/mika-engine.service';
 import { Mika } from '../../helpers/mika-app.helper';
 import { MikaTenantSwitcherComponent } from '../../components/switchers/mika-tenant-switcher/mika-tenant-switcher.component';
 import { MikaActionService } from '../../services';
+import { MikaHubComponent } from '../../components/mika/mika-hub/mika-hub.component';
+import { MikaSidebarService } from '../../services/view/mika-sidebar.service';
 
 
 @Component({
@@ -51,14 +53,10 @@ export class MikaRootComponent implements OnInit, AfterViewInit {
 		public translate: TranslateService,
 		public mika: MikaEngineService,
 		private modalController: ModalController,
-		private actions: MikaActionService
+		private actions: MikaActionService,
+		public sidebar: MikaSidebarService
 	) {
-		addIcons({
-			grid, gridOutline, swapHorizontalOutline, list, book, accessibility, pricetags, images, newspaper, documents, people, cash, cashOutline,
-			calendarNumber, calendar, alertCircle, peopleCircle, car, addCircle, speedometer, notifications, mail, home, open, logOut, cashSharp, peopleSharp,
-			documentSharp, settings, settingsOutline, help, rocket, logInOutline, logOutOutline, peopleOutline, calendarNumberOutline, peopleCircleOutline,
-			calendarOutline, alertCircleOutline, listOutline, bookOutline, accessibilityOutline, pricetagsOutline, imagesOutline, newspaperOutline, cubeOutline
-		});
+		addIcons({swapHorizontalOutline,rocket,settingsOutline,logOutOutline,homeOutline,openOutline,notificationsOutline,mailOutline,logOut,mail,notifications,open,grid,gridOutline,list,book,accessibility,pricetags,images,newspaper,documents,people,cash,cashOutline,calendarNumber,calendar,alertCircle,peopleCircle,car,addCircle,speedometer,home,cashSharp,peopleSharp,documentSharp,settings,help,logInOutline,peopleOutline,calendarNumberOutline,peopleCircleOutline,calendarOutline,alertCircleOutline,listOutline,bookOutline,accessibilityOutline,pricetagsOutline,imagesOutline,newspaperOutline,cubeOutline, appsOutline});
 
 		this.isLoading = this.mikaLoading.isLoading;
 		effect(() => {
@@ -80,7 +78,17 @@ export class MikaRootComponent implements OnInit, AfterViewInit {
 
 	async showTenantSwitcher() {
 		const modal = await this.modalController.create({
-			component: MikaTenantSwitcherComponent
+			// component: MikaTenantSwitcherComponent,
+			component: MikaHubComponent
+		});
+
+		modal.present();
+	}
+
+	async showMikaHub(){
+		const modal = await this.modalController.create({
+			component: MikaHubComponent,
+			cssClass: 'mika-hub-modal'
 		});
 
 		modal.present();

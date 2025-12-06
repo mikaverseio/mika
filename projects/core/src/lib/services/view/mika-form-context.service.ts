@@ -4,7 +4,7 @@ import { MikaEntityConfig } from '../../interfaces/entity/mika-entity-config.int
 import { MikaFieldConfig } from '../../interfaces/field/mika-field-config.interface';
 import { MikaFormBuilderService } from './mika-form-builder.service';
 import { MikaDesignSystem, MikaFormMode } from '../../types/mika-app.type';
-import { MikaKey } from '../../enum/mika-key.enum';
+import { MikaKeys } from '../../enum/mika-key.enum';
 
 @Injectable({ providedIn: 'root' })
 export class MikaFormContextService extends ControlContainer {
@@ -31,13 +31,13 @@ export class MikaFormContextService extends ControlContainer {
 
 		if (contentId && !mode) {
 			formMode = 'edit';
-			this.formId = `${MikaKey.FormIdPrefix}${config.contentType}-edit.${contentId}`;
+			this.formId = `${MikaKeys.FormIdPrefix}${config.contentType}-edit.${contentId}`;
 		} else if (!contentId && !mode) {
 			formMode = 'create';
-			this.formId = `${MikaKey.FormIdPrefix}${config.contentType}-create.${Math.random().toString(36).substring(2, 10)}`;
+			this.formId = `${MikaKeys.FormIdPrefix}${config.contentType}-create.${Math.random().toString(36).substring(2, 10)}`;
 		} else {
 			formMode = mode;
-			this.formId = `${MikaKey.FormIdPrefix}${config.contentType}-${mode}.${Math.random().toString(36).substring(2, 10)}`;
+			this.formId = `${MikaKeys.FormIdPrefix}${config.contentType}-${mode}.${Math.random().toString(36).substring(2, 10)}`;
 		}
 
 		this._config.set(config);

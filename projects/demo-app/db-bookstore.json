@@ -1,0 +1,48 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "manager",
+      "password": "hashed_password_hidden",
+      "name": "Store Manager",
+      "role": "admin",
+      "avatar": "https://i.pravatar.cc/150?u=5"
+    }
+  ],
+  "books": [
+    {
+      "id": "b1",
+      "title": "The Angular Way",
+      "author": "Mika Team",
+      "price": 29.99,
+      "stock": 150,
+      "category": "tech",
+      "cover": "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400"
+    },
+    {
+      "id": "b2",
+      "title": "Zero to Hero",
+      "author": "John Doe",
+      "price": 14.50,
+      "stock": 5,
+      "category": "fiction",
+      "cover": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord-101",
+      "customer": "Alice Smith",
+      "total": 44.99,
+      "status": "shipped",
+      "date": "2025-12-01"
+    },
+    {
+      "id": "ord-102",
+      "customer": "Bob Jones",
+      "total": 120.00,
+      "status": "pending",
+      "date": "2025-12-04"
+    }
+  ]
+}

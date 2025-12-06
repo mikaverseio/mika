@@ -6,10 +6,11 @@ import { MikaTableComponent } from '../../../components/table/mika-table/table.c
 import { MikaMetaService } from '../../../services/infra/mika-meta.service';
 import { Mika } from '../../../helpers/mika-app.helper';
 import { TranslateService } from '@ngx-translate/core';
-import { MikaAppService } from '../../../services/engine/mika-app.service';
-import { NotFoundComponent } from '../../../components/pages/not-found/not-found.component';
+import { MikaContextService } from '../../../services/engine/mika-context.service';
+import { MikaNotFoundComponent } from '../../../components/pages/not-found/not-found.component';
 import { Platform } from '@ionic/angular/standalone';
 import { MikaTableMobileComponent } from "../../../components/table/mika-table-mobile/mika-table-mobile.component";
+import { MikaConfigService } from '../../../services';
 @Component({
 	selector: 'mika-entity-list',
 	template: `
@@ -25,14 +26,14 @@ import { MikaTableMobileComponent } from "../../../components/table/mika-table-m
 			<mika-cannot-find-it></mika-cannot-find-it>
 		</ng-template>
 	`,
-	imports: [MikaTableComponent, CommonModule, NotFoundComponent, MikaTableMobileComponent]
+	imports: [MikaTableComponent, CommonModule, MikaNotFoundComponent, MikaTableMobileComponent]
 })
-export class EntityListPage implements OnInit {
+export class MikaEntityListPage implements OnInit {
 
-	entityConfig!: MikaEntityConfig;
+	entityConfig!: MikaEntityConfig | null;
 
 	private route = inject(ActivatedRoute);
-	private app = inject(MikaAppService);
+	private config = inject(MikaConfigService);
 	private seo = inject(MikaMetaService);
 	private translate = inject(TranslateService);
 	public platform = inject(Platform)
@@ -40,9 +41,12 @@ export class EntityListPage implements OnInit {
 	async ngOnInit() {
 		this.route.paramMap.subscribe(async params => {
 			const slug = params.get('slug')!;
-			this.entityConfig = await this.app.getConfig(slug);
+
+			this.entityConfig = await this.config.getConfig(slug);
+			if (!this.entityConfig) return;
+
 			this.seo.setMetaTags({
-				title: `${this.translate.instant(Mika.siteName)} - ${this.translate.instant(this.entityConfig.contentType)}`
+				title: `${this.translate.instant(Mika.siteName)} - ${this.translate.instant(this.entityConfig?.contentType!)}`
 			});
 		});
 	}

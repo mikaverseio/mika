@@ -19,7 +19,7 @@ export const categoryConfig: MikaEntityConfig = {
     sidebarConfig: {
         sidebarGroup: 'Content',
         order: 1,
-        icon: 'folder-open'
+        // icon: 'folder-open'
     },
     table: {
         sortable: true,

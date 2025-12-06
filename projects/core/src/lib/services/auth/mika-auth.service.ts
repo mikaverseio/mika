@@ -2,310 +2,344 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, Injectable, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { NavController } from '@ionic/angular';
-import { MikaAuthUser } from '../../interfaces/user/mika-auth-user.interface';
-import { MikaAppService } from '../engine/mika-app.service';
-import { Mika } from '../../helpers/mika-app.helper';
+import { MikaAuthContext, MikaUser } from '../../interfaces/user/mika-user.interface';
+import { MikaContextService } from '../engine/mika-context.service';
 import { MikaStorageService } from '../infra/mika-storage.service';
 import { MikaAppConfig, MikaAuthConfig } from '../../interfaces/core/mika-app-config.interface';
-import { MikaKey } from '../../enum/mika-key.enum';
+import { MikaKeys } from '../../enum/mika-key.enum';
 import { MikaUrlHelper } from '../../helpers/mika-endpoint.helper';
+import { normalizeMikaAuthRequest, normalizeMikaAuthResponse } from '../../normalizers';
+import { MikaLoggerService } from '../infra/mika-logger.service';
+
+// Standardize keys to ensure login() and setUser() use the same storage
+const SESSION_PREFIX = MikaKeys.SessionPrefix;
+const ACTIVE_APP_KEY = MikaKeys.ActiveAppId;
 
 @Injectable({
-	providedIn: 'root'
+    providedIn: 'root'
 })
 export class MikaAuthService {
-	private _users = signal<Record<string, MikaAuthUser>>({});
-	private _activeAppId = signal<string | null>(null);
-	isLoggedIn = computed(() => !!this.token());
-	user: any = computed(() => this.getUser());
-	token = computed(() => this.user()?.token ?? null);
-	userApp = computed(() => this.user()?.appId ?? null);
-	role = computed(() => this.user()?.role ?? null);
-	permissions = computed(() => this.user()?.permissions ?? []);
+    // 1. State Signals
+    private _users = signal<Record<string, MikaAuthContext>>({});
+    private _activeAppId = signal<string | null>(null);
 
-	constructor(
-		private http: HttpClient,
-		private router: NavController,
-		private app: MikaAppService,
-		private preferences: MikaStorageService
-	) {
+    // 2. Computed Selectors (The "Reactive Brain")
+    /** The core session object for the active tenant */
+    session = computed(() => {
+        const appId = this._activeAppId();
+        return appId ? this._users()[appId] || null : null;
+    });
 
-	}
-
-	getUser() {
-		const allUsers = this._users();
-		const activeAppId = this._activeAppId();
-		return activeAppId && allUsers[activeAppId] ? allUsers[activeAppId] : null;
-	}
-
-	/**
-	 * Initializes the user's state, typically called on application startup.
-	 * Check for the user session in storage.
-	 */
-	async initialize(): Promise<void> {
-		try {
-			const storedactiveAppId = await this.preferences.get(MikaKey.ActiveAppId);
-			const appId = storedactiveAppId ?? this.app.getDefaultAppId();
-			this.setActiveAppId(appId);
-			const storedUser = await this.preferences.get(`${MikaKey.UserPrefix}${appId}`);
-			if (storedUser) {
-				this._users.set({ ...this._users(), [appId]: storedUser });
-			}
-
-			await this.initializeAll();
-		} catch (error) {
-			console.error('Initialization error:', error);
-            // this._event$.next({ name: 'initializationError', data: error }); // Use Subject
-		}
-
-	}
-
-	/**
-     * Initializes all users from storage.
+    /** * Legacy Alias for 'session'.
+     * Kept for compatibility with your existing code.
      */
-	async initializeAll(): Promise<boolean> {
-		const apps = this.app.getAllApps();
-		const restoredUsers: Record<string, MikaAuthUser> = {};
-		let firstValidappId: string | null = null;
-		// Load all users in parallel
-		await Promise.all(apps.map(async (app) => {
-			try {
-				const user = await this.preferences.get(`${MikaKey.UserPrefix}${app.appId}`);
-				if (user) {
-					restoredUsers[app.appId] = user;
-					if (!firstValidappId) {
-						firstValidappId = app.appId;
-					}
-				}
-			} catch (err) {
-				console.warn('Failed to restore tenant', app.appId, err);
-			}
-		}));
+    user = computed(() => this.session());
 
-		if (Object.keys(restoredUsers).length) {
-			this._users.set(restoredUsers);
-			return true;
-		}
+    isLoggedIn = computed(() => {
+		const logged = !!this.session()?.token;
+		return logged;
+	});
+    token = computed(() => this.session()?.token ?? null);
+    role = computed(() => this.session()?.role ?? null);
+    permissions = computed(() => this.session()?.permissions ?? []);
 
-		return false;
-	}
+    /** * ✅ KEPT: Required by your external services.
+     * Returns the App ID of the currently logged-in user.
+     */
+    userApp = computed(() => this.session()?.appId ?? null);
 
-	/**
-	 * Gets the active tenant ID.
-	 * @returns The active tenant ID or null if not set.
-	 */
-	get activeAppId(): string | null {
-		return this._activeAppId();
-	}
+    constructor(
+        private http: HttpClient,
+        private router: NavController,
+        private context: MikaContextService,
+        private storage: MikaStorageService,
+		private logger: MikaLoggerService
+    ) {}
 
+    // ============================================================
+    // ⬇️ LEGACY METHODS (Kept for Compatibility)
+    // ============================================================
 
-	/**
-	* Sets the active tenant ID.
-	* @param appId The tenant ID to set.
-	*/
-	async setActiveAppId(appId: string | null): Promise<void> {
-		this._activeAppId.set(appId);
+    /**
+     * ✅ KEPT: Imperative getter for current user.
+     * Updated to return the cleaner MikaAuthContext type.
+     */
+    getUser(): MikaAuthContext | null {
+        return this.session();
+    }
+
+    /**
+     * ✅ KEPT: Checks storage for a user state.
+     * Updated to use the standard SESSION_PREFIX key.
+     */
+    async checkUserState(): Promise<MikaAuthContext | null> {
+        const appId = this._activeAppId();
+        if (!appId) return null;
+
+        const storageKey = `${SESSION_PREFIX}${appId}`;
         try {
-            await this.preferences.set('mikaactiveAppId', appId);
+            return await this.storage.get(storageKey);
         } catch (error) {
-            console.error('Failed to set active tenant ID in storage', error);
-            // this._event$.next({ name: 'setactiveAppIdError', data: error }); // Use Subject
+            console.error('[MikaAuth] Failed to check user state', error);
+            return null;
         }
-	}
+    }
 
-	/**
-     * Checks the user's state in storage for the active tenant.
-     * @returns  The user data from storage or null if not found.
+    /**
+     * ✅ KEPT: Manually sets a user (e.g. from a custom flow).
+     * Refactored to ensure it updates the Signals and Storage correctly.
      */
-	async checkUserState(): Promise<MikaAuthUser | null> {
-		const storageKey = `mikaUser_${this._activeAppId()}`;
+    async setUser(userData: any, app?: MikaAppConfig): Promise<void> {
+        if (!app?.appId) {
+            console.error('[MikaAuth] Cannot set user: Missing App ID');
+            return;
+        }
+
+        // Construct a proper session object
+        const session: MikaAuthContext = {
+            ...userData,
+            token: userData.token,
+            appId: app.appId,
+            permissions: userData.permissions ?? [],
+        };
+
+        // Reuse the robust session logic
+        await this.setSession({ token: session.token, user: session }, app);
+    }
+
+    // ============================================================
+    // ⬇️ CORE ENGINE METHODS (Enhanced)
+    // ============================================================
+
+    get activeAppId(): string | null {
+        return this._activeAppId();
+    }
+
+    async setActiveAppId(appId: string | null): Promise<void> {
+
+		// if (this._activeAppId() === appId) {
+        //     return; // <-- ADDED GUARD
+        // }
+
+        this._activeAppId.set(appId);
         try {
-            return await this.preferences.get(storageKey);
+            if (appId) {
+                await this.storage.set(ACTIVE_APP_KEY, appId);
+            } else {
+                await this.storage.remove(ACTIVE_APP_KEY);
+            }
         } catch (error) {
-            console.error('Failed to check user state', error);
-            // this._event$.next({ name: 'checkUserStateError', data: error }); // Use Subject
-            return null; // Consider how you want to handle this.
+            console.error('[MikaAuth] Failed to persist active App ID', error);
         }
+    }
+
+    async initialize(): Promise<void> {
+        try {
+			// Get user default app id
+            const storedActiveId = await this.storage.get(MikaKeys.ActiveAppId);
+			// Get default app id
+            const defaultAppId = this.context.getDefaultAppId();
+			// Determine which app id
+            const appId = storedActiveId ?? defaultAppId;
+            // Load all sessions first
+            await this.initializeAll();
+            // Then activate the correct one
+            if (appId) await this.setActiveAppId(appId);
+        } catch (error) {
+            console.error('[MikaAuth] Initialization error:', error);
+        }
+    }
+
+    async initializeAll(): Promise<boolean> {
+		// Get all registered apps
+        const apps = this.context.getAllApps();
+		// Restore sessions
+        const restoredSessions = await this.restoreSessions(apps);
+		// Set restored sessions
+        if (Object.keys(restoredSessions).length > 0) {
+            this._users.set(restoredSessions);
+            return true;
+        }
+
+        return false;
+    }
+
+	async restoreSessions(apps: MikaAppConfig[]): Promise<Record<string, MikaAuthContext>> {
+		const restoredSessions: Record<string, MikaAuthContext> = {};
+		 await Promise.all(apps.map(async (app) => {
+            try {
+                // Use the standardized key
+                const session = await this.storage.get(`${MikaKeys.SessionPrefix}${app.appId}`);
+                if (session && session.token) {
+                    restoredSessions[app.appId] = session;
+                }
+            } catch (err) {
+                console.warn('[MikaAuth] Failed to restore session for', app.appId, err);
+            }
+        }));
+
+		return restoredSessions;
 	}
 
-	/**
-	* Performs the login operation.
-	* @param credentials The user's email and password.
-	* @param tenant The tenant configuration.
-	* @returns A promise that resolves with the login response or rejects with an error.
-	*/
-	async login(credentials: { email: string, password: string }, app: MikaAppConfig): Promise<any> {
+    async login(credentials: { email: string, password: string }, app: MikaAppConfig): Promise<any> {
+        const authConfig = app.auth;
+        const mappedCredentials = normalizeMikaAuthRequest(authConfig!, credentials);
+        const baseUrl = MikaUrlHelper.ensureBase(app.baseUrls?.apiBaseUrl || '');
+        const loginUrl = `${baseUrl}${authConfig?.endpoints.login}`;
 
-		const authConfig = this.app.auth();
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-Tenant-ID': app.appId
+        });
 
-		const mappedCredentials = {
-			[authConfig?.propMap?.identifier || 'email']: credentials.email,
-			[authConfig?.propMap?.password || 'password']: credentials.password
-		};
+        try {
+            const response = await firstValueFrom(
+                this.http.post(loginUrl, mappedCredentials, { headers, observe: 'response' })
+            );
 
-		const headers = new HttpHeaders({
-			'Content-Type': 'application/json',
-			'X-Tenant-ID': app.appId
-		});
+            // Use the Utility to parse the generic response
+            const { token, user } = normalizeMikaAuthResponse(authConfig!, response.body);
 
-		const loginUrl = `${MikaUrlHelper.ensureBase(app.baseUrls.apiBaseUrl)}${authConfig?.endpoints.login}`;
+            if (token && user) {
+                await this.setSession({ token, user }, app);
+                return { success: true, user };
+            } else {
+                console.warn('[MikaAuth] API returned 200 but token/user mapping failed');
+                return { success: false, error: 'Invalid response format' };
+            }
 
-		try {
-			const loginResponse = await firstValueFrom(this.http.post(loginUrl, mappedCredentials, { headers }));
-            await this.setUser(loginResponse, app);
-            // this._event$.next({ name: 'userLoginSuccess', data: loginResponse });  // Use Subject
-            return loginResponse;
-		} catch(error) {
-			// Handle HTTP errors here
-			console.error('Login error:', error);
-			// this._event$.next({ name: 'loginError', data: error }); // Use Subject
-			return Promise.reject(error); // Re-throw as a rejected promise
-		}
-	}
+        } catch (error: any) {
+            console.error('[MikaAuth] Login error:', error);
+            const status = error.status;
+            let msg = 'Login failed';
 
+            if (status === 401) msg = 'Invalid credentials';
+            else if (status === 403) msg = 'Access denied';
+            else if (status === 0) msg = 'Network error';
 
-	/**
-	 * Sets the current user and updates the user state.
-	 * @param userData The user data.
-	 * @param tenant The tenant configuration.
-	 */
-	async setUser(userData: any, app?: MikaAppConfig): Promise<void> {
+            return { success: false, error: msg, originalError: error };
+        }
+    }
 
-		if (!app) {
-			throw new Error('[MikaAuthService] Cannot set user without tenant ID.');
-		}
-
-		const appId = app?.appId;
-		const user: MikaAuthUser = {
-			...userData,
-			token: userData.token,
-			appId: appId,
-			permissions: userData.permissions ?? [],
-		};
-
-		// this._activeAppId.set(appId);
-		this.setActiveAppId(appId);
-		this._users.set({ ...this._users(), [appId]: user });
-
-		// Persist user data
-		const storageKey = `mikaUser_${appId}`;
-		try {
-			await this.preferences.set(storageKey, user);
-		} catch (e) {
-			console.error("Error saving user data", e);
-			//  this.events.publish('userSaveError', e);
-		}
-
-	}
-
-	/**
-     * Logs the user out.
-     * @param tenant - The tenant to log out from.  If not provided, logs out from all tenants.
-     * @returns A promise that resolves with a boolean indicating success.
+    /**
+     * Unified Logic to update State + Storage
      */
-	async logout(app?: MikaAppConfig): Promise<boolean> {
-		if (!app) {
-			return await this.logoutFromAllTenants();
-		}
+    async setSession(
+        authResult: { token: string; user: MikaUser },
+        app: MikaAppConfig
+    ): Promise<void> {
+        if (!app?.appId) return;
 
-		return await this.logoutFromTenant(app);
+        const session: MikaAuthContext = {
+            ...authResult.user,
+            token: authResult.token,
+            appId: app.appId
+        };
+
+        this.setActiveAppId(app.appId);
+
+        // Update Signal
+        this._users.update(current => ({
+            ...current,
+            [app.appId]: session
+        }));
+
+        // Persist
+        const storageKey = `${SESSION_PREFIX}${app.appId}`;
+        try {
+            await this.storage.set(storageKey, session);
+        } catch (e) {
+            console.error('[MikaAuth] Storage Write Failed', e);
+        }
+    }
+
+    async logout(app?: MikaAppConfig): Promise<any> {
+        if (!app) {
+            return await this.logoutFromAllTenants();
+        } else {
+            return await this.logoutFromTenant(app);
+        }
+    }
+
+    private async logoutFromTenant(app: MikaAppConfig): Promise<any> {
+        const appId = app.appId;
+
+		this.logger.info('MikaAuthService', `Log the user our from ${app.appId}`);
+
+        // 1. Backend Call
+        try { await this.callLogoutApi(app); } catch (e) { console.warn(e); }
+
+        // 2. Clear Storage
+        await this.storage.remove(`${SESSION_PREFIX}${appId}`);
+
+        // 3. Update Signal
+        this._users.update(current => {
+            const updated = { ...current };
+            delete updated[appId];
+            return updated;
+        });
+
+        // 4. Navigate
+        if (this._activeAppId() === appId) {
+            const remaining = Object.keys(this._users());
+
+            if (remaining.length > 0) {
+				const nextAppId = remaining[0];
+                this.setActiveAppId(nextAppId);
+				// this.context.activateApp(nextAppId);
+
+                this.router.navigateRoot('/dashboard');
+            } else {
+                this.setActiveAppId(null);
+                this.router.navigateRoot('/login');
+            }
+        }
+    }
+
+    private async logoutFromAllTenants(): Promise<any> {
+        const apps = this.context.getAllApps();
+		const activeApps = Object.keys(this._users());
+
+
+		const logoutTasks = apps.map(async app => {
+			const appId = app.appId;
+            // Get the full config needed for the API URL
+            if (!activeApps.includes(appId)) return;
+
+			// A. Call Backend Logout (Fire and Forget)
+			try { await this.callLogoutApi(app); } catch (e) { console.warn(e); }
+
+			// B. Clear Persistent Session Storage
+			await this.storage.remove(`${MikaKeys.SessionPrefix}${appId}`);
+        });
+
+       	await Promise.allSettled(logoutTasks);
+
+		await this.storage.remove(ACTIVE_APP_KEY);
+
+        this._users.set({});
+        this.setActiveAppId(null);
+        this.router.navigateRoot('/login');
+    }
+
+    private async callLogoutApi(app: MikaAppConfig) {
+        if (!app.auth?.endpoints.logout) return;
+		const baseUrl = MikaUrlHelper.ensureBase(app.baseUrls?.apiBaseUrl || '');
+		const url = `${baseUrl}${app.auth.endpoints.logout}`;
+		return firstValueFrom(this.http.post(url, {}));
+    }
+
+    hasPermission(permission?: string): boolean {
+		return true;
+        const perms = this.permissions();
+        return perms ? perms.includes(permission!) : false;
+    }
+
+    isLoggedInToTenant(appId: string): boolean {
+        return !!this._users()[appId];
+    }
+
+	getRemainingUsers() {
+		return Object.keys(this._users());
 	}
-
-	/**
-     * Logs the user out from all tenants.
-     */
-	private async logoutFromAllTenants(): Promise<boolean> {
-		const allApps = this.app.getAllApps();
-
-		try {
-
-		} catch (error) {
-
-		}
-		const logoutTasks = allApps.map(async (_app) => {
-			const appId = _app.appId;
-			const authConfig = _app.auth as MikaAuthConfig;
-			if (authConfig?.endpoints.logout) {
-				const logoutUrl = `${Mika.apiBase}${authConfig?.endpoints.logout}`;
-				await firstValueFrom(this.http.post(logoutUrl, {})).catch(() => { });
-			}
-			await this.preferences.remove(`mikaUser_${appId}`);
-		});
-
-		await Promise.allSettled(logoutTasks);
-
-		this._users.set({});
-		this._activeAppId.set(this.app.getDefaultAppId());
-		this.app.activateApp(this.app.getDefaultAppId());
-		await this.preferences.remove('mikaactiveAppId');
-
-		this.router.navigateRoot('/login');
-		return false;
-	}
-
-	/**
-	 * Logs the user out from a specific tenant.
-	 * @param tenant The tenant configuration.
-	 * @returns A promise that resolves with a boolean indicating success.
-	 */
-	private async logoutFromTenant(app: MikaAppConfig): Promise<boolean> {
-		const appId = app.appId;
-		const authConfig = app.auth;
-
-		try {
-			// Logout from the tenant's backend (if supported)
-			if (authConfig?.endpoints.logout) {
-				const logoutUrl = `${Mika.apiBase}${authConfig?.endpoints.logout}`;
-				await firstValueFrom(this.http.post(logoutUrl, {})).catch(() => { });
-			}
-
-			// Remove the user's data for the tenant
-			await this.preferences.remove(`mikaUser_${appId}`);
-
-			// Update the user state
-			const updatedUsers = { ...this._users() };
-			delete updatedUsers[appId];
-			this._users.set(updatedUsers);
-
-			// If the active tenant is being logged out, determine the next active tenant
-			if (this._activeAppId() === appId) {
-				const remainingappIds = Object.keys(updatedUsers);
-
-				if (remainingappIds.length) {
-					const newActive = remainingappIds[0];
-					this._activeAppId.set(newActive);
-					this.app.activateApp(newActive);
-					return true;
-				} else {
-					this._activeAppId.set(this.app.getDefaultAppId());
-					this.app.activateApp(this.app.getDefaultAppId());
-					this.router.navigateRoot('/login');
-					return false;
-				}
-			}
-
-			return true;
-		} catch (error) {
-			console.error(`Logout from app ${appId} failed:`, error);
-			// this.events.publish('logoutTenantError', { appId, error }); // Emit an event
-			return false; // Indicate failure
-		}
-
-	}
-
-	/**
-	 * Checks if a user is logged in to a specific tenant.
-	 * @param appId The ID of the tenant to check.
-	 * @returns True if the user is logged in to the tenant, false otherwise.
-	 */
-	isLoggedInToTenant(appId: string): boolean {
-		return !!this._users()[appId];
-	}
-
-
-	hasPermission(permission: any) {
-		return false;
-	}
-
-
 }
