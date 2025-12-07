@@ -1,9 +1,36 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="light">
-    <ion-title>{{ 'mf-dashboard-welcome' | translate: {mika: Mika.siteName | translate} }}</ion-title>
-  </ion-toolbar>
+	<ion-toolbar color="light">
+    	<ion-title>Welcome</ion-title>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+  	</ion-toolbar>
+
+	@if (dashboardConfigs().length > 1) {
+		<ion-toolbar color="light">
+			<ion-segment [(ngModel)]="activeDashboardId" (ionChange)="loadDashboard($event)" scrollable>
+				@for (dashboard of dashboardConfigs(); track dashboard.id) {
+					<ion-segment-button [value]="dashboard.id">
+						<ion-label>{{ dashboard.label }}</ion-label>
+					</ion-segment-button>
+				}
+			</ion-segment>
+		</ion-toolbar>
+	}
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-	<h1>{{ 'mf-dashboard-no-comps' | translate }}</h1>
+	@if (activeDashboard()?.widgets?.length === 0) {
+		<div class="h-full flex flex-col justify-center items-center text-slate-500">
+			<h2>{{ 'mf-dashboard-no-comps' | translate }}</h2>
+		</div>
+	} @else if (activeDashboard()) {
+		<div [class]="getGridLayout(activeDashboard()!)">
+			@for (widget of activeDashboard()?.widgets; track widget.id) {
+				<div [class]="getWidgetSize(widget)">
+					<ng-container *ngComponentOutlet="resolveComponent(widget); inputs: { config: widget }"></ng-container>
+				</div>
+			}
+		</div>
+	}
 </ion-content>
