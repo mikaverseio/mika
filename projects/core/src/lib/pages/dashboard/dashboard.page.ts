@@ -3,13 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonLabel, IonMenuButton, IonSegment, IonSegmentButton, IonTitle, IonToolbar, IonButtons } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Mika } from '../../helpers/mika-app.helper';
-import { MikaEngineService } from '../../services/engine/mika-engine.service';
 import { MikaWidgetService } from '../../services/engine/mika-widget.service';
 import { MikaDashboardConfig, MikaWidgetConfig } from '../../interfaces';
 import { MikaContextService } from '../../services';
-import { MikaStatCardComponent } from '../../components/dashboard/mika-stat-card.component';
-import { generateDefaultDashboard } from '../../config/mika-dashboard.config';
+import { normalizeDashboardConfigs } from '../../normalizers';
 
 @Component({
 	selector: 'app-dashboard',
@@ -34,16 +31,13 @@ export class MikaDashboardPage implements OnInit {
 	});
 
 	async ngOnInit(): Promise<void> {
-		// We assume the context is fully loaded here (per APP_INITIALIZER logic)
 
-		// Load configurations from context
 		const rawConfigs = this.context.getSetting('dashboards', {});
+		const dashboards = normalizeDashboardConfigs(rawConfigs, this.injector);
 
-		const dashboards = this.normalizeDashboardConfigs(rawConfigs);
 		this.dashboardConfigs.set(dashboards);
 
 		if (dashboards.length > 0) {
-			// Set the first dashboard as active by default
 			this.activeDashboardId.set(dashboards[0].id);
 		}
 	}
@@ -81,21 +75,5 @@ export class MikaDashboardPage implements OnInit {
 				// Allows custom classes like 'col-span-1'
 				return widget.size;
 		}
-	}
-
-	// --- Normalization Helpers (Can be extracted to normalizers file) ---
-
-	private normalizeDashboardConfigs(raw: Record<string, MikaDashboardConfig>): MikaDashboardConfig[] {
-		let dashboards = Object.values(raw);
-
-		if (dashboards.length === 0) {
-			runInInjectionContext(this.injector, () => {
-				dashboards = [generateDefaultDashboard()]
-			});
-		}
-
-		console.log('---dashboards', dashboards);
-
-		return dashboards.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 	}
 }

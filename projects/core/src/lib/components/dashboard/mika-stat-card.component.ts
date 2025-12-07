@@ -18,7 +18,7 @@ import { MikaContextService } from '../../services';
                 } @else {
 					<div class="flex flex-col aic jsc">
 						<ion-note>{{ config.title }}</ion-note>
-						<ion-chip>{{ count() | number }}</ion-chip>
+						<ion-chip color="success">{{ data() }}</ion-chip>
 						<ion-note class="text-sm text-slate-500 mt-1">Total {{ config.entitySlug }}</ion-note>
 					</div>
                 }
@@ -39,24 +39,21 @@ export class MikaStatCardComponent implements OnInit {
 
 	private context = inject(MikaContextService); // Context for system stats
 
-    count = signal(0);
+    data = signal<any>(null);
     loading = signal(true);
 
     async ngOnInit() {
         this.loading.set(true);
         try {
-            if (this.config.entitySlug === 'mika_system_apps') {
-                // SYSTEM STATS: Get count directly from Context Service
-                this.count.set(this.context.appsCount());
+			if (this.config.dataSourceFn) {
+				const data = await this.config.dataSourceFn();
+				this.data.set(data);
+			}
 
-            } else if (this.config.entitySlug) {
-                // 🛑 ENTITY STATS: Use the Data Facade (MikaDataService)
-                // const total = await this.dataService.getEntityCount(this.config.entitySlug);
-                this.count.set(0);
-            }
+
         } catch (e) {
             // Error handling remains here
-            this.count.set(0);
+            this.data.set(0);
         } finally {
             this.loading.set(false);
         }

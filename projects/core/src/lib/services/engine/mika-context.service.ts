@@ -50,6 +50,18 @@ export class MikaContextService {
 	i18n = computed(() => this.getActiveApp()?.i18n);
 	theming = computed(() => this.getActiveApp()?.theming);
 
+	totalEntityCount = computed(() => {
+        let total = 0;
+        const apps = this.apps();
+        for (const app of apps.values()) {
+            const entities = app.entities;
+            if (entities) {
+                total += entities.size;
+            }
+        }
+        return total;
+    });
+
 	private _contextChange = new BehaviorSubject<string | null>(null);
 	public contextChange$ = this._contextChange.asObservable();
 

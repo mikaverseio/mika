@@ -1,7 +1,10 @@
+import { Injector, runInInjectionContext } from "@angular/core";
 import { mikaDefaultAuthConfig, mikaDefaultConfig } from "../core/mika-default-config";
+import { MikaDashboardConfig } from "../interfaces";
 import { MikaAppConfig, MikaAuthConfig } from "../interfaces/core/mika-app-config.interface";
 import { normalizeEntityConfigMap } from "./entity.normalization";
 import { normalizeBaseUrls } from "./generic.normalization";
+import { generateDefaultDashboard } from "../config/mika-dashboard.config";
 
 export function normalizeAppsConfig(input: MikaAppConfig | MikaAppConfig[]): Map<string, MikaAppConfig> {
 	const configs = Array.isArray(input) ? input : [input];
@@ -24,11 +27,23 @@ export function normalizeAppConfig(config: MikaAppConfig): MikaAppConfig {
 
 	// config.baseUrls = normalizeBaseUrls(config.baseUrls);
 	config.entities = normalizeEntityConfigMap(config.entities, config.baseUrls);
-	config.settings = {...mikaDefaultConfig, ...config.settings };
-	config.auth = {...mikaDefaultAuthConfig, ...config.auth };
+	config.settings = { ...mikaDefaultConfig, ...config.settings };
+	config.auth = { ...mikaDefaultAuthConfig, ...config.auth };
 
 
 	return config;
 }
 
+
+export function normalizeDashboardConfigs(raw: Record<string, MikaDashboardConfig>, injector: Injector): MikaDashboardConfig[] {
+	let dashboards = Object.values(raw);
+
+	if (dashboards.length === 0) {
+		runInInjectionContext(injector, () => {
+			dashboards = [generateDefaultDashboard()]
+		});
+	}
+
+	return dashboards.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+}
 

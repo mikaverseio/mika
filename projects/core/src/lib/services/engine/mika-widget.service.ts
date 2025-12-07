@@ -1,16 +1,19 @@
-import { Injectable, Type, inject } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { MikaWidgetConfig } from '../../interfaces';
 import { MikaStatCardComponent } from '../../components/dashboard/mika-stat-card.component';
+import { MikaRecentCardComponent } from '../../components/dashboard/mika-recent-card.component';
+import { MikaBarChartCardComponent } from '../../components/dashboard/mika-barchart-card.component';
+import { MikaLineChartCardComponent } from '../../components/dashboard/mika-linechart-card.component';
 
 @Injectable({ providedIn: 'root' })
 export class MikaWidgetService {
 
-    // 🛑 Registry mapping config type to Angular Component Type
+    // Registry mapping config type to Angular Component Type
     private readonly componentRegistry: Record<MikaWidgetConfig['type'], Type<any>> = {
         'stat-card': MikaStatCardComponent,
-        'recent-list': MikaStatCardComponent, // Placeholder: Should be a proper list component
-        'chart-bar': MikaStatCardComponent,   // Placeholder: Should be a chart component
-        'chart-line': MikaStatCardComponent,  // Placeholder
+        'recent-list': MikaRecentCardComponent,
+        'chart-bar': MikaBarChartCardComponent,
+        'chart-line': MikaLineChartCardComponent,
         'custom-comp': null! // This must be provided via config/plugin
     };
 
@@ -18,7 +21,7 @@ export class MikaWidgetService {
      * Resolves a widget configuration type to its corresponding Angular component.
      */
     resolveWidgetComponent(config: MikaWidgetConfig): Type<any> | null {
-		console.log('---resolveWidgetComponent', config);
+
         if (config.type === 'custom-comp' && config.component) {
             return config.component;
         }

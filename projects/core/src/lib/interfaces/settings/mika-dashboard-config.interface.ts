@@ -55,4 +55,10 @@ export interface MikaWidgetConfig {
 
     /** Configuration specific to the widget type (e.g., API query params, chart colors). */
     options?: Record<string, any>;
+
+	/** Custom, asynchronous function to retrieve the metric data.
+     * Overrides the standard entitySlug API call.
+     * @returns A promise that resolves to the final number or object.
+     */
+	dataSourceFn?: () => Promise<any>;
 }

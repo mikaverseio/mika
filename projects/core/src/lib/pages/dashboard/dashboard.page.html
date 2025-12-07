@@ -25,7 +25,7 @@
 			<h2>{{ 'mf-dashboard-no-comps' | translate }}</h2>
 		</div>
 	} @else if (activeDashboard()) {
-		<div [class]="getGridLayout(activeDashboard()!)">
+		<div class="grid-default" [class]="getGridLayout(activeDashboard()!)">
 			@for (widget of activeDashboard()?.widgets; track widget.id) {
 				<div [class]="getWidgetSize(widget)">
 					<ng-container *ngComponentOutlet="resolveComponent(widget); inputs: { config: widget }"></ng-container>
