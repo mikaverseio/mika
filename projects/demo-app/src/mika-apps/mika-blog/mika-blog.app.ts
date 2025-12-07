@@ -57,6 +57,16 @@ export function makeMikaBlogApp(): MikaAppConfig {
 				data: 'data'
 			}
 		},
-		entities: entityConfig
+		entities: entityConfig,
+		dashboards: [
+			{
+				id: "test",
+				label: "Test",
+			},
+			{
+				id: "sales",
+				label: "Sales",
+			}
+		]
 	}
 }

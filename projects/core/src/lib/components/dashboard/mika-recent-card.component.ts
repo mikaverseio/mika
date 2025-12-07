@@ -2,14 +2,17 @@ import { Component, Input, signal, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
     IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonSpinner,
-    IonList, IonItem, IonLabel, IonNote, IonIcon
+    IonList, IonItem, IonLabel, IonNote, IonIcon,
+	IonSelect,
+	IonSelectOption
 } from '@ionic/angular/standalone';
 
 import { addIcons } from 'ionicons';
 import { timeOutline, ellipsisVertical } from 'ionicons/icons';
 import { MikaWidgetConfig } from '../../interfaces';
+import { MikaDataService } from '../../services';
+import { TranslatePipe } from '@ngx-translate/core';
 
-// Assuming data structure for recent items (simplified)
 interface RecentItem {
     id: string;
     title: string;
@@ -22,17 +25,19 @@ interface RecentItem {
     standalone: true,
     imports: [
         CommonModule, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
-        IonSpinner, IonList, IonItem, IonLabel, IonNote, IonIcon
+        IonSpinner, IonList, IonItem, IonLabel, IonNote, IonIcon, IonSelect,
+		IonSelectOption, TranslatePipe
     ],
     template: `
         <ion-card class="shadow-md">
-            <ion-card-header>
-                <ion-card-title class="text-lg font-semibold text-indigo-600">
-                    {{ config.title }}
-                </ion-card-title>
-            </ion-card-header>
-
             <ion-card-content class="pt-0">
+				<div class="flex jcb aic">
+					<ion-note><strong>{{ config.title | translate }}</strong></ion-note>
+					<ion-select interface="popover">
+
+						<ion-select-option [value]>12123</ion-select-option>
+					</ion-select>
+				</div>
                 @if (loading()) {
                     <div class="flex justify-center items-center h-24">
                         <ion-spinner></ion-spinner>
@@ -66,12 +71,20 @@ interface RecentItem {
                 }
             </ion-card-content>
         </ion-card>
-    `
+    `,
+	styles: `
+		ion-card {
+			-background: #f3f3f3;
+			box-shadow: none;
+			border-radius: 15px;
+			border: 1px solid #dcdfea;
+		}
+	`
 })
 export class MikaRecentCardComponent implements OnInit {
     @Input({ required: true }) config!: MikaWidgetConfig;
 
-    // private dataService = inject(MikaDataService);
+    private dataService = inject(MikaDataService);
 
     items = signal<RecentItem[]>([]);
     loading = signal(true);
@@ -83,10 +96,8 @@ export class MikaRecentCardComponent implements OnInit {
     async ngOnInit() {
         this.loading.set(true);
         try {
-            if (this.config.entitySlug) {
-
-                this.items.set([]);
-            }
+           await this.dataService.getRecent('posts');
+			this.items.set([]);
         } catch (e) {
             console.error('Failed to load recent list:', e);
             this.items.set([]);

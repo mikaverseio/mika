@@ -1,11 +1,10 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
+import { Injectable, signal, computed, inject, Injector } from '@angular/core';
 import { Mika } from '../../helpers/mika-app.helper';
 import { MikaStorageService } from '../infra/mika-storage.service';
 import { resolveMediaUrl, setTenantMode } from '../../utils/mika-app.util';
 import { MikaAppConfig, MikaEnvironmentConfig } from '../../interfaces/core/mika-app-config.interface';
 import { normalizeAppsConfig } from '../../normalizers/app.normalization';
 import { MikaAppConfigOptions } from '../../types/mika-app.type';
-import { MikaEntityConfig } from '../../interfaces/entity/mika-entity-config.interface';
 import { MikaKeys } from '../../enum/mika-key.enum';
 import { MikaAppContextService } from './mika-app-context.service';
 import { MikaLoggerService } from '../infra/mika-logger.service';
@@ -17,11 +16,11 @@ export class MikaContextService {
 	private preferences = inject(MikaStorageService);
 	private appContext = inject(MikaAppContextService);
 	private logger = inject(MikaLoggerService);
+	private injector = inject(Injector);
 
 	private apps = signal<Map<string, MikaAppConfig>>(new Map());
 	private activeAppId = signal<string | null>(null);
 	private activeEnvironmentId = signal<string | null>(null);
-	private runtimeCache = new Map<string, MikaEntityConfig>();
 
 	readonly defaultApp = computed(() => {
 		const apps = this.apps();

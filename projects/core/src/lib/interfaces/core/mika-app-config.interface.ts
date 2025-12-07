@@ -4,6 +4,7 @@ import { MikaEntityConfig } from "../entity/mika-entity-config.interface";
 import { MikaLocalizationConfig } from "../entity/mika-localization-config.interface";
 import { MikaPreloadConfig } from "../entity/mika-preload-config.interface";
 import { Route, Routes } from "@angular/router";
+import { MikaDashboardConfig } from "../settings/mika-dashboard-config.interface";
 
 // mika-auth-settings.interface.ts
 
@@ -143,7 +144,7 @@ export interface MikaAppConfig {
 	theming?: MikaThemingConfig;
 	environments?: MikaEnvironmentConfig[];
 	preload?: MikaPreloadConfig[]
-	dashboards?: any[],
+	dashboards?: MikaDashboardConfig[],
 
 	customRoutes?: Routes
 	default?: boolean;

@@ -1,25 +1,34 @@
-import { Component, Input, signal, OnInit, inject } from '@angular/core';
+import { Component, Input, signal, OnInit, inject, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonSpinner, IonNote, IonChip } from '@ionic/angular/standalone';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonSpinner, IonNote, IonChip, IonIcon, IonBadge } from '@ionic/angular/standalone';
 import { MikaWidgetConfig } from '../../interfaces';
 import { MikaContextService } from '../../services';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     selector: 'mika-stat-card',
     standalone: true,
-    imports: [CommonModule, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonSpinner, IonNote, IonChip],
+    imports: [CommonModule, IonCard, IonIcon, IonCardContent, IonSpinner, IonNote, IonChip, TranslatePipe,  TranslateModule, IonBadge],
     template: `
         <ion-card class="shadow-md">
             <ion-card-content class="pt-0">
                 @if (loading()) {
-                    <div class="flex justify-center items-center h-16">
+                    <div class="flex aic jcs">
                         <ion-spinner></ion-spinner>
                     </div>
                 } @else {
-					<div class="flex flex-col aic jsc">
-						<ion-note>{{ config.title }}</ion-note>
-						<ion-chip color="success">{{ data() }}</ion-chip>
-						<ion-note class="text-sm text-slate-500 mt-1">Total {{ config.entitySlug }}</ion-note>
+					<div class="flex flex-s aic jcb">
+						<div class="flex flex-col">
+							@if (config.icon) {
+								<ion-icon [name]="config.icon"></ion-icon>
+							}
+							<ion-note><strong>{{ config.title | translate }}</strong></ion-note>
+							@if (config.subTitle) {
+								<ion-note>{{ config.subTitle! | translate}}</ion-note>
+							}
+						</div>
+
+						<ion-chip color="secondary">{{ data() }}</ion-chip>
 					</div>
                 }
             </ion-card-content>
@@ -32,12 +41,21 @@ import { MikaContextService } from '../../services';
 			border-radius: 15px;
 			border: 1px solid #dcdfea;
 		}
+		ion-chip {
+			font-size: 1.2rem;
+    		font-weight: 700;
+		}
+		ion-icon {
+			font-size: 22px;
+    		margin-bottom: 10px;
+		}
 	`
 })
 export class MikaStatCardComponent implements OnInit {
     @Input({ required: true }) config!: MikaWidgetConfig;
 
 	private context = inject(MikaContextService); // Context for system stats
+	private componentInjector = inject(Injector);
 
     data = signal<any>(null);
     loading = signal(true);

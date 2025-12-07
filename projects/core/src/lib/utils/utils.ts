@@ -1,3 +1,5 @@
+import { Injector, runInInjectionContext } from "@angular/core";
+
 const arabicMap: Record<string, string> = {
 	'ا': 'a', 'أ': 'a', 'إ': 'i', 'آ': 'aa',
 	'ب': 'b', 'ت': 't', 'ث': 'th',
@@ -244,4 +246,26 @@ export function kebabToCamelCase(kebab: string): string {
         result += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
     }
     return result;
+}
+
+/**
+ * Executes an asynchronous function within the provided Angular Injection Context.
+ * If the injection context fails (e.g., due to timing or framework error),
+ * it falls back to direct execution to prevent a complete application crash.
+ * * This is essential for safely running lazy-loaded or dynamic code (like entity configs).
+ */
+export async function executeWithContextFallback<T = any>(
+    fn: () => Promise<T>,
+    injector: Injector
+): Promise<T> {
+    try {
+        // Attempt execution within the Angular Injection Context
+        return await runInInjectionContext(injector, fn);
+    } catch (err) {
+        // Log the failure to the console for debugging
+        console.warn('[MikaContext] Injection context failed, attempting fallback.', err);
+
+        // Fallback: Execute the function directly (raw execution)
+        return await fn();
+    }
 }

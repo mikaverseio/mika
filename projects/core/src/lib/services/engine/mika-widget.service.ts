@@ -4,6 +4,7 @@ import { MikaStatCardComponent } from '../../components/dashboard/mika-stat-card
 import { MikaRecentCardComponent } from '../../components/dashboard/mika-recent-card.component';
 import { MikaBarChartCardComponent } from '../../components/dashboard/mika-barchart-card.component';
 import { MikaLineChartCardComponent } from '../../components/dashboard/mika-linechart-card.component';
+import { MikaStatListCardComponent } from '../../components/dashboard/mika-stat-list-card.component';
 
 @Injectable({ providedIn: 'root' })
 export class MikaWidgetService {
@@ -14,6 +15,7 @@ export class MikaWidgetService {
         'recent-list': MikaRecentCardComponent,
         'chart-bar': MikaBarChartCardComponent,
         'chart-line': MikaLineChartCardComponent,
+		'stat-list-card': MikaStatListCardComponent,
         'custom-comp': null! // This must be provided via config/plugin
     };
 

@@ -10,23 +10,29 @@ export interface MikaDashboardConfig {
     /** The display label for the tab or page header. e.g., 'System Overview' */
     label: string;
 
+	icon?: string;
+
     /** Determines the order of the tab relative to other dashboards. */
     order?: number;
 
-    /** * Defines the overall layout of the widgets in this dashboard.
-     * @example 'grid-2-col' (two columns of equal width)
-     */
-    layout?: 'grid-2-col' | 'grid-3-col' | 'grid-default';
+	default?: boolean;
 
-    /** * The array of widgets to be rendered on this specific tab.
-     * Replaces the generic 'widgets?: any[]'.
-     */
-    widgets?: MikaWidgetConfig[];
+	groups?: MikaDashboardGroup[];
 
-    /** * Optional custom components injected at the top or bottom of the layout.
-     * Retained from your original structure.
-     */
-    components?: any[];
+}
+
+export interface MikaDashboardGroup {
+	id: string;
+	label?: string;
+	icon?: string;
+	layout?: 'grid-1' | 'grid-2' | 'grid-3' | 'grid-4' | 'auto' | string;
+	customGridTemplate?: string;
+	widgets?: MikaWidgetConfig[];
+	components?: any[];
+	collapsible?: boolean;
+	collapsed?: boolean;
+	order?: number;
+	permissions?: string[];
 }
 
 /**
@@ -39,8 +45,14 @@ export interface MikaWidgetConfig {
     /** Title displayed in the widget card header. */
     title: string;
 
+	icon?: string;
+
+	subTitle?: string;
+
+	teaser?: string;
+
     /** The type of widget component to render. */
-    type: 'stat-card' | 'recent-list' | 'chart-bar' | 'chart-line' | 'custom-comp';
+    type: 'stat-card' | 'recent-list' | 'chart-bar' | 'chart-line' | 'custom-comp' | 'stat-list-card';
 
     /** * The size/span the widget should take in the CSS grid layout.
      * @example 'col-span-1', 'col-span-2', or simple 'medium'.
