@@ -8,10 +8,21 @@
 	}
 
 	@case ('button') {
-		<ion-button (click)="toggle()">
-			<ion-icon slot="icon-only" name="contrast-outline"></ion-icon>
-			<ion-icon slot="icon-only" name="sunny-outline"></ion-icon>
-			<ion-icon slot="icon-only" name="moon-outline"></ion-icon>
+		<ion-button (click)="toggle()" [matTooltip]="theme.activeMode() | translate">
+			@switch (theme.activeMode()) {
+				@case('system') {
+					<ion-icon slot="icon-only" name="contrast-outline"></ion-icon>
+				}
+
+				@case ('dark') {
+					<ion-icon slot="icon-only" name="moon-outline"></ion-icon>
+				}
+
+				@case ('light') {
+					<ion-icon slot="icon-only" name="sunny-outline"></ion-icon>
+				}
+			}
+
 		</ion-button>
 	}
 }

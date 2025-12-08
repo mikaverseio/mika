@@ -18,7 +18,7 @@ interface RecentItem {
 }
 
 @Component({
-    selector: 'mika-recent-card',
+    selector: 'mika-linechart-card',
     standalone: true,
     imports: [
         CommonModule, IonCard, IonCardHeader, IonCardTitle, IonCardContent,

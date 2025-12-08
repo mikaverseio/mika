@@ -94,10 +94,12 @@
 
 	--ion-background-color: #f4f7fb;
 	--ion-toolbar-background: #f4f7fb;
+
+	--menu-background: var(--ion-color-primary-tint);
 }
 
 .ion-palette-dark.md {
-	--ion-background-color: #020617;
+	--ion-background-color: #13161e;
 	--ion-background-color-rgb: 2,6,23;
 
 	--ion-text-color: #fff;
@@ -143,12 +145,16 @@
 	--ion-background-color-step-900: #e6e6e8;
 	--ion-background-color-step-950: #f2f3f3;
 
-	--ion-item-background: #1e1e1e;
-	--ion-toolbar-background: #020617;
-	--ion-tab-bar-background: #1f1f1f;
+	--ion-item-background: #13161e;
+	--ion-toolbar-background: #13161e;
+	--ion-tab-bar-background: #13161e;
 	--ion-card-background: #1e1e1e
 
 	--mat-paginator-container-background-color: #1e1e1e;
+
+	--ion-toolbar-segment-color-checked: #fff;
+
+	--menu-background: var(--ion-color-primary);
 }
 
 /*# sourceMappingURL=dark.class.css.map */

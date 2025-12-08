@@ -18,7 +18,7 @@ interface RecentItem {
 }
 
 @Component({
-    selector: 'mika-recent-card',
+    selector: 'mika-barchart-card',
     standalone: true,
     imports: [
         CommonModule, IonCard, IonCardHeader, IonCardTitle, IonCardContent,

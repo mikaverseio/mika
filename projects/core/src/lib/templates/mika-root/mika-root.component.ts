@@ -99,8 +99,4 @@ export class MikaRootComponent implements OnInit, AfterViewInit {
 		this.actions.setAlert(this.confirmActionAlert);
 	}
 
-	toggleAppearance() {
-		this.theme.toggleChange('system')
-	}
-
 }

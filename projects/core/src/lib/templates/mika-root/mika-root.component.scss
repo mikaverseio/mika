@@ -1,5 +1,9 @@
+ion-menu {
+	border: 0;
+}
+
 ion-menu ion-content {
-	--background: var(--ion-color-primary);
+	--background: var(--menu-background);
 }
 
 ion-menu.md ion-content {
@@ -16,6 +20,10 @@ ion-menu ion-note {
 
 ion-menu ion-list-header {
 	color: #fff;
+}
+
+ion-menu ion-toolbar {
+	--background: var(--menu-background);
 }
 
 ion-menu ion-note {
@@ -86,9 +94,9 @@ ion-header {
 
 ion-footer {
 	padding: 5px 15px;
-	background: var(--ion-color-primary);
+	background: var(--ion-color-primary-tint);
 }
 
 .actions-toolbar {
-	--background: #141722 !important
+	--background: #13161e !important
 }

@@ -9,6 +9,8 @@ import { MikaKeys } from '../../enum/mika-key.enum';
 import { MikaAppContextService } from './mika-app-context.service';
 import { MikaLoggerService } from '../infra/mika-logger.service';
 import { BehaviorSubject } from 'rxjs';
+import { getMapEntries } from '../../utils';
+import { MikaEntityConfig } from '../../interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class MikaContextService {
@@ -39,6 +41,12 @@ export class MikaContextService {
 
 	settings = computed(() => this.getActiveApp()?.settings);
 	entityConfigs = computed(() => this.getActiveApp()?.entities);
+	entityConfigsArray = computed(() => {
+		const entities = this.entityConfigs();
+		const array = getMapEntries(entities) as MikaEntityConfig[];
+		console.log('arrrrrrr', array);
+		return array;
+	});
 	dashboards = computed(() => this.getActiveApp()?.dashboards);
 	sidebarGroups = computed(() => this.getActiveApp()?.settings?.sidebarGroups);
 	appsCount = computed(() => this.apps().size);

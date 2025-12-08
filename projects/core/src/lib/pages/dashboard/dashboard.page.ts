@@ -1,21 +1,24 @@
 import { Component, computed, DestroyRef, inject, OnInit, signal, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonLabel, IonMenuButton, IonSegment, IonSegmentButton, IonTitle, IonToolbar, IonButtons, IonSpinner, IonIcon, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonLabel, IonMenuButton, IonSegment, IonSegmentButton, IonTitle, IonToolbar, IonButtons, IonSpinner, IonIcon, IonButton, IonPopover, IonList, IonItem } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MikaWidgetService } from '../../services/engine/mika-widget.service';
-import { MikaDashboardConfig, MikaDashboardGroup, MikaWidgetConfig } from '../../interfaces';
+import { MikaDashboardConfig, MikaDashboardGroup, MikaEntityConfig, MikaWidgetConfig } from '../../interfaces';
 import { MikaContextService, MikaDashboardService } from '../../services';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { from, switchMap, tap } from 'rxjs';
 import { getGroupGridLayout, getWidgetSize } from '../../utils/dashboard.util';
+import { RouterModule } from '@angular/router';
+import { MikaThemeToggleComponent } from "../../components/ui/mika-theme-toggle/mika-theme-toggle.component";
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.page.html',
 	styleUrls: ['./dashboard.page.scss'],
 	standalone: true,
-	imports: [IonSpinner, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, TranslatePipe, IonSegment, IonSegmentButton, IonLabel, IonMenuButton, IonIcon, IonButton]
+	imports: [IonItem, IonList, IonPopover, IonSpinner, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, TranslatePipe, IonSegment, IonSegmentButton, IonLabel, IonMenuButton, IonIcon, IonButton, RouterModule, MikaThemeToggleComponent, FormsModule, MatTooltipModule]
 })
 export class MikaDashboardPage implements OnInit {
 	private widgetService = inject(MikaWidgetService);
@@ -34,6 +37,8 @@ export class MikaDashboardPage implements OnInit {
 		const id = this.activeDashboardId();
 		return this.dashboardConfigs().find(d => d.id === id) ?? null;
 	});
+
+	entities: MikaEntityConfig[] = [];
 
 	constructor() {
 		// Subscribe to context changes and refresh dashboards when context changes

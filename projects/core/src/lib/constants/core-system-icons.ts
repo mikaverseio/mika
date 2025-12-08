@@ -26,6 +26,7 @@ export const CORE_SYSTEM_ICONS: Record<string, any> = {
     'trash-outline': ionIcons.trashOutline,
     'trash': ionIcons.trash,
     'add-circle': ionIcons.addCircle,
+    'add-circle-outline': ionIcons.addCircleOutline,
     'create-outline': ionIcons.createOutline,
     'create': ionIcons.create,
     'close-outline': ionIcons.closeOutline,
@@ -67,5 +68,10 @@ export const CORE_SYSTEM_ICONS: Record<string, any> = {
     'cloud-download': ionIcons.cloudDownload,
 	'swap-horizontal-outline': ionIcons.swapHorizontalOutline,
 	'stats-chart-outline': ionIcons.statsChartOutline,
-	'checkmark-done-circle-outline': ionIcons.checkmarkDoneCircleOutline
+	'checkmark-done-circle-outline': ionIcons.checkmarkDoneCircleOutline,
+
+	'contrast-outline': ionIcons.contrastOutline,
+	'sunny-outline': ionIcons.sunnyOutline,
+	'moon-outline': ionIcons.moonOutline,
+
 };
