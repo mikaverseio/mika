@@ -1,0 +1,17 @@
+@switch (renderMode) {
+	@case('select') {
+		<ion-select [label]="'mf-select-theme' | translate" (ionChange)="setMode($event.detail.value)" interface="popover" [value]="theme.activeMode()">
+			<ion-select-option value="system">{{ 'mf-theme-system' | translate }}</ion-select-option>
+			<ion-select-option value="dark">{{ 'mf-theme-dark' | translate }}</ion-select-option>
+			<ion-select-option value="light">{{ 'mf-theme-light' | translate }} </ion-select-option>
+		</ion-select>
+	}
+
+	@case ('button') {
+		<ion-button (click)="toggle()">
+			<ion-icon slot="icon-only" name="contrast-outline"></ion-icon>
+			<ion-icon slot="icon-only" name="sunny-outline"></ion-icon>
+			<ion-icon slot="icon-only" name="moon-outline"></ion-icon>
+		</ion-button>
+	}
+}

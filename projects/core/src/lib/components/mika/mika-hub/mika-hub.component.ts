@@ -1,6 +1,6 @@
 
 import { Component, inject, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonContent, IonSearchbar, IonList, IonItem, IonButton, IonIcon, IonButtons, IonTitle , ModalController, IonInput, IonChip, IonLabel, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, IonItemDivider, IonItemGroup, IonInputPasswordToggle, IonSelect, IonSelectOption, IonPopover } from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonContent, IonSearchbar, IonList, IonItem, IonButton, IonIcon, IonButtons, IonTitle, ModalController, IonInput, IonChip, IonLabel, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, IonItemDivider, IonItemGroup, IonInputPasswordToggle, IonSelect, IonSelectOption, IonPopover } from "@ionic/angular/standalone";
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,17 +11,19 @@ import { MikaAuthService } from '../../../services/auth/mika-auth.service';
 import { MikaLoading } from '../../../services/data/mika-loading.service';
 import { MikaAppConfig } from '../../../interfaces/core/mika-app-config.interface';
 import { MikaAiGeneratorComponent } from '../../ai/mika-ai-generator/mika-ai-generator.component';
-import { MikaUiService } from '../../../services';
+import { MikaI18nService, MikaUiService } from '../../../services';
+import { MikaThemeToggleComponent } from "../../ui/mika-theme-toggle/mika-theme-toggle.component";
 
 @Component({
 	selector: 'mika-hub',
 	templateUrl: './mika-hub.component.html',
 	styleUrls: ['./mika-hub.component.scss'],
-	imports: [IonLabel, IonChip, IonPopover, IonInput, IonTitle, IonButtons, IonIcon, IonButton, IonItem, IonList, IonSearchbar, IonContent, IonToolbar, IonHeader, TranslatePipe, FormsModule, CommonModule, MatTooltipModule, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, MikaAiGeneratorComponent, IonItemDivider, IonItemGroup, IonInputPasswordToggle, IonSelect, IonSelectOption]
+	imports: [IonLabel, IonChip, IonPopover, IonInput, IonTitle, IonButtons, IonIcon, IonButton, IonItem, IonList, IonSearchbar, IonContent, IonToolbar, IonHeader, TranslatePipe, FormsModule, CommonModule, MatTooltipModule, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView, MikaAiGeneratorComponent, IonItemDivider, IonItemGroup, IonInputPasswordToggle, IonSelect, IonSelectOption, MikaThemeToggleComponent]
 })
 export class MikaHubComponent implements OnInit {
 
-  public context = inject(MikaContextService);
+	public context = inject(MikaContextService);
+	public i18n = inject(MikaI18nService);
 
 	selectedTab = 'tenants';
 
@@ -73,7 +75,7 @@ export class MikaHubComponent implements OnInit {
 	async login(email: string, password: string, app: MikaAppConfig) {
 		try {
 			this.loading.present();
-			const response: any = await this.auth.login({email: email, password: password},  app);
+			const response: any = await this.auth.login({ email: email, password: password }, app);
 
 			if (response.success) {
 				await this.switchTenant(app.appId);
@@ -86,10 +88,6 @@ export class MikaHubComponent implements OnInit {
 		} finally {
 			this.loading.dismiss();
 		}
-
-
-
-
 	}
 
 	async logout(tenant: MikaAppConfig) {
@@ -100,6 +98,10 @@ export class MikaHubComponent implements OnInit {
 			this.switchTenant(remaining[0]);
 		}
 		this.loading.dismiss();
+	}
+
+	setDashboardLocale(event: any) {
+		this.i18n.setDashboardLocale(event.detail.value);
 	}
 
 }

@@ -1,22 +1,22 @@
 ion-list {
 	background: none;
 	ion-item {
-		--background: #111524;
-		color: #fff;
+		// --background: #111524;
+		// color: #fff;
 	}
 }
 
 
-ion-segment-button {
-	--color: #fff;
-	color: #fff;
-	--color-hover: #fff;
-}
+// ion-segment-button {
+// 	--color: #fff;
+// 	color: #fff;
+// 	--color-hover: #fff;
+// }
 
 ion-item-group {
 	margin: 0 0 2px;
 	padding: 10px;
-    background: #111524;
+    // background: #111524;
 
 	.input-item {
 		--background: var(--ion-color-primary);
