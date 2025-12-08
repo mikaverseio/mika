@@ -1,22 +1,23 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { MikaLocalizationConfig, MikaLanguageOption } from '../../interfaces/entity/mika-localization-config.interface';
 import { TranslateService } from '@ngx-translate/core';
-import { Preferences } from '@capacitor/preferences';
 import { isEmpty } from '../../utils/utils';
 import { MikaApiService } from '../http/mika-api.service';
 import { MikaLocalStorageAdapterService } from '../data/mika-localstorage-adapter.service';
 import { MikaContextService } from '../engine/mika-context.service';
 import { MikaLoggerService } from './mika-logger.service';
 import { MikaConfigService } from '../engine/mika-config.service';
+import { MikaStorageService } from './mika-storage.service';
+import { MikaKeys } from '../../enum';
 
 @Injectable({ providedIn: 'root' })
 export class MikaI18nService {
-  translate = inject(TranslateService);
+	translate = inject(TranslateService);
 
 	private default: MikaLanguageOption[] = [
-        { title: 'English', locale: 'en', direction: 'ltr', default: false },
-        { title: 'العربية', locale: 'ar', direction: 'rtl', default: true }
-    ];
+		{ title: 'English', locale: 'en', direction: 'ltr', default: false },
+		{ title: 'العربية', locale: 'ar', direction: 'rtl', default: true }
+	];
 
 	private languagesSignal = signal<MikaLanguageOption[]>(this.default);
 	private currentLocaleSignal = signal<string>(this.translate.getDefaultLang() || 'ar');
@@ -26,12 +27,12 @@ export class MikaI18nService {
 	tableLocalSignal = signal<string>(this.translate.getDefaultLang() || 'ar');
 
 	constructor(
-		private app: MikaContextService,
 		private config: MikaConfigService,
 		private api: MikaApiService,
 		private localAdapter: MikaLocalStorageAdapterService,
-		private logger: MikaLoggerService
-	) {}
+		private logger: MikaLoggerService,
+		private storage: MikaStorageService
+	) { }
 
 	async register(languageConfig: MikaLocalizationConfig) {
 
@@ -103,52 +104,58 @@ export class MikaI18nService {
 		this.tableLocalSignal.set(this.translate.getDefaultLang() || 'ar');
 	}
 
-	// dashboard
-
 	getDashboardDefaultLang() {
 		return this.languages.find((item: any) => item.locale === (this.translate.getDefaultLang() || 'ar'))
 	}
 
-   async setInitialAppLanguage(locale?: string) {
+	async initializeDashboardLanguage() {
+		const pref = await this.storage.get(MikaKeys.DashboardLanguage);
+		const lang = pref || this.getDashboardDefaultLang();
+		await this.setDashboardLanguage(lang);
+	}
+
+	async setInitialAppLanguage(locale?: string) {
 		if (locale) {
 			const lang = this.languages.find((item: any) => item.locale === locale);
 			await this.setDashboardLanguage(lang);
 			return;
 		}
 
-		const storedDefaultLang = (await Preferences.get({ key: 'dashboardLang' })).value;
+		const storedDefaultLang = await this.storage.get(MikaKeys.DashboardLanguage);
 		const selected = storedDefaultLang && !isEmpty(storedDefaultLang) ? JSON.parse(storedDefaultLang) : this.getDashboardDefaultLang();
-        await this.setDashboardLanguage(selected);
-    }
+		await this.setDashboardLanguage(selected);
+	}
 
-    async setDashboardLanguage(language: any) {
+	async setDashboardLanguage(language: any) {
 		this.dashLanguage.set(language);
 
-		await Preferences.set({
-			key: 'dashboardLang',
-			value: JSON.stringify(this.dashLanguage())
-		});
+		await this.storage.set(MikaKeys.DashboardLanguage, this.dashLanguage())
 
 		this.setTranslateServieConfig();
 
-        this.updateHtmlAttributes();
-    }
+		this.updateHtmlAttributes();
+	}
+
+	async setDashboardLocale(locale: string) {
+		const lang = this.languages.find((item: any) => item.locale === locale);
+		await this.setDashboardLanguage(lang);
+	}
 
 	getDashboardLanguage() {
-        return this.dashLanguage();
-    }
+		return this.dashLanguage();
+	}
 
 	setTranslateServieConfig() {
 		const lang: any = this.dashLanguage();
 		this.translate.setDefaultLang(lang?.locale);
-        this.translate.use(lang.locale);
+		this.translate.use(lang.locale);
 	}
 
 	updateHtmlAttributes() {
 		const lang: any = this.dashLanguage();
 		document.documentElement.lang = lang.locale;
-        document.documentElement.dir = lang.direction;
-        document.documentElement.classList.add(`${lang.locale}-font`);
+		document.documentElement.dir = lang.direction;
+		document.documentElement.classList.add(`${lang.locale}-font`);
 	}
 
 	setRTL() {

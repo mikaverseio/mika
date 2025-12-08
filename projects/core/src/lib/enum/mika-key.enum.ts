@@ -25,4 +25,6 @@ export enum MikaKeys {
 	EnvPrefix = 'mika.env.',
 
 	ActiveTheme = 'mika.theme',
+
+	DashboardLanguage = 'mika.dashboard.language',
 }

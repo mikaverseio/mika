@@ -1,5 +1,5 @@
 <ion-header>
-	<ion-toolbar color="primary">
+	<ion-toolbar>
 		<ion-buttons slot="start">
 			<ion-button (click)="close()">
 				<ion-icon slot="icon-only" name="close-circle"></ion-icon>
@@ -8,26 +8,26 @@
 		<ion-title>مركز تحكم ميكا</ion-title>
 
 	</ion-toolbar>
-	<ion-toolbar color="primary">
+	<ion-toolbar>
 		<ion-segment [(ngModel)]="selectedTab" color="secondary" value="tenants" [scrollable]="true">
-			<ion-segment-button value="tenants" content-id="tenants">
+			<ion-segment-button value="tenants">
 				<ion-label>مدير التطبيقات</ion-label>
 			</ion-segment-button>
-			<ion-segment-button value="settings" content-id="settings">
+			<ion-segment-button value="settings">
 				<ion-label>الإعدادات</ion-label>
 			</ion-segment-button>
-			<ion-segment-button value="ai" content-id="ai">
+			<ion-segment-button value="ai">
 				<ion-label>ميكا AI</ion-label>
 			</ion-segment-button>
 		</ion-segment>
 	</ion-toolbar>
 </ion-header>
 
-<ion-content color="primary">
+<ion-content>
 
-	<ion-segment-view>
-		<ion-segment-content id="tenants">
-			<ion-list lines="full" [inset]="true">
+	@switch (selectedTab) {
+		@case('tenants') {
+			<ion-list lines="full" [inset]="true" [inset]="true" mode="ios">
 				@for (tenant of context.getAllApps(); track tenant.appId; let i = $index) {
 					<ion-item [ngClass]="{active: context.getActiveAppId() === tenant.appId}">
 						<div class="tenant-dets" slot="start">
@@ -115,11 +115,29 @@
 					}
 				}
 			</ion-list>
-		</ion-segment-content>
-		<ion-segment-content id="settings"></ion-segment-content>
-		<ion-segment-content id="ai">
+		}
+
+		@case ('settings') {
+			<ion-list lines="full" [inset]="true" mode="ios">
+				<ion-item>
+					<mika-theme-toggle></mika-theme-toggle>
+				</ion-item>
+				<ion-item button id="open-modal">
+					<ion-select interface="popover" (ionChange)="setDashboardLocale($event)" v>
+						@for (lang of i18n.languages ; track lang.locale) {
+							<ion-select-option [value]="lang.locale">{{ lang.title }}</ion-select-option>
+						}
+					</ion-select>
+				</ion-item>
+				<ion-item button>
+					<ion-label>المستخدمين والأدوار</ion-label>
+				</ion-item>
+			</ion-list>
+		}
+
+		@case ('ai') {
 			<mika-ai-generator></mika-ai-generator>
-		</ion-segment-content>
-	</ion-segment-view>
+		}
+	}
 
 </ion-content>

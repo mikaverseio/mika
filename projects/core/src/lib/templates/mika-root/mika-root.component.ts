@@ -56,10 +56,9 @@ export class MikaRootComponent implements OnInit, AfterViewInit {
 		public icons: MikaIconResolverService,
 		public theme: MikaThemeService
 	) {
-
-		// this.icons.registerConfigIcons();
-
 		this.isLoading = this.mikaLoading.isLoading;
+		this.languageService.initializeDashboardLanguage();
+
 		effect(() => {
 			if (this.isLoading()) {
 				this.globalLoader?.present();
