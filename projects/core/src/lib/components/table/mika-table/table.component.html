@@ -1,6 +1,6 @@
 
 <ion-header [translucent]="true">
-	<ion-toolbar color="light">
+	<ion-toolbar>
 		<ion-buttons slot="start">
 			<ion-menu-button></ion-menu-button>
 		</ion-buttons>
@@ -60,7 +60,7 @@
 
 
 	@if (showFilter()) {
-		<ion-toolbar color="light">
+		<ion-toolbar>
 			<app-table-filters [entityConfig]="entityConfig" (onSubmit)="onFilterSubmit($event)"></app-table-filters>
 		</ion-toolbar>
 	}

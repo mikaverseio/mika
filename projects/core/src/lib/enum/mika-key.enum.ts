@@ -23,4 +23,6 @@ export enum MikaKeys {
     FormIdPrefix = 'mika.form.',
 
 	EnvPrefix = 'mika.env.',
+
+	ActiveTheme = 'mika.theme',
 }
