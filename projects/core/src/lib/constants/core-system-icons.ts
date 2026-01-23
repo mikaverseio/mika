@@ -22,6 +22,7 @@ export const CORE_SYSTEM_ICONS: Record<string, any> = {
     "mail-outline": ionIcons.mailOutline,
 
     // Actions (CRUD, Save/Cancel, Workflow)
+	'save': ionIcons.save,
     'save-outline': ionIcons.saveOutline,
     'trash-outline': ionIcons.trashOutline,
     'trash': ionIcons.trash,

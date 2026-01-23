@@ -96,6 +96,12 @@
 	--ion-toolbar-background: #f4f7fb;
 
 	--menu-background: var(--ion-color-primary-tint);
+
+	--mika-table-background-color: #fff;
+
+	--mat-table-background-color: var(--mika-table-background-color);
+
+	--mat-paginator-container-background-color: var(--ion-background-color);
 }
 
 .ion-palette-dark.md {
@@ -155,6 +161,21 @@
 	--ion-toolbar-segment-color-checked: #fff;
 
 	--menu-background: var(--ion-color-primary);
+
+	--mika-table-background-color: #181b24;
+
+	--mat-table-header-headline-color: #fff;
+	--mat-table-row-item-label-text-color: #fff;
+
+	--mat-table-row-item-outline-color: #1c2343;
+
+	--mat-paginator-container-text-color: #fff;
+
+	--mdc-icon-button-disabled-icon-color: #fff;
+
+	--mat-select-enabled-trigger-text-color: #fff;
+
+	--mat-paginator-disabled-icon-color: #3a3b3c;
 }
 
 /*# sourceMappingURL=dark.class.css.map */
