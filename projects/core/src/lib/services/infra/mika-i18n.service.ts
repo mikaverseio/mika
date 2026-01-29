@@ -21,7 +21,7 @@ export class MikaI18nService {
 
 	private languagesSignal = signal<MikaLanguageOption[]>(this.default);
 	private currentLocaleSignal = signal<string>(this.translate.getDefaultLang() || 'ar');
-	private dashLanguage = signal(null);
+	private dashLanguage = signal<MikaLanguageOption | null>(null);
 
 	formLocaleSignal = signal<string>(this.translate.getDefaultLang() || 'ar');
 	tableLocalSignal = signal<string>(this.translate.getDefaultLang() || 'ar');

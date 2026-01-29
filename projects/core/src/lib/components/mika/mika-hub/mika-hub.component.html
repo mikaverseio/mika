@@ -123,7 +123,7 @@
 					<mika-theme-toggle></mika-theme-toggle>
 				</ion-item>
 				<ion-item button id="open-modal">
-					<ion-select interface="popover" (ionChange)="setDashboardLocale($event)" v>
+					<ion-select interface="popover" (ionChange)="setDashboardLocale($event)" [value]="getDashboardLocale()">
 						@for (lang of i18n.languages ; track lang.locale) {
 							<ion-select-option [value]="lang.locale">{{ lang.title }}</ion-select-option>
 						}
