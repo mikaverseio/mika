@@ -104,4 +104,8 @@ export class MikaHubComponent implements OnInit {
 		this.i18n.setDashboardLocale(event.detail.value);
 	}
 
+	getDashboardLocale() {
+		return this.i18n.getDashboardLanguage()?.locale;
+	}
+
 }
