@@ -52,9 +52,7 @@ export class MikaEngineService {
         this.context.init(config);
 
 		// 2. Register Languages
-		this.i18nService.register(this.context.settings()?.languages! || []);
-
-
+		// this.i18nService.register(this.context.settings()?.languages! || []);
 
 		// 3. Preload Entities (Async data fetching)
         this.preloadService.handlePreload(

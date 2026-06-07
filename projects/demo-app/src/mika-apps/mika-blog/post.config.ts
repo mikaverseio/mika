@@ -87,6 +87,7 @@ export const postConfig: MikaEntityConfig = {
                 format: 'mediumDate'
             }
         ],
+		recentColumns: ['title', 'status', 'publishedAt']
     },
     form: {
         fields: [

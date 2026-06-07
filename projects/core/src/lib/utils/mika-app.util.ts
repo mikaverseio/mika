@@ -95,4 +95,29 @@ export const slugifys = (text: string): string  => {
 	  .replace(/-+/g, '-');        // Collapse dashes
 }
 
+export function extractAppIcons(app: any): Set<string> {
+	const icons = new Set<string>();
 
+	// 1. Sidebar groups → items
+	app.settings?.sidebarGroups?.forEach((group: any) =>
+		group.items?.forEach((item: any) => item.icon && icons.add(item.icon))
+	);
+
+	// 2. Entities → sidebarConfig.icon
+	for (const [, config] of app.entities ?? []) {
+		const sidebarIcon = config?.sidebarConfig?.icon;
+		if (sidebarIcon) icons.add(sidebarIcon);
+	}
+
+	// 3. Dashboards → dashboard.icon + group.icon + widget.icon
+	app.dashboards?.forEach((dashboard: any) => {
+		if (dashboard.icon) icons.add(dashboard.icon);
+
+		dashboard.groups?.forEach((group: any) => {
+			if (group.icon) icons.add(group.icon);
+			group.widgets?.forEach((w: any) => w.icon && icons.add(w.icon));
+		});
+	});
+
+	return icons;
+}

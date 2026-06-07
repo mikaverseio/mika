@@ -28,6 +28,7 @@ export interface MikaEntityConfig extends MikaHookRegistry {
 		delete?: string;
 		allResults?: string;
 		custom?: Record<string, CustomEndpoint>;
+		count?: string;
 	};
 
 	request?: {
@@ -66,6 +67,7 @@ export interface MikaEntityConfig extends MikaHookRegistry {
 		filters?: Array<MikaFilterConfig>;
 		filterSubmitMode?: 'onChange' | 'onSubmit' | null;
 		mobileColumns?: Array<MikaColumnConfig['key']>;
+		recentColumns?: Array<MikaColumnConfig['key']>;
 	};
 
 	form: {

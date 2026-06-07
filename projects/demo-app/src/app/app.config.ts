@@ -9,7 +9,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideMika([
 		makeMikaBlogApp(),
-		makeMikaStoreApp(),
+		// makeMikaStoreApp(),
 	]),
   ]
 

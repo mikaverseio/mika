@@ -5,6 +5,7 @@ import { MikaContextService } from './mika-context.service'; // Inject Context
 import { MikaLoggerService } from '../infra/mika-logger.service';
 import { MikaUrlHelper } from '../../helpers';
 import { EMikaAction } from '../../enum';
+import { executeWithContextFallback } from '../../utils';
 
 @Injectable({ providedIn: 'root' })
 export class MikaConfigService {
@@ -45,7 +46,7 @@ export class MikaConfigService {
 		let config: MikaEntityConfig;
 
 		if (typeof raw === 'function') {
-			const resolved = await this.executeWithFallback(raw);
+			const resolved = await executeWithContextFallback(raw, this.injector);
 
 			if (!resolved || typeof resolved !== 'object') {
 				throw new Error(`[MikaEntity] Function config for "${contentType}" is invalid or returned nothing.`);

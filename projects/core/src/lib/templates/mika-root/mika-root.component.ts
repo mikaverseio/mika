@@ -16,6 +16,7 @@ import { MikaTenantSwitcherComponent } from '../../components/switchers/mika-ten
 import { MikaActionService, MikaIconResolverService } from '../../services';
 import { MikaHubComponent } from '../../components/mika/mika-hub/mika-hub.component';
 import { MikaSidebarService } from '../../services/view/mika-sidebar.service';
+import { MikaThemeService } from '../../services/view/mika-theme.service';
 
 
 @Component({
@@ -52,12 +53,12 @@ export class MikaRootComponent implements OnInit, AfterViewInit {
 		private modalController: ModalController,
 		private actions: MikaActionService,
 		public sidebar: MikaSidebarService,
-		public icons: MikaIconResolverService
+		public icons: MikaIconResolverService,
+		public theme: MikaThemeService
 	) {
-
-		// this.icons.registerConfigIcons();
-
 		this.isLoading = this.mikaLoading.isLoading;
+		this.languageService.initializeDashboardLanguage();
+
 		effect(() => {
 			if (this.isLoading()) {
 				this.globalLoader?.present();
@@ -73,6 +74,7 @@ export class MikaRootComponent implements OnInit, AfterViewInit {
 		// await this.mika.sidebar.render();
 		// this.isInitializing.set(false)
 		// this.mikaLoading.dismiss();
+		await this.theme.initializeUserPreferances();
 	}
 
 	async showTenantSwitcher() {

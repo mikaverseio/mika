@@ -79,5 +79,15 @@
 	"mf-tenant-switcher-header": "مدير التطبيقات",
 	"mf-leave-confirmation": "لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد الخروج؟",
 	"mf-logged-in": "مسجل الدخول",
-	"mf-logged-out": "غير مسجل"
+	"mf-logged-out": "غير مسجل",
+	"System Overview": "معلومات",
+	"Stats": "إحصائيات",
+	"Registered Apps": "التطبيقات المسجّلة",
+	"Registered Entities": "الكيانات المسجّلة",
+	"Active Environment": "البيئة النشطة",
+	"Environment currently used by the system": "البيئة التي يعمل عليها النظام حالياً",
+	"Active App": "التطبيق النشط",
+	"The application currently in use": "التطبيق الذي يعمل حالياً",
+	"Total number of registered entities": "إجمالي الكيانات المسجّلة",
+	"Number of registered Mika apps": "عدد تطبيقات ميكا المسجّلة"
 }

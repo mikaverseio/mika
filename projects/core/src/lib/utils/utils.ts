@@ -1,3 +1,5 @@
+import { Injector, runInInjectionContext } from "@angular/core";
+
 const arabicMap: Record<string, string> = {
 	'ا': 'a', 'أ': 'a', 'إ': 'i', 'آ': 'aa',
 	'ب': 'b', 'ت': 't', 'ث': 'th',
@@ -206,8 +208,8 @@ export function deepMerge(target: any, source: any): any {
 }
 
 export function getValueByPath(obj: any, path: string): any {
-  if (!path || !obj) return undefined;
-  return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+	if (!path || !obj) return undefined;
+	return path.split('.').reduce((acc, part) => acc && acc[part], obj);
 }
 
 export function printMikaConsoleBanner() {
@@ -229,19 +231,49 @@ export function printMikaConsoleBanner() {
 
 
 export function kebabToPascalCase(kebab: string): string {
-    // Splits by '-' and capitalizes the first letter of each part
-    return kebab.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
+	// Splits by '-' and capitalizes the first letter of each part
+	return kebab.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('');
 }
 
 export function kebabToCamelCase(kebab: string): string {
-    const parts = kebab.split('-');
+	const parts = kebab.split('-');
 
-    // 1. Take the first part as is (lowercase)
-    let result = parts[0];
+	// 1. Take the first part as is (lowercase)
+	let result = parts[0];
 
-    // 2. Capitalize the rest and append
-    for (let i = 1; i < parts.length; i++) {
-        result += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
-    }
-    return result;
+	// 2. Capitalize the rest and append
+	for (let i = 1; i < parts.length; i++) {
+		result += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
+	}
+	return result;
+}
+
+/**
+ * Executes an asynchronous function within the provided Angular Injection Context.
+ * If the injection context fails (e.g., due to timing or framework error),
+ * it falls back to direct execution to prevent a complete application crash.
+ * * This is essential for safely running lazy-loaded or dynamic code (like entity configs).
+ */
+export async function executeWithContextFallback<T = any>(
+	fn: () => Promise<T>,
+	injector: Injector
+): Promise<T> {
+	try {
+		// Attempt execution within the Angular Injection Context
+		return await runInInjectionContext(injector, fn);
+	} catch (err) {
+		// Log the failure to the console for debugging
+		console.warn('[MikaContext] Injection context failed, attempting fallback.', err);
+
+		// Fallback: Execute the function directly (raw execution)
+		return await fn();
+	}
+}
+
+
+export function getMapEntries(map: any) {
+	// The entries() method returns an iterable [key, value] pair.
+	// Array.from() converts that iterable into a standard Array.
+	// return Array.from(map.entries());
+	return Array.from(map.keys());
 }

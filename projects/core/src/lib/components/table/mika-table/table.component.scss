@@ -28,7 +28,7 @@ ion-img {
 }
 
 .mat-mdc-header-row {
-	background: #fff;
+	// background: #fff;
 }
 
 .mat-column-id {
@@ -64,9 +64,9 @@ ion-img {
     border-radius: 10px;
     overflow: hidden;
     // box-shadow: 0 0 19px 0px #0000000a;
-	box-shadow: rgba(175, 182, 201, 0.2) 0px 2px 4px -1px;
+	// box-shadow: rgba(175, 182, 201, 0.2) 0px 2px 4px -1px;
 	padding: 15px;
-    background: #fff;
+    background: var(--mika-table-background-color);
 }
 
 ion-toolbar {
