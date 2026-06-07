@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ProductCardComponent } from './product-card.component';
-import { Product } from '@org/models';
+import { Product } from '@mikaverse/models';
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
 describe('ProductCardComponent', () => {

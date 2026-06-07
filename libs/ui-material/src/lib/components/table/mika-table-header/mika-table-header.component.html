@@ -1,0 +1,21 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="toggleBulkMode()" [color]="bulkMode ? 'warn' : undefined">
+    <mat-icon>select_all</mat-icon>
+  </button>
+  <button mat-icon-button *ngIf="entityConfig.table.filters?.length || entityConfig.actions.items?.search" (click)="toggleFilter()">
+    <mat-icon>{{ showFilter() ? 'filter_alt' : 'filter_alt_off' }}</mat-icon>
+  </button>
+  <button mat-icon-button (click)="refresh()"><mat-icon>refresh</mat-icon></button>
+  <button mat-icon-button *ngIf="entityConfig.table.sortable" [routerLink]="['/sortable', entityConfig.contentType, 'title']">
+    <mat-icon>format_list_bulleted</mat-icon>
+  </button>
+  <button mat-icon-button *ngIf="entityConfig.actions.items?.create" [routerLink]="['/', entityConfig.contentType, 'create']">
+    <mat-icon>add_circle</mat-icon>
+  </button>
+  <span class="spacer"></span>
+  <mika-lang-switcher></mika-lang-switcher>
+</mat-toolbar>
+
+<mat-toolbar *ngIf="showFilter()">
+  <app-table-filters [entityConfig]="entityConfig" (onSubmit)="onFilterSubmit($event)"></app-table-filters>
+</mat-toolbar>

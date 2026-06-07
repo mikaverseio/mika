@@ -1,0 +1,106 @@
+<ion-list *ngIf="context.form" lines="none" [inset]="true" [formGroup]="context.form">
+	<ion-accordion-group [multiple]="true" [value]="['General', 'Options']">
+		@for (group of context.groupedFields; track group.key) {
+		<ion-accordion [value]="group.key">
+
+			<ion-item slot="header" color="light">
+				<ion-label>{{ group.key | translate }}</ion-label>
+			</ion-item>
+
+			<div slot="content">
+				@for (field of group.fields; track field.key) {
+				@if (['text','number','email'].includes(field.type)) {
+				<ion-item>
+					<ion-input [labelPlacement]="field.labelPlacement ?? 'stacked'"
+						[label]="field.label | translate" [type]="field.type" [formControlName]="field.key"
+						[placeholder]="field.placeholder ?? '' | translate"
+						[errorText]="field.errorText ?? 'mf-required-field' | translate"></ion-input>
+				</ion-item>
+				}
+
+				@if (field.type === 'textarea') {
+				<ion-item>
+					<ion-textarea [labelPlacement]="field.labelPlacement ?? 'stacked'"
+						[label]="field.label | translate" [formControlName]="field.key"
+						[placeholder]="field.placeholder ?? '' | translate"
+						[errorText]="field.errorText ?? 'mf-required-field' | translate"></ion-textarea>
+				</ion-item>
+				}
+
+				@if (field.type === 'checkbox') {
+				<ion-item>
+					<ion-checkbox slot="end" [formControlName]="field.key">
+						<ion-label>{{ field.label | translate }}</ion-label>
+					</ion-checkbox>
+				</ion-item>
+				}
+
+				@if (field.type === 'select' && field.options) {
+				<ion-item>
+					<ion-select [labelPlacement]="field.labelPlacement ?? 'stacked'"
+						[label]="field.label | translate" [formControlName]="field.key"
+						[placeholder]="field.placeholder ?? '' | translate"
+						[errorText]="field.errorText ?? 'mf-required-field' | translate">
+						@for (opt of field.options; track opt.value) {
+						<ion-select-option [value]="opt.value">
+							@if (opt.isTranslatable) {
+							{{ opt.label | translate }}
+							} @else if (opt.localizable) {
+
+							} @else {
+							{{ opt.label }}
+							}
+						</ion-select-option>
+						}
+					</ion-select>
+				</ion-item>
+				}
+
+				@if (field.type === 'multiselect' && field.options) {
+				<ion-item>
+					<ion-label position="stacked">{{ field.label | translate }}</ion-label>
+					<ion-select multiple="true" [formControlName]="field.key">
+						@for (opt of field.options; track opt.value) {
+						<ion-select-option [value]="opt.value">{{ opt.label }}</ion-select-option>
+						}
+					</ion-select>
+				</ion-item>
+				}
+
+				<!-- @if (field.type === 'richtext' && context.form.get(field.key); as ctrl) {
+				<ion-item>
+					<ion-label position="stacked">{{ field.label | translate }}</ion-label>
+					<div class="editor">
+						<quill-editor (onEditorCreated)="onEditorCreated($event)"
+							[formControlName]="field.key" theme="snow"
+							placeholder="اكتب هنا"></quill-editor>
+					</div>
+				</ion-item>
+				} -->
+
+				@if (field.type === 'date') {
+				<ion-item lines="none">
+					<ion-label position="stacked">{{ field.label | translate }}</ion-label>
+					<mat-form-field appearance="fill" style="width: 100%;">
+						<input matInput [matDatepicker]="picker" [formControlName]="field.key" />
+						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+						<mat-datepicker #picker></mat-datepicker>
+					</mat-form-field>
+				</ion-item>
+				}
+
+				@if (field.type === 'file') {
+				<ion-item>
+					<app-file-upload [label]="field.label" [accept]="field.accept || '*'"
+						[formControlName]="field.key"></app-file-upload>
+				</ion-item>
+				}
+
+
+				}
+
+			</div>
+		</ion-accordion>
+		}
+	</ion-accordion-group>
+</ion-list>

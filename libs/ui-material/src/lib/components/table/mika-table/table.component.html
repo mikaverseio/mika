@@ -1,0 +1,95 @@
+<mat-toolbar color="primary" class="table-toolbar">
+  <span class="title">{{ entityConfig.contentType | translate }}</span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="toggleBulkMode()" [color]="bulkMode ? 'warn' : undefined" [attr.aria-pressed]="bulkMode">
+    <mat-icon>select_all</mat-icon>
+  </button>
+  <button mat-icon-button *ngIf="entityConfig.table.filters?.length || entityConfig.actions.items?.search" (click)="toggleFilter()" [color]="showFilter() ? 'accent' : undefined">
+    <mat-icon>{{ showFilter() ? 'filter_alt' : 'filter_alt_off' }}</mat-icon>
+  </button>
+  <button mat-icon-button (click)="refresh()"><mat-icon>refresh</mat-icon></button>
+  <button mat-icon-button *ngIf="entityConfig.table.sortable" [routerLink]="['/sortable', entityConfig.contentType, 'title']">
+    <mat-icon>format_list_bulleted</mat-icon>
+  </button>
+  <button mat-icon-button *ngIf="entityConfig.actions.items?.create && auth.hasPermission('create')" [routerLink]="['/', entityConfig.contentType, 'create']">
+    <mat-icon>add_circle</mat-icon>
+  </button>
+</mat-toolbar>
+
+<section class="filters" *ngIf="showFilter()">
+  <app-table-filters [entityConfig]="entityConfig" (onSubmit)="onFilterSubmit($event)"></app-table-filters>
+</section>
+
+<section class="bulk-actions" *ngIf="bulkMode">
+  <div class="bulk-actions-inner">
+    <span>{{ 'mf-bulk-actions' | translate }}</span>
+    <span class="spacer"></span>
+    <button mat-icon-button color="warn" (click)="bulkDelete()" [disabled]="!hasSelection"><mat-icon>delete</mat-icon></button>
+    <button mat-icon-button (click)="selection.clear()" [disabled]="!hasSelection"><mat-icon>close</mat-icon></button>
+  </div>
+</section>
+
+<section class="table-wrapper mat-elevation-z8">
+  <table mat-table matSort [dataSource]="dataSource">
+    <ng-container *ngIf="bulkMode" matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="masterToggle()" [checked]="isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()"></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()" (change)="selection.toggle(row)" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)"></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <ng-container *ngFor="let column of entityConfig.table.columns" [matColumnDef]="column.columnDef || column.key">
+      <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.sortable ? column.key : ''">
+        {{ column.label | translate }}
+      </th>
+      <td mat-cell *matCellDef="let item" [ngClass]="{'chip-col': column.renderType === 'chip'}">
+        @switch (column.renderType) {
+          @case ('chip') {
+            <mat-chip [color]="item[column.key] ? 'primary' : 'warn'" selected>
+              {{ item[column.key] ? (column.trueValue || '' | translate) : (column.falseValue || '' | translate) }}
+            </mat-chip>
+          }
+          @case ('image') {
+            <img class="cell-image" [src]="item | localize: column.key:selectedLocale()" />
+          }
+          @case ('date') {
+            {{ item | getValue: column | date: column.format || 'yyyy-MM-dd' }}
+          }
+          @case ('time') {
+            {{ item | getValue: column | date: column.format || 'hh:mm' }}
+          }
+          @case ('object') {
+            {{ column.localizable ? (item[column.key] | localize: column.localizeField) : column.localizeField }}
+          }
+          @default {
+            {{ item | getValue: column:selectedLocale() }}
+          }
+        }
+      </td>
+    </ng-container>
+
+    <ng-container *ngIf="showActions" matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="actions-col">{{ 'mf-actions' | translate }}</th>
+      <td mat-cell *matCellDef="let item" class="actions-cell">
+        <button mat-icon-button color="warn" *ngIf="entityConfig.actions.items?.delete" (click)="delete(item)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" *ngIf="entityConfig.actions.items?.edit"
+          [routerLink]="['/', entityConfig.contentType, 'edit', entityConfig.table.idColumn ? item[entityConfig.table.idColumn] : item.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" *ngIf="entityConfig.actions.items?.view"
+          [routerLink]="['/', entityConfig.contentType, 'view', entityConfig.table.idColumn ? item[entityConfig.table.idColumn] : item.id]">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="visibleColumnKeys"></tr>
+    <tr mat-row *matRowDef="let row; columns: visibleColumnKeys"></tr>
+  </table>
+  <mat-progress-bar *ngIf="isLoading()" mode="indeterminate"></mat-progress-bar>
+  <mat-paginator [length]="totalCount" [pageIndex]="paginator?.pageIndex || 0" [pageSize]="paginator?.pageSize || 20"></mat-paginator>
+</section>

@@ -1,0 +1,33 @@
+<mat-dialog-content>
+  <div class="print-controls">
+    <mat-button-toggle-group [(ngModel)]="printMode" (change)="togglePrintMode($event)" aria-label="Print mode">
+      <mat-button-toggle value="page">{{ 'mf-current-page' | translate }}</mat-button-toggle>
+      <mat-button-toggle value="all">{{ 'mf-all-results' | translate }}</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <mat-button-toggle-group [(ngModel)]="fieldMode" (change)="toggleFieldMode($event)" aria-label="Field mode">
+      <mat-button-toggle value="all">{{ 'mf-all-fields' | translate }}</mat-button-toggle>
+      <mat-button-toggle value="custom">{{ 'mf-custom-fields' | translate }}</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <div *ngIf="fieldMode === 'custom'" class="field-selector">
+      <mat-form-field appearance="outline" style="width: 100%">
+        <mat-label>{{ 'mf-select-fields' | translate }}</mat-label>
+        <mat-select [(value)]="selectedPrintFields" multiple>
+          <mat-option *ngFor="let col of entityConfig.table.columns" [value]="col.key">
+            {{ col.label | translate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div #printSection class="print-area">
+    <app-print [items]="printData" [entityConfig]="entityConfig" [columns]="selectedColumns" />
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="closePrintModal()">{{ 'cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="print()">{{ 'print' | translate }}</button>
+</mat-dialog-actions>

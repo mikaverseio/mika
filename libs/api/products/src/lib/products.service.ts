@@ -1,4 +1,4 @@
-import { Product, ProductFilter, PaginatedResponse } from '@org/models';
+import { Product, ProductFilter, PaginatedResponse } from '@mikaverse/models';
 
 export class ProductsService {
   private products: Product[] = this.generateMockProducts();

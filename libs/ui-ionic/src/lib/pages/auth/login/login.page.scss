@@ -1,0 +1,45 @@
+ion-content {
+	--background: var(--ion-color-primary);
+}
+
+ion-img {
+	width: 60px;
+    margin-top: 20px;
+}
+
+form {
+	margin: 20px 0;
+}
+
+ion-list {
+	width: 320px;
+	// direction: ltr;
+	background: none;
+
+	ion-item {
+		margin-bottom: 10px;
+		color: #fff;
+		--background: var(--ion-color-primary);
+		--border-radius: 7px;
+		--border-color: rgb(42 45 57);
+		--border-width: 1px;
+		--color-hover: #fff;
+	}
+}
+
+.form-wrapper {
+	background: #111525;
+    height: fit-content;
+    padding: 10px 20px;
+    border: 1px solid rgb(42 45 57);
+    border-radius: 15px;
+}
+
+
+ion-input, ion-select {
+	--highlight-color-valid: var(--ion-color-secondary) !important;
+}
+
+.mika-notes {
+	margin-top: 15px;
+}

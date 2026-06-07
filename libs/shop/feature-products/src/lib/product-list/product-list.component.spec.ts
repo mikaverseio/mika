@@ -2,8 +2,8 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { ProductListComponent } from './product-list.component';
-import { ProductsService } from '@org/shop/data';
-import { Product } from '@org/models';
+import { ProductsService } from '@mikaverse/shop/data';
+import { Product } from '@mikaverse/models';
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 
 describe('ProductListComponent', () => {

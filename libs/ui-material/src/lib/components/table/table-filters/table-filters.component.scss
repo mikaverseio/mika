@@ -1,0 +1,27 @@
+form {
+	display: block;
+	margin-bottom: 15px;
+
+	&.sticky {
+		padding: 15px;
+		background: #fff;
+		position: sticky;
+		top: 0;
+		z-index: 99999;
+	}
+}
+
+.rep-grid {
+	--cols: 5;
+	display: grid;
+	grid-template-columns: repeat(var(--cols), 1fr);
+	column-gap: 10px;
+	align-items: flex-start;
+	// padding: 0 15px;
+}
+
+@media screen and (max-width: 600px) {
+	.rep-grid {
+		--cols: 1;
+	}
+}

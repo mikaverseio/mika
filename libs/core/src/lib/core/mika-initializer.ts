@@ -1,0 +1,118 @@
+import { inject, Injector, Optional, runInInjectionContext, Type } from "@angular/core";
+import { MikaAuthService } from "../services/auth/mika-auth.service";
+import { MikaEngineService } from "../services/engine/mika-engine.service";
+import { Mika } from "../helpers/mika-app.helper";
+import { TranslateLoader } from "@ngx-translate/core";
+import { HttpClient } from "@angular/common/http";
+// import { DynamicFieldComponentResolver } from "../resolvers";
+import { LIB_I18N_PATH, MIKA_APP_CONFIG, MIKA_FIELD_COMPONENT_OVERRIDES } from "../tokens/mika.tokens";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { MikaAppConfig, MikaAppConfigAsyncOptions, MikaAppConfigOptions } from "../schema";
+import { mikaAuthInterceptor } from "../interceptors/mika-auth.interceptor";
+import { normalizeInterceptors } from "../normalizers/generic.normalization";
+import { Route, Routes } from "@angular/router";
+// import { mikaRoutes } from "../routes";
+import { HybridLoader } from "../i18n";
+import { MikaAppGuard } from "../guards";
+import { printMikaConsoleBanner } from "../utils";
+import { mikaContextInterceptor } from "../interceptors";
+
+const mikaRoutes: Route[] = [];
+
+export const mikaAppInitializer = (parentInjector: Injector) => {
+  return runInInjectionContext(parentInjector, async () => {
+    printMikaConsoleBanner();
+
+    const auth = inject(MikaAuthService);
+    const mikaFormService = inject(MikaEngineService);
+    const mikaSettings = inject(MIKA_APP_CONFIG);
+
+    const ms: any = mikaSettings;
+    mikaFormService.register(ms);
+    await Mika.runReadyHooks(parentInjector);
+
+    return auth.initialize();
+  });
+}
+
+export const mikaDefaultTranslateService = () => {
+  return {
+    defaultLanguage: 'ar',
+    loader: {
+      provide: TranslateLoader,
+      // useFactory: HttpLoaderFactory,
+      useClass: HybridLoader,
+      deps: [HttpClient, [new Optional(), LIB_I18N_PATH]]
+    },
+    isolate: true
+  }
+}
+
+export const mikaComponentOverrideProviders = (overrides?: Record<string, Type<any>>) => {
+  return [
+    // DynamicFieldComponentResolver,
+    ...(overrides
+      ? [
+        {
+          provide: MIKA_FIELD_COMPONENT_OVERRIDES,
+          useValue: overrides,
+          multi: true,
+        },
+      ]
+      : []),
+  ];
+}
+
+export const initializeHttpInterceptors = (mikaFormConfig: MikaAppConfig | MikaAppConfig[]) => {
+  const apps = Array.isArray(mikaFormConfig) ? mikaFormConfig : [mikaFormConfig];
+
+  const allInterceptors = apps
+    .flatMap(app => normalizeInterceptors(app.interceptors))
+    .filter(Boolean);
+
+  const finalInterceptors = [
+    mikaAuthInterceptor,
+    mikaContextInterceptor,
+    ...allInterceptors
+  ];
+
+  return finalInterceptors;
+}
+
+export async function resolveMikaAppAsyncConfig(input: MikaAppConfigAsyncOptions): Promise<MikaAppConfig[]> {
+  if (typeof input === 'function') {
+    const result = await input();
+    return normalizeMikaAppConfig(result);
+  }
+  if (typeof input === 'string') {
+    const res = await fetch(input);
+    if (!res.ok) throw new Error(`[MikaForm] Failed to load config from URL: ${input}`);
+    const result = await res.json();
+    return normalizeMikaAppConfig(result);
+  }
+  return normalizeMikaAppConfig(input);
+}
+
+export function resolveRoutes(input: MikaAppConfigOptions): Routes {
+  const configs = normalizeMikaAppConfig(input);
+
+  const mergedRoutes: Routes = [
+    ...extractCustomRoutes(configs),
+    ...mikaRoutes.map((route: Route) => ({
+      ...route,
+      canActivate: [...(route.canActivate || []), MikaAppGuard],
+    })),
+  ];
+
+  return mergedRoutes
+}
+
+export function normalizeMikaAppConfig(config: MikaAppConfigOptions): MikaAppConfig[] {
+  return Array.isArray(config) ? config : [config];
+}
+
+export function extractCustomRoutes(configs: MikaAppConfig[]): Routes {
+  return configs.flatMap(c =>
+    Array.isArray(c.customRoutes) ? c.customRoutes : []
+  );
+}

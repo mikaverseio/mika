@@ -1,0 +1,48 @@
+<mat-sidenav-container class="mika-root">
+
+  <mat-sidenav class="mika-sidenav" mode="side" opened>
+    <div class="sidenav-header">
+      <mat-icon class="sidenav-logo-icon">dashboard_customize</mat-icon>
+      <span class="sidenav-site-name">{{ context.settings()?.siteName || 'Mika' }}</span>
+    </div>
+
+    @if (auth.isLoggedIn() || context.settings()?.noAuth) {
+      @for (group of sidebar.menus(); track group.label) {
+        <div class="sidenav-group-label">{{ group.label }}</div>
+        <mat-nav-list>
+          @for (item of group.items; track item.label) {
+            <a mat-list-item
+               [routerLink]="item.route"
+               routerLinkActive="active-nav-item"
+               [routerLinkActiveOptions]="{ exact: false }">
+              <mat-icon matListItemIcon>{{ item.icon || 'apps' }}</mat-icon>
+              <span matListItemTitle>{{ item.label }}</span>
+            </a>
+          }
+        </mat-nav-list>
+      }
+    }
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="mika-toolbar">
+      <mat-icon class="toolbar-logo-icon">dashboard_customize</mat-icon>
+      <span class="toolbar-title">{{ context.settings()?.siteName || 'Mika' }}</span>
+      <span class="flex-spacer"></span>
+      @if (context.appsCount() > 1) {
+        <mat-form-field appearance="outline" class="app-switcher" subscriptSizing="dynamic">
+          <mat-select [value]="activeAppId" (selectionChange)="switchApp($event.value)">
+            @for (app of allApps; track app.appId) {
+              <mat-option [value]="app.appId">{{ app.settings?.siteName || app.appId }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+    </mat-toolbar>
+
+    <main class="mika-content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { ProductsService } from './products.service';
-import { Product, ApiResponse, PaginatedResponse, ProductFilter } from '@org/models';
+import { Product, ApiResponse, PaginatedResponse, ProductFilter } from '@mikaverse/models';
 
 describe('ProductsService', () => {
   let service: ProductsService;

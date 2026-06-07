@@ -1,0 +1,36 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button type="button" (click)="toast.back()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span class="toolbar-title">
+    @if (!context.id()) {
+      {{ 'mf-form-create' | translate: {slug: context.config()?.singular ?? ('mf-item' | translate)} }}
+    } @else {
+      {{ 'mf-form-edit' | translate: {slug: context.config()?.singular ?? ('mf-item' | translate)} }}
+    }
+  </span>
+  <span class="spacer"></span>
+  @if (context.form) {
+    <button mat-icon-button color="primary" [attr.form]="context.formId" type="submit" [disabled]="context.form.invalid">
+      <mat-icon>save</mat-icon>
+    </button>
+  }
+  <button mat-icon-button type="button" (click)="toast.back()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+@if (context.tabbedComponents.length) {
+  <mat-toolbar>
+    <mat-button-toggle-group [value]="context.selectedTab()" (change)="context.onTabChange($event)">
+      <mat-button-toggle value="main">
+        {{ 'mf-main-tab' | translate }}
+      </mat-button-toggle>
+      @for (tab of context.tabbedComponents; track tab.tab) {
+        <mat-button-toggle [value]="tab.tab">
+          {{ tab.label | translate }}
+        </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+  </mat-toolbar>
+}

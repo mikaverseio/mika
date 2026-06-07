@@ -1,0 +1,59 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Hello Mika",
+      "coverImage": "https://picsum.photos/seed/mika1/400/200",
+      "category": "tech",
+      "views": 1240,
+      "status": "published",
+      "publishedAt": "2026-01-15T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Config-Driven UIs in Angular",
+      "coverImage": "https://picsum.photos/seed/mika2/400/200",
+      "category": "tech",
+      "views": 875,
+      "status": "published",
+      "publishedAt": "2026-02-10T14:30:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Building Multi-Tenant Apps",
+      "coverImage": "https://picsum.photos/seed/mika3/400/200",
+      "category": "architecture",
+      "views": 430,
+      "status": "draft",
+      "publishedAt": "2026-03-05T09:00:00Z"
+    },
+    {
+      "id": 4,
+      "title": "Angular Signals Deep Dive",
+      "coverImage": "https://picsum.photos/seed/mika4/400/200",
+      "category": "tech",
+      "views": 2100,
+      "status": "published",
+      "publishedAt": "2026-04-01T11:00:00Z"
+    },
+    {
+      "id": 5,
+      "title": "Why We Open-Sourced Mika",
+      "coverImage": "https://picsum.photos/seed/mika5/400/200",
+      "category": "news",
+      "views": 560,
+      "status": "archived",
+      "publishedAt": "2026-05-01T08:00:00Z"
+    }
+  ],
+  "categories": [
+    { "id": "tech", "name": "Technology" },
+    { "id": "architecture", "name": "Architecture" },
+    { "id": "news", "name": "News" },
+    { "id": "tutorial", "name": "Tutorial" }
+  ],
+  "users": [
+    { "id": 1, "username": "admin", "password": "admin123", "email": "admin@mikaverse.io", "role": "admin", "permissions": ["blog:delete_post", "blog:view_list", "cms:review_content"] },
+    { "id": 2, "username": "editor", "password": "editor123", "email": "editor@mikaverse.io", "role": "editor", "permissions": ["blog:view_list"] }
+  ]
+}

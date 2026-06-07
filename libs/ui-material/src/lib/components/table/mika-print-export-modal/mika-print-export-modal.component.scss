@@ -1,0 +1,15 @@
+.print-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.field-selector {
+  margin-top: 8px;
+}
+
+.print-area {
+  padding: 8px;
+  background: #fff;
+}

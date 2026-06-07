@@ -1,0 +1,73 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "Clean Code",
+      "author": "Robert C. Martin",
+      "cover": "https://picsum.photos/seed/book1/300/400",
+      "price": 39.99,
+      "stock": 12,
+      "category": "tech"
+    },
+    {
+      "id": 2,
+      "title": "The Pragmatic Programmer",
+      "author": "David Thomas",
+      "cover": "https://picsum.photos/seed/book2/300/400",
+      "price": 49.99,
+      "stock": 7,
+      "category": "tech"
+    },
+    {
+      "id": 3,
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "cover": "https://picsum.photos/seed/book3/300/400",
+      "price": 14.99,
+      "stock": 25,
+      "category": "fiction"
+    },
+    {
+      "id": 4,
+      "title": "A Brief History of Time",
+      "author": "Stephen Hawking",
+      "cover": "https://picsum.photos/seed/book4/300/400",
+      "price": 19.99,
+      "stock": 0,
+      "category": "science"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1001,
+      "customer": "Alice Johnson",
+      "date": "2026-01-20T10:00:00Z",
+      "total": 89.98,
+      "status": "delivered"
+    },
+    {
+      "id": 1002,
+      "customer": "Bob Smith",
+      "date": "2026-02-15T14:30:00Z",
+      "total": 49.99,
+      "status": "shipped"
+    },
+    {
+      "id": 1003,
+      "customer": "Carol White",
+      "date": "2026-03-01T09:00:00Z",
+      "total": 34.98,
+      "status": "pending"
+    },
+    {
+      "id": 1004,
+      "customer": "David Brown",
+      "date": "2026-04-10T16:00:00Z",
+      "total": 19.99,
+      "status": "cancelled"
+    }
+  ],
+  "users": [
+    { "id": 1, "username": "admin", "password": "admin123", "email": "admin@mikaverse.io", "role": "admin", "permissions": [] }
+  ]
+}

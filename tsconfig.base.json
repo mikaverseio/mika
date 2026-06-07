@@ -15,14 +15,20 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@org/api/products": ["libs/api/products/src/index.ts"],
-      "@org/models": ["libs/shared/models/src/index.ts"],
-      "@org/shop/data": ["libs/shop/data/src/index.ts"],
-      "@org/shop/feature-product-detail": [
+      "@mikaverse/api/products": ["libs/api/products/src/index.ts"],
+      "@mikaverse/models": ["libs/shared/models/src/index.ts"],
+      "@mikaverse/shop/data": ["libs/shop/data/src/index.ts"],
+      "@mikaverse/shop/feature-product-detail": [
         "libs/shop/feature-product-detail/src/index.ts"
       ],
-      "@org/shop/feature-products": ["libs/shop/feature-products/src/index.ts"],
-      "@org/shop/shared-ui": ["libs/shop/shared-ui/src/index.ts"]
+      "@mikaverse/shop/feature-products": [
+        "libs/shop/feature-products/src/index.ts"
+      ],
+      "@mikaverse/shop/shared-ui": ["libs/shop/shared-ui/src/index.ts"],
+      "@mikaverse/core": ["libs/core/src/index.ts"],
+      "@mikaverse/ui-material": ["libs/ui-material/src/index.ts"],
+      "@mikaverse/ui-i18n": ["libs/ui-i18n/src/index.ts"],
+      "@mikaverse/ui-ionic": ["libs/ui-ionic/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

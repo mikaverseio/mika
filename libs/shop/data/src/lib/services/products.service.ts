@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map, catchError, of } from 'rxjs';
-import { Product, ApiResponse, PaginatedResponse, ProductFilter } from '@org/models';
+import { Product, ApiResponse, PaginatedResponse, ProductFilter } from '@mikaverse/models';
 
 @Injectable({
   providedIn: 'root',

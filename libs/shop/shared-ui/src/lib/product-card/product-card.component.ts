@@ -1,6 +1,6 @@
 import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { Product } from '@org/models';
+import { Product } from '@mikaverse/models';
 
 @Component({
   selector: 'shop-product-card',

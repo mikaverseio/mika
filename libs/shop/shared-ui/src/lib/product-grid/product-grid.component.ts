@@ -1,6 +1,6 @@
 import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Product } from '@org/models';
+import { Product } from '@mikaverse/models';
 import { ProductCardComponent } from '../product-card/product-card.component';
 
 @Component({

@@ -1,0 +1,20 @@
+@if (form && ready) {
+  @if (this.id && notFound()) {
+    <div class="not-found">{{ 'mf-item-not-found' | translate }}</div>
+  }
+  @else {
+    <app-form-header />
+    <section class="form-content">
+      <ng-template #aboveFormContainer></ng-template>
+      <form [id]="context.formId" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mika-container>
+          <div class="main-form" *ngIf="context.selectedTab() === 'main'">
+            <app-form-fields-material />
+          </div>
+          <app-form-tabbed-components />
+        </mika-container>
+      </form>
+      <ng-template #belowFormContainer></ng-template>
+    </section>
+  }
+}

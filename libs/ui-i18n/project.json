@@ -1,0 +1,13 @@
+{
+  "name": "ui-i18n",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui-i18n/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:mika", "type:ui", "ui:i18n"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

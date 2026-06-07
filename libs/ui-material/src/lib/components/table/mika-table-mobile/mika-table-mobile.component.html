@@ -1,0 +1,169 @@
+
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+		<ion-title slot="start">
+			<div class="flex aic">
+				<ion-icon *ngIf="entityConfig.sidebarConfig?.icon" [name]="entityConfig.sidebarConfig?.icon" style="margin-inline-end: 5px;"></ion-icon>
+				{{ entityConfig.contentType | translate }}
+			</div>
+		</ion-title>
+		<ion-buttons slot="start">
+			<mika-lang-switcher [config]="entityConfig"/>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<ion-button (click)="toggleBulkMode()" [color]="bulkMode ? 'warning' : 'primary'">
+				<ion-icon slot="icon-only" [name]="bulkMode ? 'create' : 'create-outline'"></ion-icon>
+			</ion-button>
+
+			@if (entityConfig.table.filters && entityConfig.table.filters.length || entityConfig.actions.items?.search) {
+				<ion-button (click)="toggleFilter()" [color]="!showFilter() ? 'secondar' : 'secondary'">
+					@if (showFilter()) {
+					<ion-icon slot="icon-only" name="filter-circle"></ion-icon>
+					} @else {
+					<ion-icon slot="icon-only" name="filter-circle-outline"></ion-icon>
+					}
+				</ion-button>
+			}
+
+			<ion-button (click)="refresh()">
+				<ion-icon slot="icon-only" name="reload-circle"></ion-icon>
+			</ion-button>
+
+			@if (entityConfig.table.sortable) {
+				<ion-button [routerLink]="`/sortable/${entityConfig.contentType}/title`">
+					<ion-icon slot="icon-only" name="list-circle"></ion-icon>
+				</ion-button>
+			}
+
+			@if (entityConfig.actions.items?.create) {
+				<ion-button [routerLink]="`/${entityConfig.contentType}/create`">
+					<ion-icon slot="icon-only" name="add-circle"></ion-icon>
+				</ion-button>
+			}
+		</ion-buttons>
+
+		@if (entityConfig.actions.items?.print || entityConfig.actions.items?.export && (entityConfig.actions.items?.exportPdf || entityConfig.actions.items?.exportExcel))
+		{
+			<ion-buttons slot="end">
+				<ion-button (click)="presentPrintModal()">
+					<ion-icon slot="icon-only" name="cloud-download"></ion-icon>
+				</ion-button>
+				<ion-button (click)="presentPrintModal()">
+					<ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		}
+	</ion-toolbar>
+
+
+	@if (showFilter()) {
+		<ion-toolbar>
+			<app-table-filters [entityConfig]="entityConfig" (onSubmit)="onFilterSubmit($event)"></app-table-filters>
+		</ion-toolbar>
+	}
+</ion-header>
+
+<ion-content>
+	<div class="ion-padding">
+		<ion-list lines="none">
+			<ion-item button *ngFor="let item of items">
+				<div class="flex flex-col w-100">
+					<div class="item-data flex flex-col">
+						<div class="col-item" *ngFor="let column of entityConfig.table.columns">
+							<ion-note>{{ column.label | translate }}</ion-note>
+							@switch (column.renderType) {
+								@case ('chip') {
+									<ion-chip [color]="item[column.key] ? 'success' : 'danger'">
+										{{ item[column.key] ? (column.trueValue || '' | translate) : (column.falseValue || '' |
+										translate) }}
+									</ion-chip>
+								}
+
+								@case ('image') {
+									<ion-img [src]="item[column.key]"></ion-img>
+								}
+
+								@case ('date') {
+									{{ item | getValue: column | date: column.format || 'yyyy-MM-dd' }}
+								}
+
+								@case ('time') {
+									<ion-label>
+										{{ item | getValue: column | date: column.format || 'hh:mm' }}
+									</ion-label>
+								}
+
+								@case ('object') {
+									<ion-label>
+										{{ column.localizable ? (item[column.key] | localize: column.localizeField) : column.localizeField }}
+									</ion-label>
+								}
+
+								@default {
+									<ion-label>
+										{{ item | getValue: column }}
+									</ion-label>
+								}
+							}
+						</div>
+					</div>
+					<div class="mika-aciton-row flex aic jcb w-100">
+						<ion-buttons slot="end">
+							@if (entityConfig.actions.items?.delete) {
+								<ion-button (click)="delete(item)" color="danger">
+									<ion-icon slot="icon-only" name="trash"></ion-icon>
+								</ion-button>
+							}
+
+							@if (entityConfig.actions.items?.edit) {
+								<ion-button color="primary"
+									[routerLink]="[`/${entityConfig.contentType}/edit`, entityConfig.table.idColumn ? item[entityConfig.table.idColumn] : item.id]">
+									<ion-icon slot="icon-only" name="create"></ion-icon>
+								</ion-button>
+							}
+
+							@if (entityConfig.actions.items?.view) {
+								<ion-button color="primary"
+									[routerLink]="[`/${entityConfig.contentType}/view`, entityConfig.table.idColumn ? item[entityConfig.table.idColumn] : item.id]">
+									<ion-icon slot="icon-only" name="eye"></ion-icon>
+								</ion-button>
+							}
+
+							@if (entityConfig.actions.items?.custom && entityConfig.actions.items?.custom?.length) {
+								@for (cAction of entityConfig.actions.items?.custom; track cAction.title) {
+									<ion-button color="primary" (click)="cAction?.handler(item)">
+										<ion-icon slot="icon-only" [name]="cAction?.icon || 'chevron-back-circle'"></ion-icon>
+									</ion-button>
+								}
+							}
+
+							@if (entityConfig.actions.items?.more && entityConfig.actions.items?.more?.length) {
+
+								<ion-button color="primary" button mat-button [matMenuTriggerFor]="customActions">
+									<ion-icon slot="icon-only" name="ellipsis-vertical-circle-sharp"></ion-icon>
+								</ion-button>
+								<mat-menu #customActions="matMenu">
+									@for (cAction of entityConfig.actions.items?.more; track cAction.title) {
+										<button mat-menu-item (click)="cAction?.handler(item)">{{ cAction?.title ?? 'action' | translate }}</button>
+									}
+								</mat-menu>
+							}
+
+						</ion-buttons>
+					</div>
+				</div>
+			</ion-item>
+		</ion-list>
+	</div>
+
+	<ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" threshold="60%">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+</ion-content>
+
+<ion-loading></ion-loading>
+	<ion-alert #deleteAlert [header]="'mf-delete-item' | translate" [message]="'mf-delete-item-desc' | translate"
+		[buttons]="[{text: 'mf-cancel' | translate, role: 'cancel'}, {text: 'mf-delete' | translate, role: 'confirm'}]"></ion-alert>

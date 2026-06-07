@@ -1,0 +1,153 @@
+@use './tokens';
+
+// ── Reset ───────────────────────────────────────────────────────
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--mika-font);
+  font-size: var(--mika-font-size-base);
+  color: var(--mika-text);
+  background: var(--mika-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--mika-border-strong); border-radius: 3px; }
+
+// ── Toolbar ─────────────────────────────────────────────────────
+.mat-toolbar.mat-primary,
+mat-toolbar.mat-primary {
+  background: var(--mika-primary) !important;
+  color: var(--mika-primary-contrast) !important;
+}
+
+// ── Sidenav ─────────────────────────────────────────────────────
+.mat-sidenav-container {
+  background: var(--mika-bg) !important;
+}
+
+.mat-sidenav {
+  border-right: none !important;
+  box-shadow: 2px 0 12px rgba(27, 31, 59, 0.08) !important;
+}
+
+// ── Table ────────────────────────────────────────────────────────
+.mat-mdc-table {
+  width: 100%;
+  background: var(--mika-surface) !important;
+}
+
+.mat-mdc-header-row,
+.mdc-data-table__header-row {
+  background: var(--mika-primary) !important;
+  background-color: var(--mika-primary) !important;
+  height: 52px !important;
+}
+
+.mat-mdc-header-cell,
+.mdc-data-table__header-cell {
+  color: rgba(255, 255, 255, 0.92) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px !important;
+  border-bottom: none !important;
+  background: var(--mika-primary) !important;
+  background-color: var(--mika-primary) !important;
+
+  .mat-sort-header-arrow,
+  .mat-sort-header-stem,
+  .mat-sort-header-pointer-left,
+  .mat-sort-header-pointer-right,
+  .mat-sort-header-pointer-middle {
+    color: rgba(255, 255, 255, 0.6) !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+  }
+
+  .mat-sort-header-button {
+    color: rgba(255, 255, 255, 0.92) !important;
+  }
+}
+
+.mat-mdc-row {
+  height: 56px !important;
+  transition: background 0.12s;
+
+  &:hover {
+    background: var(--mika-surface-hover) !important;
+  }
+
+  &:last-child .mat-mdc-cell {
+    border-bottom: none !important;
+  }
+}
+
+.mat-mdc-cell {
+  font-size: 13.5px !important;
+  color: var(--mika-text) !important;
+  border-bottom: 1px solid var(--mika-border) !important;
+}
+
+// ── Paginator ────────────────────────────────────────────────────
+.mat-mdc-paginator {
+  background: var(--mika-surface) !important;
+  border-top: 1px solid var(--mika-border) !important;
+  font-family: var(--mika-font) !important;
+  font-size: 13px !important;
+}
+
+// ── Cards ────────────────────────────────────────────────────────
+.mat-mdc-card {
+  background: var(--mika-surface) !important;
+  box-shadow: var(--mika-shadow) !important;
+  border-radius: var(--mika-radius) !important;
+  border: 1px solid var(--mika-border);
+}
+
+// ── Form fields ──────────────────────────────────────────────────
+.mat-mdc-form-field.mat-focused {
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: var(--mika-accent) !important;
+  }
+  .mat-mdc-floating-label { color: var(--mika-accent) !important; }
+}
+
+// ── Buttons ──────────────────────────────────────────────────────
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-unelevated-button.mat-primary {
+  background-color: var(--mika-primary) !important;
+  color: var(--mika-primary-contrast) !important;
+}
+
+// ── Snackbar ─────────────────────────────────────────────────────
+.mika-snack-success .mdc-snackbar__surface {
+  background: var(--mika-success) !important;
+  color: #fff !important;
+}
+
+.mika-snack-error .mdc-snackbar__surface {
+  background: var(--mika-danger) !important;
+  color: #fff !important;
+}
+
+// ── Dialog ───────────────────────────────────────────────────────
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: var(--mika-radius-lg) !important;
+  box-shadow: var(--mika-shadow-lg) !important;
+}
+
+.mat-mdc-dialog-title {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: var(--mika-text) !important;
+}
+
+// ── Chips ────────────────────────────────────────────────────────
+.mat-mdc-chip {
+  font-size: 12px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+}

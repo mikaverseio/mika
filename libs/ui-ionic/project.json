@@ -1,0 +1,25 @@
+{
+  "name": "ui-ionic",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui-ionic/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:mika", "type:ui", "ui:ionic"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/ui-ionic/ng-package.json",
+        "tsConfig": "libs/ui-ionic/tsconfig.lib.json"
+      },
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {}
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

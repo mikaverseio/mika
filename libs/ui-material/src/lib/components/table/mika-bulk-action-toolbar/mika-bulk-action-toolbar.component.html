@@ -1,0 +1,10 @@
+<div class="bulk-toolbar" *ngIf="bulkMode">
+  <div class="bulk-info">{{ 'mf-bulk-actions' | translate }}</div>
+  <span class="spacer"></span>
+  <button mat-icon-button color="warn" (click)="bulkDelete()" [disabled]="!hasSelection">
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button mat-icon-button (click)="selection.clear()" [disabled]="!hasSelection">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

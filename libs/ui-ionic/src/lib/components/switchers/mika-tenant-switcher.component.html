@@ -1,0 +1,57 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-button (click)="close()">
+				<ion-icon slot="icon-only" name="close-circle"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+		<ion-title>{{ 'mf-tenant-switcher-header' | translate }}</ion-title>
+	</ion-toolbar>
+	<ion-toolbar>
+		<ion-searchbar [placeholder]="'mf-search' | translate"></ion-searchbar>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+	<ion-list lines="full" [inset]="true">
+		@for (tenant of app.getAllApps(); track tenant.appId; let i = $index) {
+			<ion-item [ngClass]="{active: app.getActiveAppId() === tenant.appId}">
+				<div class="tenant-dets" slot="start">
+					<div>{{ tenant.settings?.siteName ?? 'mika-app' | translate }}</div>
+					@if (auth.isLoggedInToTenant(tenant.appId)) {
+						<div class="log-state">{{ 'mf-logged-in' | translate }}</div>
+					}
+				</div>
+				<ion-chip color="danger" style="direction: ltr;">
+					<ion-icon name="rocket"></ion-icon>
+					<ion-label>Prod</ion-label>
+				</ion-chip>
+				<ion-buttons slot="end">
+					<ion-button [disabled]="app.getActiveAppId() === tenant.appId || !auth.isLoggedInToTenant(tenant.appId)" (click)="switchTenant(tenant)" [matTooltip]="'mf-tenant-switch-tooltip' | translate: { siteName: tenant.settings?.siteName }">
+						<ion-icon slot="icon-only" name="swap-horizontal-outline"></ion-icon>
+					</ion-button>
+
+					@if (auth.isLoggedInToTenant(tenant.appId)) {
+						<ion-button color="danger" (click)="logout(tenant)" [matTooltip]="'mf-tenant-logout-tooltip' | translate: { siteName: tenant.settings?.siteName }">
+							<ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+						</ion-button>
+					} @else {
+						<ion-button color="primary" (click)="toggleLogin(i)" [matTooltip]="'mf-tenant-login-tooltip' | translate: { siteName: tenant.settings?.siteName }">
+							<ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
+						</ion-button>
+					}
+				</ion-buttons>
+			</ion-item>
+			@if (showLogin[i]) {
+
+					<ion-item>
+						<ion-input type="text" placeholder="Email" [(ngModel)]="email"></ion-input>
+						<ion-input type="password" placeholder="Password" [(ngModel)]="password"></ion-input>
+						<ion-button (click)="login(email, password, tenant)">
+							<span>{{ 'mf-login' | translate}}</span>
+						</ion-button>
+					</ion-item>
+			}
+
+		}
+	</ion-list>
+</ion-content>

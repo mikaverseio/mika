@@ -1,0 +1,19 @@
+{
+  "name": "@mikaverse/core",
+  "version": "0.1.0-alpha.1",
+  "description": "Headless engine for Mika — config-driven Angular admin framework. Zero UI dependencies.",
+  "keywords": ["angular", "admin", "crud", "config-driven", "typescript", "nx", "headless"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mikaverseio/mika"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@angular/forms": "^21.1.0",
+    "@angular/router": "^21.1.0",
+    "@ngx-translate/core": "^16.0.0"
+  },
+  "sideEffects": false
+}

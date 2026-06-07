@@ -1,0 +1,25 @@
+{
+  "name": "ui-material",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui-material/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:mika", "type:ui", "ui:material"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/ui-material/ng-package.json",
+        "tsConfig": "libs/ui-material/tsconfig.lib.json"
+      },
+      "defaultConfiguration": "production",
+      "configurations": {
+        "production": {}
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

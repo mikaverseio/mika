@@ -1,0 +1,21 @@
+ion-list {
+	padding: 0;
+}
+
+ion-item {
+	--padding-bottom: 5px;
+    --padding-top: 5px;
+}
+.active {
+	font-weight: 700;
+}
+
+.log-state {
+	font-weight: 400;
+	font-size: 12px;
+}
+
+.tenant-dets {
+	min-width: 100px;
+	max-width: 200px;
+}

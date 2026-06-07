@@ -1,0 +1,13 @@
+export enum EMikaAction {
+    DELETE = 'DELETE',
+	CANCEL = 'CANCEL',
+	APPROVE = 'APPROVE',
+	REJECT = 'REJECT',
+	LOGOUT = 'LOGOUT',
+	LOGIN = 'LOGIN',
+	HIDE = 'HIDE',
+	SHOW = 'SHOW',
+	SAVE = 'SAVE',
+	LOAD = 'LOAD',
+	CREATE = 'CREATE',
+};

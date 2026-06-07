@@ -1,0 +1,58 @@
+<div class="file-upload-wrapper">
+  <div class="field-label">{{ label | translate }}</div>
+
+  @if (!file && !previewUrl) {
+    <input
+      hidden
+      #fileInput
+      type="file"
+      class="custom-file-input"
+      [accept]="accept"
+      (change)="handleFileSelect($event); fileInput.value = ''"
+    />
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="fileInput.click()"
+      class="upload-file drop-zone"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+      [class.dragover]="isDragging">
+      <mat-icon>cloud_upload</mat-icon>
+      {{ 'mf-choose-file' | translate }}
+    </button>
+  }
+
+  @if (file || previewUrl) {
+    <div class="preview">
+      <div class="flex aic jcb">
+        <div class="flex aic gap">
+          @if (file?.type?.startsWith('image/') && previewUrl) {
+            <img [src]="previewUrl" class="thumbnail" />
+          }
+          @else if (!file && previewUrl?.startsWith('http')) {
+            <img [src]="previewUrl" class="thumbnail" />
+          }
+          @else if (fileIcon) {
+            <mat-icon>{{ fileIcon }}</mat-icon>
+          }
+
+          <div class="filename">{{ fileName }}</div>
+
+          @if (isRemoteFile) {
+            <button mat-button type="button" (click)="openInNewTab()">
+              <mat-icon>open_in_new</mat-icon>
+              {{ 'mf-view-file' | translate }}
+            </button>
+          }
+        </div>
+
+        <button mat-icon-button color="warn" type="button" (click)="removeFile()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+  }
+</div>

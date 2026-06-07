@@ -1,9 +1,9 @@
 import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ProductsService } from '@org/shop/data';
-import { Product } from '@org/models';
-import { LoadingSpinnerComponent, ErrorMessageComponent } from '@org/shop/shared-ui';
+import { ProductsService } from '@mikaverse/shop/data';
+import { Product } from '@mikaverse/models';
+import { LoadingSpinnerComponent, ErrorMessageComponent } from '@mikaverse/shop/shared-ui';
 
 @Component({
   selector: 'shop-product-detail',

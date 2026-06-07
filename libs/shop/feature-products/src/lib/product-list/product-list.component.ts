@@ -2,13 +2,13 @@ import { Component, inject, signal, computed, OnInit, ChangeDetectionStrategy } 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ProductsService } from '@org/shop/data';
-import { Product, ProductFilter } from '@org/models';
+import { ProductsService } from '@mikaverse/shop/data';
+import { Product, ProductFilter } from '@mikaverse/models';
 import {
   ProductGridComponent,
   LoadingSpinnerComponent,
   ErrorMessageComponent,
-} from '@org/shop/shared-ui';
+} from '@mikaverse/shop/shared-ui';
 
 @Component({
   selector: 'shop-product-list',

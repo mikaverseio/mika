@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.sticky-form-action-bar {
+  position: sticky;
+  bottom: 0;
+  background: var(--mika-primary);
+  padding: 8px 16px;
+  border-radius: var(--mika-radius);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+}

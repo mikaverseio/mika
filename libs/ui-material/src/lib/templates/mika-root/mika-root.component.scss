@@ -1,0 +1,128 @@
+.mika-root {
+  height: 100vh;
+}
+
+// ── Sidebar ─────────────────────────────────────────────────
+.mika-sidenav {
+  width: var(--mika-sidenav-width);
+  background: var(--mika-primary);
+  color: var(--mika-primary-contrast);
+  border-right: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenav-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  .sidenav-logo-icon {
+    color: var(--mika-accent);
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .sidenav-site-name {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--mika-primary-contrast);
+  }
+}
+
+.sidenav-group-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  padding: 16px 16px 4px;
+}
+
+mat-nav-list {
+  padding-top: 0;
+
+  a[mat-list-item] {
+    border-radius: 8px;
+    margin: 2px 8px;
+    color: var(--mika-text-on-primary);
+    height: 44px;
+
+    mat-icon {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--mika-primary-contrast);
+    }
+
+    &.active-nav-item {
+      background: var(--mika-accent-light);
+      color: var(--mika-accent);
+
+      mat-icon {
+        color: var(--mika-accent);
+      }
+    }
+  }
+}
+
+// ── Toolbar ─────────────────────────────────────────────────
+.mika-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  .toolbar-logo-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+    margin-right: 4px;
+    opacity: 0.9;
+  }
+
+  .toolbar-title {
+    font-size: 17px;
+    font-weight: 500;
+  }
+}
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+
+.app-switcher {
+  width: 160px;
+  margin-right: 8px;
+  --mat-form-field-container-text-size: 14px;
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  ::ng-deep .mat-mdc-select-value-text,
+  ::ng-deep .mat-mdc-select-arrow {
+    color: var(--mika-primary-contrast);
+  }
+
+  ::ng-deep .mdc-notched-outline__leading,
+  ::ng-deep .mdc-notched-outline__notch,
+  ::ng-deep .mdc-notched-outline__trailing {
+    border-color: rgba(255, 255, 255, 0.4) !important;
+  }
+}
+
+// ── Content area ─────────────────────────────────────────────
+.mika-content {
+  padding: var(--mika-content-padding);
+  background: var(--mika-bg);
+  min-height: calc(100vh - var(--mika-toolbar-height));
+}
